@@ -11,6 +11,13 @@
         <!-- Google fonts -->
         <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
 
+        <!-- Special version of Bootstrap that only affects content wrapped in .bootstrap-iso -->
+        <link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" />
+
+        <!--Font Awesome (added because you use icons in your prepend/append)-->
+        <link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
+
+
     </head>
     <body>
 
@@ -72,10 +79,11 @@
 
         <div class="container _container">
           <div class="row">
+
             <div class="col-sm-4">
 
               <div class="list-group">
-              <span class="list-group-item active">
+              <span class="list-group-item">
 
                 <div class="media">
                   <div class="media-left">
@@ -88,7 +96,7 @@
                 </div>
 
               </span>
-              <span class="list-group-item">
+              <span class="list-group-item active">
                 <div class="media">
                   <div class="media-left">
                       <span style="font-size: 30px;" class="glyphicon glyphicon-calendar"></span>
@@ -104,72 +112,66 @@
             </div>
 
             <div class="col-sm-8">
-              <form class="form-inline">
-                  <input style="width: 437px;" type="text" class="form-control" placeholder="Doctor's name...">
-                  <select class="form-control">
-                    <option>Pathology</option>
-                    <option>Cardiology</option>
-                    <option>Endocrinology</option>
-                    <option>Gastroenterology</option>
-                    <option>Microbiology</option>
-                    <option>Nephrology</option>
-                    <option>Neurology</option>
-                    <option>Ophthalmology</option>
-                    <option>Orthodontics</option>
-                    <option>Orthopaedics</option>
-                    <option>Paediatrics</option>
-                  </select>
-                <button type="submit" class="btn btn-default">Search</button>
-              </form>
-
-
-              <!-- if we dont have search
-
-              <center><span style="font-size: 200px;position: relative; top: 150px; color: #E6E6E6;" class="glyphicon glyphicon-search"></span></center>
-
-              -->
-
-              <!-- if we have results -->
-
-              <div style="height: 20px;"></div>
 
               <div class="panel panel-default">
 
-                <div class="panel-heading">Results</div>
-
-
+                <div class="panel-heading">Dr. <a href="#">Giorgos Bouridis</a> booked dates</div>
                 <table class="table">
                   <tr>
                     <td>
-                      <a href="#">Giorgos Bouridis</a>, Physiologist
-                      <button style="float: right;" class="btn btn-success btn-xs">Continue with this doctor</button>
+                      15/7/2017 10:00 AM - 11:00 AM
+                      <span style="float:right;padding: 5px;" class="label label-danger">Booked</span>
                     </td>
                   </tr>
                   <tr>
                     <td>
-                      <a href="#">Giorgos Bouridis</a>, Neurology
-                      <button style="float: right;" class="btn btn-success btn-xs">Continue with this doctor</button>
+                      15/7/2017 3:00 PM - 4:00 PM
+                      <span style="float:right;padding: 5px;" class="label label-danger">Booked</span>
                     </td>
                   </tr>
                   <tr>
                     <td>
-                      <a href="#">Giorgos Bouridis</a>, Orthodontics
-                      <button style="float: right;" class="btn btn-success btn-xs">Continue with this doctor</button>
+                      15/7/2017 4:00 PM - 5:00 PM
+                      <span style="float:right;padding: 5px;" class="label label-danger">Booked</span>
                     </td>
                   </tr>
                   <tr>
                     <td>
-                      <a href="#">Giorgos Bouridis</a>, Pathology
-                      <button style="float: right;" class="btn btn-success btn-xs">Continue with this doctor</button>
+                      15/7/2017 5:00 PM - 6:00 PM
+                      <span style="float:right;padding: 5px;" class="label label-danger">Booked</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      15/7/2017 6:00 PM - 7:00 PM
+                      <span style="float:right;padding: 5px;" class="label label-danger">Booked</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      15/8/2017 4:00 PM - 5:00 PM
+                      <span style="float:right;padding: 5px;" class="label label-danger">Booked</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      15/8/2017 5:00 PM - 6:00 PM
+                      <span style="float:right;padding: 5px;" class="label label-danger">Booked</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      15/9/2017 2:00 PM - 3:00 PM
+                      <span style="float:right;padding: 5px;" class="label label-danger">Booked</span>
                     </td>
                   </tr>
                 </table>
               </div>
+
             </div>
 
-
-          </div>
         </div>
+
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
