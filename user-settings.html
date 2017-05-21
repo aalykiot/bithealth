@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Notifications</title>
+        <title>Settings</title>
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/inner.css" rel="stylesheet">
 
@@ -44,11 +44,11 @@
                   <li><a href="#">
                     <span class="glyphicon glyphicon-th-list"></span>
                   </a></li>
-                  <li class="active"><a href="#">
+                  <li><a href="#">
                     <span class="glyphicon glyphicon-bell"></span>
                     <span class="badge _navbar-not">2</span>
                   </a></li>
-                  <li class="dropdown">
+                  <li class="dropdown active">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
                       <span class="glyphicon glyphicon-user"></span>
                       <span class="caret"></span></a>
@@ -75,8 +75,8 @@
             <div class="col-sm-12">
               <ul class="nav nav-tabs">
                 <li role="presentation" class="active"><a href="#">
-                  <span class="glyphicon glyphicon-bell"></span>
-                  Notifications
+                  <span class="glyphicon glyphicon-cog"></span>
+                  Settings
                 </a></li>
               </ul>
             </div>
@@ -87,62 +87,52 @@
           <div class="row">
             <div class="col-sm-3">
               <ul class="nav nav-pills nav-stacked">
-                <li role="presentation" class="active"><a href="#">Unseen <span style="float: right;" class="badge">2</span></a></li>
-                <li role="presentation"><a href="#">All notifications <span style="float: right;" class="badge">7</span></a></li>
+                <li role="presentation" class="active"><a href="#">Details & Privacy</a></li>
               </ul>
             </div>
-            <div class="col-sm-9">
 
-              <!-- if no new notifications -->
-
-              <div class="well"><center>
-                <span style="font-size: 50px;" class="glyphicon glyphicon-bell"></span>
-                <h3><strong>No new notifications.</strong></h3>
-              </center></div>
-
-              <!-- else
-              <div class="well">
-
-                <div class="media _media-not">
-                  <div class="media-left">
-                      <span style="color: #428bca;" class="glyphicon glyphicon-asterisk"></span>
-                  </div>
-                  <div class="media-body">
-                    <p class="media-heading"> Doctor <strong><a href="#">Giorgos Iliadis</strong></a> canceled your appointment on <i>14/6/2017 2:00 PM</i></p>
-                  </div>
+            <div class="col-sm-5">
+              <form style = "border-right: 1px solid #D8D8D8;padding-right: 30px;">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">First Name</label>
+                  <input type="email" class="form-control _settings-input" value="Alex" readonly>
                 </div>
-
-
-                <div class="media _media-not">
-                  <div class="media-left">
-                      <span style="color: #428bca;" class="glyphicon glyphicon-asterisk"></span>
-                  </div>
-                  <div class="media-body">
-                    <p class="media-heading"> Doctor <strong><a href="#">Dimitris Vouvouras</a></strong> canceled your appointment on <i>14/6/2017 2:00 PM</i></p>
-                  </div>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Last Name</label>
+                  <input type="email" class="form-control _settings-input" value="Alikiotis" readonly>
                 </div>
-
-                <div class="media _media-not">
-                  <div class="media-left">
-                      <span class="glyphicon glyphicon-asterisk"></span>
-                  </div>
-                  <div class="media-body">
-                    <p class="media-heading"> Doctor <strong><a href="#">Giannis Liopoulos</a></strong> canceled your appointment on <i>14/6/2017 2:00 PM</i></p>
-                  </div>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Email</label>
+                  <input type="email" class="form-control _settings-input" value="alexalikiotis5@gmail.com">
                 </div>
-
-                <div class="media _media-not">
-                  <div class="media-left">
-                      <span class="glyphicon glyphicon-asterisk"></span>
-                  </div>
-                  <div class="media-body">
-                    <p class="media-heading"> Doctor <strong><a href="#">Giannis Staurou</a></strong> canceled your appointment on <i>14/6/2017 2:00 PM</i></p>
-                  </div>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">AMKA</label>
+                  <input type="email" class="form-control _settings-input" value="12345678912" readonly>
                 </div>
+                <button type="submit" class="btn btn-md btn-success">Update settings</button>
+              </form>
+            </div>
 
-              </div> -->
+            <div class="col-sm-4">
+
+              <form>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Old Password</label>
+                  <input type="password" class="form-control _settings-input">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">New Password</label>
+                  <input type="password" class="form-control _settings-input">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Retype new password</label>
+                  <input type="password" class="form-control _settings-input">
+                </div>
+                <button type="submit" class="btn btn-md btn-success">Update password</button>
+              </form>
 
             </div>
+
           </div>
         </div>
 
