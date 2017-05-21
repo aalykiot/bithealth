@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Notifications</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/inner.css" rel="stylesheet">
+
+        <!-- Google fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+
+    </head>
+    <body>
+
+      <nav class="navbar navbar-inverse navbar-fixed-top _navbar">
+        <div class="container-fluid">
+          <div class="container _container">
+
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand _brand" href="#" style="color:#fff;">
+                  <span class="glyphicon glyphicon-plus _nav-glyphicon"></span>BitHealth
+                </a>
+              </div>
+
+              <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                <form class="navbar-form form-inline navbar-left">
+                  <div class="form-group has-feedback has-feedback">
+                    <input type="text" class="form-control _search-input" placeholder="Search doctors...">
+                    <i class="form-control-feedback glyphicon glyphicon-search" style="color:#fff;"></i>
+                  </div>
+                </form>
+
+
+                <ul class="nav navbar-nav navbar-right">
+                  <li><a href="#">
+                    <span class="glyphicon glyphicon-th-list"></span>
+                  </a></li>
+                  <li class="active"><a href="#">
+                    <span class="glyphicon glyphicon-bell"></span>
+                    <span class="badge _navbar-not">2</span>
+                  </a></li>
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                      <span class="glyphicon glyphicon-user"></span>
+                      <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      <li class="dropdown-header">Signed in as <br/><strong>Alex Alikiotis</strong></li>
+                      <li role="separator" class="divider"></li>
+                      <li><a href="#">Settings</a></li>
+                      <li role="separator" class="divider"></li>
+                      <li><a href="#">Sign out</a></li>
+                    </ul>
+                  </li>
+                </ul>
+
+              </div><!-- /.navbar-collapse -->
+            </div>
+          </div><!-- /.container-fluid -->
+        </nav>
+
+        <div class="_empty-space"></div>
+
+
+        <div class="container _container">
+          <div class="row">
+            <div class="col-sm-12">
+              <ul class="nav nav-tabs">
+                <li role="presentation" class="active"><a href="#">
+                  <span class="glyphicon glyphicon-bell"></span>
+                  Notifications
+                </a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="_empty-space-not"></div>
+
+          <div class="row">
+            <div class="col-sm-3">
+              <ul class="nav nav-pills nav-stacked">
+                <li role="presentation" class="active"><a href="#">Unseen <span style="float: right;" class="badge">2</span></a></li>
+                <li role="presentation"><a href="#">All notifications <span style="float: right;" class="badge">7</span></a></li>
+              </ul>
+            </div>
+            <div class="col-sm-9">
+
+              <!-- if no new notifications
+
+              <div class="well"><center>
+                <span style="font-size: 50px;" class="glyphicon glyphicon-bell"></span>
+                <h3><strong>No new notifications.</strong></h3>
+              </center></div> -->
+
+              <!-- else -->
+              <div class="well">
+
+                <div class="media _media-not">
+                  <div class="media-left">
+                      <span style="color: #428bca;" class="glyphicon glyphicon-asterisk"></span>
+                  </div>
+                  <div class="media-body">
+                    <p class="media-heading"> Doctor <strong><a href="#">Giorgos Iliadis</strong></a> canceled your appointment on <i>14/6/2017 2:00 PM</i> with him/her.</p>
+                  </div>
+                </div>
+
+
+                <div class="media _media-not">
+                  <div class="media-left">
+                      <span style="color: #428bca;" class="glyphicon glyphicon-asterisk"></span>
+                  </div>
+                  <div class="media-body">
+                    <p class="media-heading"> Doctor <strong><a href="#">Dimitris Vouvouras</a></strong> canceled your appointment on <i>14/6/2017 2:00 PM</i> with him/her.</p>
+                  </div>
+                </div>
+
+                <div class="media _media-not">
+                  <div class="media-left">
+                      <span class="glyphicon glyphicon-asterisk"></span>
+                  </div>
+                  <div class="media-body">
+                    <p class="media-heading"> Doctor <strong><a href="#">Giannis Liopoulos</a></strong> canceled your appointment on <i>14/6/2017 2:00 PM</i> with him/her.</p>
+                  </div>
+                </div>
+
+                <div class="media _media-not">
+                  <div class="media-left">
+                      <span class="glyphicon glyphicon-asterisk"></span>
+                  </div>
+                  <div class="media-body">
+                    <p class="media-heading"> Doctor <strong><a href="#">Giannis Staurou</a></strong> canceled your appointment on <i>14/6/2017 2:00 PM</i> with him/her.</p>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+    </body>
+</html>
