@@ -19,15 +19,23 @@ html, body{
   box-shadow: 0 0 5px rgba(0,0,0,0.5);
 }
 
+
 ._search-input {
-  color:#fff;
+  padding-left: 30px;
+  color:#fafafa;
   background-color:#333;
   border:0px;
-  transition: width .2s ease;
+  transition: width .5s ease;
   width: 200px !important;
   font-size: 16px;
   height: 30px;
   margin-top: 2px;
+}
+
+._search-glyphicon{
+  position: relative;
+  top: 3px;
+  left: 25px;
 }
 
 ._search-input:focus{
