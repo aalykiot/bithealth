@@ -86,3 +86,7 @@ html, body{
 ._media-not:last-child {
   border-bottom: 0px;
 }
+
+._doctor-icon{
+  font-size: 150px;
+}
