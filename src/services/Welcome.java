@@ -21,7 +21,7 @@ import services.Database;
 
 
 
-@WebServlet(name="Welcome", urlPatterns={"/"})
+@WebServlet(name="Welcome", urlPatterns={"/Welcome"})
 public class Welcome extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

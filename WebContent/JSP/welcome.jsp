@@ -7,8 +7,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>BitHealth</title>
-        <link href="./Resources/css/bootstrap.min.css" rel="stylesheet">
-        <link href="./Resources/css/main.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/Resources/css/bootstrap.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/Resources/css/main.css" rel="stylesheet">
 
         <!-- Google fonts -->
         <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
@@ -36,8 +36,18 @@
                     <p class="_par">This platform allows you to get an appointment with your favorite doctor easily and efficiently. You can also manage, reschedule or even delete your appointments with a few simple steps and all these with the help of BitHealth.</p>
                 </div>
                 <div class="col-md-4 col-md-offset-1">
+                     <% 
+                        	
+                    	if(request.getAttribute("error") != null){
+                        	
+                     %>
+                        	
+                     <div class="alert alert-danger" role="alert"><%= request.getAttribute("error") %></div>
+                        	
+                        	
+                     <% } %>
                     <div class="well">
-                        <form class="form-group" action="./" method="POST">
+                        <form class="form-group" action="./Welcome" method="POST">
                             <input type="text" class="form-control" placeholder="First Name" name="firstName"/>
                             <input type="text" class="form-control" placeholder="Last Name" name="lastName"/>
                             <input type="email" class="form-control" placeholder="Email" name="email"/>
@@ -48,18 +58,6 @@
                         
                         </form>
                     </div>
-                    
-                    
-                    <% 
-                        	
-                    	if(request.getAttribute("error") != null){
-                        	
-                     %>
-                        	
-                     <div class="alert alert-danger" role="alert"><%= request.getAttribute("error") %></div>
-                        	
-                        	
-                     <% } %>
                     
                     
                 </div>
