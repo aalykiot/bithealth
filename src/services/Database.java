@@ -11,7 +11,7 @@ public class Database {
 		try{
 			InitialContext cxt = new InitialContext();
 
-			DataSource ds = (DataSource) cxt.lookup( "java:/comp/env/jdbc/postgres" );
+			DataSource ds = (DataSource) cxt.lookup( "java:/comp/env/jdbc/bithealth" );
 			
 			Connection conn = ds.getConnection();
 			
