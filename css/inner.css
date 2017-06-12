@@ -88,5 +88,17 @@ html, body{
 }
 
 ._doctor-icon{
-  font-size: 150px;
+  font-size: 120px;
+  padding-top: 10px;
+  color: #444;
+}
+
+._doctor-icon-app{
+  font-size: 120px;
+  padding-top: 20px;
+  color: #444;
+}
+
+.thumbnail:hover{
+  background-color: #f1f1f1 !important;
 }
