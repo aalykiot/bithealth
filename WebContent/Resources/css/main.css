@@ -1,0 +1,92 @@
+html, body{
+    height: 100%;
+    background-color: #f0f0f0;
+}
+
+a:hover{
+    text-decoration: none;
+}
+
+._navbar {
+    background-color: #f0f0f0;
+    border-radius: 0;
+    border:0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+._navbar-links {
+    margin-right: 5px;
+    font-size: 1.2em;
+}
+
+._brand {
+    font-size: 2.1em;
+    font-family: 'Lobster', cursive;
+}
+
+._container{
+    margin-top: 30px;
+}
+
+.form-group input{
+    width: 100%;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+._form-btn {
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+._slogan {
+    font-size: 4em;
+    font-weight: bold;
+    color: #575757;
+}
+
+._reminder {
+    color: #8e8e8e;
+}
+
+._par {
+    font-size: 1.3em;
+    line-height: 30px;
+    color: #8e8e8e;
+    font-weight: bold;
+    font-style: italic;
+}
+
+._nav-glyphicon {
+    font-size: 0.8em;
+}
+
+._signin-logo {
+    font-size: 2.1em;
+    text-align: center;
+    font-family: 'Lobster', cursive;
+}
+
+._signin-logo-link, ._signin-logo-link:hover, ._signin-logo-link:visited, ._signin-logo-link:active{
+    color: #777;
+    text-decoration: none;
+}
+
+._signin-header {
+    text-align: center;
+    color: #6a6a6a;
+}
+
+._signin-label {
+    float: left;
+}
+
+._signin-btn {
+    width: 100%;
+}
+
+._signin-logo-border {
+    border-bottom: 1px solid #cbcbcb;
+    margin-top: 40px;
+    margin-bottom: 15px
+}
