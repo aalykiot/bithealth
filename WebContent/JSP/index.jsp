@@ -39,11 +39,11 @@
             <nav class="navbar navbar-default _navbar">
               <div class="container-fluid">
                 <div class="navbar-header">
-                  <a class="navbar-brand _brand" href="#">
+                  <a class="navbar-brand _brand" href="./">
                     <span class="glyphicon glyphicon-plus _nav-glyphicon"></span>BitHealth
                   </a>
                 </div>
-                <p class="navbar-text navbar-right _navbar-links"><strong><a href="signin.html">Sign In</a></strong></p>
+                <p class="navbar-text navbar-right _navbar-links"><strong><a href="./Signin">Sign In</a></strong></p>
               </div>
             </nav>
         </div>
@@ -66,7 +66,7 @@
                         	
                      <% } %>
                     <div class="well">
-                        <form class="form-group" action="./Welcome" method="POST">
+                        <form class="form-group" action="./" method="POST">
                             <input type="text" class="form-control" placeholder="First Name" name="firstName" autocomplete="off" maxlength="30"/>
                             <input type="text" class="form-control" placeholder="Last Name" name="lastName" autocomplete="off" maxlength="30"/>
                             <input type="email" class="form-control" placeholder="Email" name="email" autocomplete="off" maxlength="255"/>

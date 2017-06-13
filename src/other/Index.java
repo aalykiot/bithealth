@@ -1,7 +1,7 @@
-package services;
+package other;
+
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,17 +13,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import java.security.MessageDigest;
-
 import services.Database;
+import services.Encryption;
 
 
 
-@WebServlet(name="Welcome", urlPatterns={"/Welcome"})
-public class Welcome extends HttpServlet {
+@WebServlet(name="Welcome", urlPatterns={""})
+public class Index extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    public Welcome() {
+    public Index() {
         super();
     }
 
@@ -94,9 +93,7 @@ public class Welcome extends HttpServlet {
 								
 								// Encrypt users password
 								
-								MessageDigest md = MessageDigest.getInstance("SHA-256");
-								String hashedPassword = md.digest(password.getBytes(StandardCharsets.UTF_8)).toString();
-								
+								String hashedPassword = Encryption.hash(password);
 								
 								
 								query = "INSERT INTO users (first_name, last_name, email, password, amka) VALUES ( ?, ?, ?, ?, ?)";
@@ -125,7 +122,7 @@ public class Welcome extends HttpServlet {
 							}else{
 								
 								request.setAttribute("error", "Email or AMKA already exists!");
-								request.getRequestDispatcher("/JSP/welcome.jsp").forward(request, response);
+								request.getRequestDispatcher("/JSP/index.jsp").forward(request, response);
 								
 							}
 							
@@ -139,27 +136,27 @@ public class Welcome extends HttpServlet {
 					}else{
 						
 						request.setAttribute("error", "Error connecting to database!");
-						request.getRequestDispatcher("/JSP/welcome.jsp").forward(request, response);
+						request.getRequestDispatcher("/JSP/index.jsp").forward(request, response);
 						
 					}
 					
 				}else{
 					request.setAttribute("error", "Your AMKA is incorrect!");
-					request.getRequestDispatcher("/JSP/welcome.jsp").forward(request, response);
+					request.getRequestDispatcher("/JSP/index.jsp").forward(request, response);
 				}
 				
 				
 			}else{
 				
 				request.setAttribute("error", "Some fields are empty!");
-				request.getRequestDispatcher("/JSP/welcome.jsp").forward(request, response);
+				request.getRequestDispatcher("/JSP/index.jsp").forward(request, response);
 				
 			}
 			
 			
 		}else{
 			
-			request.getRequestDispatcher("/JSP/welcome.jsp").forward(request, response);
+			request.getRequestDispatcher("/JSP/index.jsp").forward(request, response);
 			
 		}
 		

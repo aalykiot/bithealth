@@ -1,4 +1,5 @@
-package services;
+package other;
+
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -28,12 +29,12 @@ public class Signout extends HttpServlet {
 		if(authSession.getAttribute("email") != null){
 			// Invalidate session
 			authSession.invalidate();
-			response.sendRedirect("./Welcome");
+			response.sendRedirect("./");
 			return;
 			
 		}else{
 			// Visitor has no authSession send him to welcome page
-			response.sendRedirect("./Welcome");
+			response.sendRedirect("./");
 		}
 		
 	}
