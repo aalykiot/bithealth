@@ -38,7 +38,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-4 col-lg-offset-4  _signin-logo-border">
-                    <h1 class="_signin-logo"><a href="./Welcome" class="_signin-logo-link"><span class="glyphicon glyphicon-plus _nav-glyphicon"></span>BitHealth</a></h1>
+                    <h1 class="_signin-logo"><a href="./" class="_signin-logo-link"><span class="glyphicon glyphicon-plus _nav-glyphicon"></span>BitHealth</a></h1>
                 </div>
             </div>
             <div class="row">
@@ -79,7 +79,7 @@
             <div class="row">
                 <div class="col-lg-4 col-lg-offset-4 _signin-header">
                     <div class="well">
-                        New to BitHealth? <a href="./Welcome">Create an account</a>
+                        New to BitHealth? <a href="./">Create an account</a>
                     </div>
                 </div>
             </div>
