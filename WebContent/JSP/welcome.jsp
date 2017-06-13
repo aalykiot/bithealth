@@ -1,5 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+    
+<% 
+	if(session.getAttribute("email") != null){
+		
+		if(session.getAttribute("type").equals("user")){
+			
+			response.sendRedirect("./User/Dashboard");
+			
+		}else if(session.getAttribute("type").equals("doctor")){
+			
+			response.sendRedirect("./Doctor/Dashboard");
+			
+		}
+		
+	}else{
+%>    
+    
+    
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -72,3 +91,7 @@
         <script src="${pageContext.request.contextPath}/Resources/js/bootstrap.min.js"></script>
     </body>
 </html>
+
+<%
+	}
+%>
