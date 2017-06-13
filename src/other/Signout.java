@@ -26,7 +26,7 @@ public class Signout extends HttpServlet {
 
 		HttpSession authSession = request.getSession(false);
 		
-		if(authSession.getAttribute("email") != null){
+		if(authSession != null && authSession.getAttribute("email") != null){
 			// Invalidate session
 			authSession.invalidate();
 			response.sendRedirect("./");
