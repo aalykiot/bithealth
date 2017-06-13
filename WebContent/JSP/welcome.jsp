@@ -48,14 +48,13 @@
                      <% } %>
                     <div class="well">
                         <form class="form-group" action="./Welcome" method="POST">
-                            <input type="text" class="form-control" placeholder="First Name" name="firstName"/>
-                            <input type="text" class="form-control" placeholder="Last Name" name="lastName"/>
-                            <input type="email" class="form-control" placeholder="Email" name="email"/>
-                            <input type="password" class="form-control" placeholder="Password" name="password"/>
-                            <input type="text" class="form-control" placeholder="AMKA" name="amka"/>
+                            <input type="text" class="form-control" placeholder="First Name" name="firstName" autocomplete="off" maxlength="30"/>
+                            <input type="text" class="form-control" placeholder="Last Name" name="lastName" autocomplete="off" maxlength="30"/>
+                            <input type="email" class="form-control" placeholder="Email" name="email" autocomplete="off" maxlength="255"/>
+                            <input type="password" class="form-control" placeholder="Password" name="password" maxlength="255"/>
+                            <input type="text" class="form-control" placeholder="AMKA" name="amka" autocomplete="off" maxlength="20"/>
                             <button type="submit" class="btn btn-success btn-lg _form-btn" name="submit">Manage your health</button>
                             <p class="_reminder">By clicking "Manage your health", you agree to our <a href="#">terms of service</a> and <a href="#">privacy policy</a>. </p>
-                        
                         </form>
                     </div>
                     

@@ -5,8 +5,6 @@ import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -44,102 +42,110 @@ public class Welcome extends HttpServlet {
 			
 			if(!firstName.isEmpty() && !lastName.isEmpty() && !email.isEmpty() && !password.isEmpty() && !amka.isEmpty()){
 				
-				// Create connection to database
-				
-				Connection conn = Database.getConnection();
-				
-				if(conn != null){
+				if(amka.length() > 10){
 					
-					PreparedStatement ps = null;
-					ResultSet rs = null;
-					String query = null;
+					// Create connection to database
 					
-					try {
+					Connection conn = Database.getConnection();
+					
+					if(conn != null){
 						
-						// Check users table
+						PreparedStatement ps = null;
+						ResultSet rs = null;
+						String query = null;
 						
-						query = "SELECT COUNT(*) FROM users WHERE email = ? OR amka = ?";
-						
-						ps = conn.prepareStatement(query);
-						
-						ps.setString(1, email);
-						ps.setString(2, amka); // let the jdbc driver convert it to bing int
-						
-						rs = ps.executeQuery();
-						
-						int counter = 0;
-						
-						if(rs.next()){
-							counter += Integer.parseInt(rs.getString("count"));
-						}
-						
-						
-						// Check doctors table
-						
-						query = "SELECT COUNT(*) FROM doctors WHERE email = ? OR amka = ?";
-						
-						ps = conn.prepareStatement(query);
-						
-						ps.setString(1, email);
-						ps.setString(2, amka); // let the jdbc driver convert it to bing int
-						
-						rs = ps.executeQuery();
-						
-						if(rs.next()){
-							counter += Integer.parseInt(rs.getString("count"));
-						}
-						
-						
-						if(counter == 0){
+						try {
 							
-							// Encrypt users password
+							// Check users table
 							
-							MessageDigest md = MessageDigest.getInstance("SHA-256");
-							String hashedPassword = md.digest(password.getBytes(StandardCharsets.UTF_8)).toString();
-							
-							
-							
-							query = "INSERT INTO users (first_name, last_name, email, password, amka) VALUES ( ?, ?, ?, ?, ?)";
+							query = "SELECT COUNT(*) FROM users WHERE email = ? OR amka::varchar = ?";
 							
 							ps = conn.prepareStatement(query);
 							
-							ps.setString(1, firstName);
-							ps.setString(2, lastName);
-							ps.setString(3, email);
-							ps.setString(4, hashedPassword);
-							ps.setString(5, amka);
+							ps.setString(1, email);
+							ps.setString(2, amka); // let the jdbc driver convert it to bing int
 							
-							ps.executeUpdate();
+							rs = ps.executeQuery();
 							
-							// Create new user session
+							int counter = 0;
 							
-							HttpSession authSession = request.getSession();
-							authSession.setAttribute("email", email);
-							
-							// Redirect to users dashboard
-							
-							response.sendRedirect("./Dashboard");
+							if(rs.next()){
+								counter += Integer.parseInt(rs.getString("count"));
+							}
 							
 							
-						}else{
+							// Check doctors table
 							
-							request.setAttribute("error", "Email or AMKA already exists!");
-							request.getRequestDispatcher("/JSP/welcome.jsp").forward(request, response);
+							query = "SELECT COUNT(*) FROM doctors WHERE email = ? OR amka::varchar = ?";
 							
+							ps = conn.prepareStatement(query);
+							
+							ps.setString(1, email);
+							ps.setString(2, amka); // let the jdbc driver convert it to bing int
+							
+							rs = ps.executeQuery();
+							
+							if(rs.next()){
+								counter += Integer.parseInt(rs.getString("count"));
+							}
+							
+							
+							if(counter == 0){
+								
+								// Encrypt users password
+								
+								MessageDigest md = MessageDigest.getInstance("SHA-256");
+								String hashedPassword = md.digest(password.getBytes(StandardCharsets.UTF_8)).toString();
+								
+								
+								
+								query = "INSERT INTO users (first_name, last_name, email, password, amka) VALUES ( ?, ?, ?, ?, ?)";
+								
+								ps = conn.prepareStatement(query);
+								
+								ps.setString(1, firstName);
+								ps.setString(2, lastName);
+								ps.setString(3, email);
+								ps.setString(4, hashedPassword);
+								ps.setLong(5, Long.parseLong(amka));
+								
+								ps.executeUpdate();
+								
+								// Create new user session
+								
+								HttpSession authSession = request.getSession();
+								authSession.setAttribute("email", email);
+								authSession.setAttribute("type", "user");
+								
+								// Redirect user to dashboard
+								
+								response.sendRedirect("./User/Dashboard");
+								
+								
+							}else{
+								
+								request.setAttribute("error", "Email or AMKA already exists!");
+								request.getRequestDispatcher("/JSP/welcome.jsp").forward(request, response);
+								
+							}
+							
+							
+							
+						} catch (Exception e) {
+							// show error
+							response.getWriter().println(e.getMessage());
 						}
 						
+					}else{
 						
+						request.setAttribute("error", "Error connecting to database!");
+						request.getRequestDispatcher("/JSP/welcome.jsp").forward(request, response);
 						
-					} catch (Exception e) {
-						// show error
-						response.getWriter().println(e.getMessage());
 					}
 					
 				}else{
-					
-					request.setAttribute("error", "Error connecting to database!");
+					request.setAttribute("error", "Your AMKA is incorrect!");
 					request.getRequestDispatcher("/JSP/welcome.jsp").forward(request, response);
-					
 				}
 				
 				
