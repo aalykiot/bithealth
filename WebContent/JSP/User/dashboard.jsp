@@ -176,10 +176,81 @@
                     <i class="glyphicon glyphicon-plus"></i><strong> Book new appointment</strong>
                   </button>
                 </a>
-                <a href="#" class="list-group-item">All <span class="badge">5</span></a>
-                <a href="#" class="list-group-item">Pending <span class="badge">2</span></a>
-                <a href="#" class="list-group-item">Completed <span class="badge">2</span></a>
-                <a href="#" class="list-group-item">Canceled <span class="badge">1</span></a>
+                
+                
+                <% 
+                
+                	int allApp = 0;
+                	int pendingApp = 0;
+                	int completedApp = 0;
+                	int canceledApp = 0;
+                	
+                	// Pending appointments
+                	
+					query = "SELECT COUNT(*) FROM appointments WHERE user_id = ? AND status = 'pending'";
+					ps = conn.prepareStatement(query);
+					
+					ps.setInt(1, Integer.parseInt(userId));
+					
+					rs = ps.executeQuery();
+					
+					if(rs.next()){
+						
+						pendingApp = Integer.parseInt(rs.getString(1));
+						
+					}
+					
+					rs.close();
+					ps.close();
+					
+					// Completed appointments
+					
+					query = "SELECT COUNT(*) FROM appointments WHERE user_id = ? AND status = 'completed'";
+					ps = conn.prepareStatement(query);
+					
+					ps.setInt(1, Integer.parseInt(userId));
+					
+					rs = ps.executeQuery();
+					
+					if(rs.next()){
+						
+						completedApp = Integer.parseInt(rs.getString(1));
+						
+					}
+					
+					rs.close();
+					ps.close();
+					
+					// Canceled appointments
+					
+					query = "SELECT COUNT(*) FROM appointments WHERE user_id = ? AND status = 'canceled'";
+					ps = conn.prepareStatement(query);
+					
+					ps.setInt(1, Integer.parseInt(userId));
+					
+					rs = ps.executeQuery();
+					
+					if(rs.next()){
+						
+						canceledApp = Integer.parseInt(rs.getString(1));
+						
+					}
+					
+					rs.close();
+					ps.close();
+					
+					allApp = pendingApp + completedApp + canceledApp;
+                
+                
+                %>
+                
+                
+                
+                
+                <a href="./dashboard" class="list-group-item">All <span class="badge"><%= allApp %></span></a>
+                <a href="./dashboard?v=pending" class="list-group-item">Pending <span class="badge"><%= pendingApp %></span></a>
+                <a href="./dashboard?v=completed" class="list-group-item">Completed <span class="badge"><%= completedApp %></span></a>
+                <a href="./dashboard?v=canceled" class="list-group-item">Canceled <span class="badge"><%= canceledApp %></span></a>
               </div>
             </div>
             <div class="col-sm-8">
