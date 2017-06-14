@@ -7,11 +7,11 @@
 		
 		if(session.getAttribute("type").equals("user")){
 			
-			response.sendRedirect("./User/Dashboard");
+			response.sendRedirect("./user/dashboard");
 			
 		}else if(session.getAttribute("type").equals("doctor")){
 			
-			response.sendRedirect("./Doctor/Dashboard");
+			response.sendRedirect("./doctor/dashboard");
 			
 		}
 		
@@ -43,7 +43,7 @@
                     <span class="glyphicon glyphicon-plus _nav-glyphicon"></span>BitHealth
                   </a>
                 </div>
-                <p class="navbar-text navbar-right _navbar-links"><strong><a href="./Signin">Sign In</a></strong></p>
+                <p class="navbar-text navbar-right _navbar-links"><strong><a href="./signin">Sign In</a></strong></p>
               </div>
             </nav>
         </div>

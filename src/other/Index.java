@@ -116,7 +116,7 @@ public class Index extends HttpServlet {
 								
 								// Redirect user to dashboard
 								
-								response.sendRedirect("./User/Dashboard");
+								response.sendRedirect("./user/dashboard");
 								
 								
 							}else{

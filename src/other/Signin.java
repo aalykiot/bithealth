@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import services.Database;
 import services.Encryption;
 
-@WebServlet(name="Signin", urlPatterns={"/Signin"})
+@WebServlet(name="Signin", urlPatterns={"/signin"})
 public class Signin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -74,7 +74,7 @@ public class Signin extends HttpServlet {
 							HttpSession authSession = request.getSession();
 							authSession.setAttribute("email", email);
 							authSession.setAttribute("type", "user");
-							response.sendRedirect("./User/Dashboard");
+							response.sendRedirect("./user/dashboard");
 							
 						}else{
 							
@@ -99,7 +99,7 @@ public class Signin extends HttpServlet {
 								HttpSession authSession = request.getSession();
 								authSession.setAttribute("email", email);
 								authSession.setAttribute("type", "doctor");
-								response.sendRedirect("./Doctor/Dashboard");
+								response.sendRedirect("./doctor/dashboard");
 								
 							}else{
 								

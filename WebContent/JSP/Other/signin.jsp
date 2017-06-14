@@ -7,11 +7,11 @@
 		
 		if(session.getAttribute("type").equals("user")){
 			
-			response.sendRedirect("./User/Dashboard");
+			response.sendRedirect("./user/dashboard");
 			
 		}else if(session.getAttribute("type").equals("doctor")){
 			
-			response.sendRedirect("./Doctor/Dashboard");
+			response.sendRedirect("./doctor/dashboard");
 			
 		}
 		
@@ -50,7 +50,7 @@
                 <div class="col-lg-4 col-lg-offset-4 _signin-header">
                     <div class="well">
                         <div class="form-group">
-                        	<form action="./Signin" method="POST">
+                        	<form action="./signin" method="POST">
 	                            <label class="_signin-label">Email</label><br/>
 	                            <input type="email" name="email" class="form-control"/>
 	                            <label class="_signin-label">Password</label><br/>
