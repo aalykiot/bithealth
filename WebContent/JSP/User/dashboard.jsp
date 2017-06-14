@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    
+    pageEncoding="UTF-8"%>  
     
 <%@ 
-	page import="java.sql.Connection,java.sql.PreparedStatement,java.sql.ResultSet,services.Database"
+	page import="java.sql.Connection,java.sql.PreparedStatement,java.sql.ResultSet,java.util.Date,services.Database"
 %>    
 
 <%
@@ -62,10 +61,7 @@
 		}else{
 			// Send user to an error page
 		}
-		
-		
-		
-		
+	
 %>
 
 <!DOCTYPE html>
@@ -112,9 +108,7 @@
                   <li class="active"><a href="./dashboard">
                     <span class="glyphicon glyphicon-th-list"></span>
                   </a></li>
-                  
-                  
-					
+	
 				<% 
 				
 					// Finding how many new notifications user has
@@ -176,7 +170,6 @@
                     <i class="glyphicon glyphicon-plus"></i><strong> Book new appointment</strong>
                   </button>
                 </a>
-                
                 
                 <% 
                 
@@ -242,10 +235,7 @@
 					allApp = pendingApp + completedApp + canceledApp;
                 
                 
-                %>
-                
-                
-                
+                %> 
                 
                 <a href="./dashboard" class="list-group-item">All <span class="badge"><%= allApp %></span></a>
                 <a href="./dashboard?v=pending" class="list-group-item">Pending <span class="badge"><%= pendingApp %></span></a>
@@ -254,20 +244,73 @@
               </div>
             </div>
             <div class="col-sm-8">
-
-              <div class="panel panel-info">
-                <div class="panel-heading">
-                  <h3 class="panel-title">Pending</h3>
-                  <div class="progress _progress-bar">
-                    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" style="width: 70%">
-                    </div>
-                  </div>
-                </div>
-                <div class="panel-body">
-                  <strong>Doctor's Name: </strong><a href="">Giorgos Vlahos</a><br/>
-                  <strong>Date: </strong> 14/6/2017 2:00 PM
-
-                  <div class="btn-group _panel-btn-group" role="group">
+	
+			<% 
+				
+			
+				String view = request.getParameter("v");
+			
+				if(view == null || !view.equals("pending") || !view.equals("completed") || !view.equals("canceled")){
+					
+					query = "SELECT CONCAT(d.first_name, ' ', d.last_name) AS full_name, a.appointment_id, a.date, a.status, a.review FROM appointments AS a JOIN doctors AS d ON d.doctor_id = a.doctor_id WHERE a.user_id = ? ORDER BY a.date";
+					
+				}else if(view.equals("pending")){
+					
+					query = "SELECT CONCAT(d.first_name, ' ', d.last_name) AS full_name, a.appointment_id, a.date, a.status, a.review FROM appointments AS a JOIN doctors AS d ON d.doctor_id = a.doctor_id WHERE a.user_id = ? AND a.status='pending' ORDER BY a.date";
+					
+				}else if(view.equals("completed")){
+					
+					query = "SELECT CONCAT(d.first_name, ' ', d.last_name) AS full_name, a.appointment_id, a.date, a.status, a.review FROM appointments AS a JOIN doctors AS d ON d.doctor_id = a.doctor_id WHERE a.user_id = ? AND a.status='completed' ORDER BY a.date";
+					
+				}else if(view.equals("canceled")){
+					
+					query = "SELECT CONCAT(d.first_name, ' ', d.last_name) AS full_name, a.appointment_id, a.date, a.status, a.review FROM appointments AS a JOIN doctors AS d ON d.doctor_id = a.doctor_id WHERE a.user_id = ? AND a.status='canceled' ORDER BY a.date";
+					
+				}
+				
+				ps = conn.prepareStatement(query);
+				
+				ps.setInt(1, Integer.parseInt(userId));
+				
+				rs = ps.executeQuery();
+				
+				
+				
+				while(rs.next()){
+					
+					String status = null;
+					String doctorsName = null;
+					int appId = 0;
+					Date appDate = null;
+					Boolean isReviewed = null;
+					
+					status = rs.getString(4);
+					doctorsName = rs.getString(1);
+					appId = rs.getInt(2);
+					appDate = rs.getTimestamp(3);
+					isReviewed = rs.getBoolean(5);
+					
+			
+			%>
+			
+			<% if(status.equals("pending")){ %>
+				
+				<div class="panel panel-info">
+	                <div class="panel-heading">
+	                  <h3 class="panel-title">Pending</h3>
+	                  <div class="progress _progress-bar">
+	                    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" style="width: 70%">
+	                    </div>
+	                  </div>
+	                </div>
+	                
+	                <div class="panel-body">
+	                  <strong>Doctor's Name: </strong><a href=""><%= doctorsName %></a><br/>
+	                  <strong>Date: </strong> <%= appDate %>
+	                
+	                
+	                
+	          	<div class="btn-group _panel-btn-group" role="group">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                       Edit
                       <span class="caret"></span>
@@ -276,114 +319,73 @@
                       <li><a href="#"><span class="glyphicon glyphicon-time"></span> Reschedule</a></li>
                       <li><a href="#"><span class="glyphicon glyphicon-remove"></span> Cancel</a></li>
                     </ul>
-                  </div>
-
-                </div>
+            	</div>
+				
+			<% }else if(status.equals("completed")){ %>
+			
+				
+				 <div class="panel panel-success">
+	                <div class="panel-heading">
+	                  <h3 class="panel-title">Completed</h3>
+	                </div>
+	                
+	                <div class="panel-body">
+	                  <strong>Doctor's Name: </strong><a href=""><%= doctorsName %></a><br/>
+	                  <strong>Date: </strong> <%= appDate %>
+	                
+	                
+		        <%
+		        	
+		        	if(isReviewed){
+		        		
+		        %> 
+		        
+			        	<div class="btn-group _panel-btn-group" role="group">
+		                    <button type="button" class="btn btn-default disabled">
+		                      <strong>experience submited</strong>
+		                    </button>
+	                  	</div>
+		        
+		        <% }else{ %>
+		        
+		        		<div class="btn-group _panel-btn-group" role="group">
+		                    <button type="button" class="btn btn-default disabled">
+		                      <strong>experience</strong>
+		                    </button>
+		                    <button type="button" class="btn btn-default">
+		                      <span class="glyphicon glyphicon-thumbs-up"></span>
+		                      Good
+		                    </button>
+		                    <button type="button" class="btn btn-default">
+		                      <span class="glyphicon glyphicon-thumbs-down"></span>
+		                      Bad
+		                    </button>
+		                  </div>
+		        
+		        <% } %>       
+	                
+	        <% }else{ %>
+	        
+		        <div class="panel panel-danger">
+	                <div class="panel-heading">
+	                  <h3 class="panel-title">Canceled</h3>
+	                </div>
+	                
+	            <div class="panel-body">
+	                  <strong>Doctor's Name: </strong><a href=""><%= doctorsName %></a><br/>
+	                  <strong>Date: </strong> <%= appDate %>    
+	        
+	        <% } %>     
+	        
+	       		</div>
               </div>
-
-              <div class="panel panel-info">
-                <div class="panel-heading">
-                  <h3 class="panel-title">Pending</h3>
-                  <div class="progress _progress-bar">
-                    <div class="progress-bar progress-bar-info  progress-bar-striped" role="progressbar" style="width: 25%">
-                    </div>
-                  </div>
-                </div>
-                <div class="panel-body">
-                  <strong>Doctor's Name: </strong><a href="">Giannis Vlachodimos</a><br/>
-                  <strong>Date: </strong> 16/7/2017 11:00 AM
-
-                  <div class="btn-group _panel-btn-group" role="group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                      Edit
-                      <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-right">
-                      <li><a href="#"><span class="glyphicon glyphicon-time"></span> Reschedule</a></li>
-                      <li><a href="#"><span class="glyphicon glyphicon-remove"></span> Cancel</a></li>
-                    </ul>
-                  </div>
-
-                </div>
-              </div>
-
-              <div class="panel panel-success">
-                <div class="panel-heading">
-                  <h3 class="panel-title">Completed</h3>
-                </div>
-                <div class="panel-body">
-                  <strong>Doctor's Name: </strong><a href="">Giorgos Vlahos</a><br/>
-                  <strong>Date: </strong> 15/7/2017 2:00 PM
-
-                  <div class="btn-group _panel-btn-group" role="group">
-                    <button type="button" class="btn btn-default disabled">
-                      <strong>experience</strong>
-                    </button>
-                    <button type="button" class="btn btn-default">
-                      <span class="glyphicon glyphicon-thumbs-up"></span>
-                      Good
-                    </button>
-                    <button type="button" class="btn btn-default">
-                      <span class="glyphicon glyphicon-thumbs-down"></span>
-                      Bad
-                    </button>
-                  </div>
-
-                </div>
-              </div>
-
-              <div class="panel panel-danger">
-                <div class="panel-heading">
-                  <h3 class="panel-title">Canceled</h3>
-                </div>
-                <div class="panel-body">
-                  <strong>Doctor's Name: </strong><a href="">Giorgos Vlahos</a><br/>
-                  <strong>Date: </strong> 15/7/2017 2:00 PM
-
-                </div>
-              </div>
-
-              <div class="panel panel-success">
-                <div class="panel-heading">
-                  <h3 class="panel-title">Completed</h3>
-                </div>
-                <div class="panel-body">
-                  <strong>Doctor's Name: </strong><a href="">Giorgos Vlahos</a><br/>
-                  <strong>Date: </strong> 15/7/2017 2:00 PM
-
-                  <div class="btn-group _panel-btn-group" role="group">
-                    <button type="button" class="btn btn-default disabled">
-                      <strong>experience</strong>
-                    </button>
-                    <button type="button" class="btn btn-default">
-                      <span class="glyphicon glyphicon-thumbs-up"></span>
-                      Good
-                    </button>
-                    <button type="button" class="btn btn-default">
-                      <span class="glyphicon glyphicon-thumbs-down"></span>
-                      Bad
-                    </button>
-                  </div>
-
-                </div>
-              </div>
-
-              <div class="panel panel-success">
-                <div class="panel-heading">
-                  <h3 class="panel-title">Completed</h3>
-                </div>
-                <div class="panel-body">
-                  <strong>Doctor's Name: </strong><a href="">Giorgos Vlahos</a><br/>
-                  <strong>Date: </strong> 15/7/2017 2:00 PM
-
-                  <div class="btn-group _panel-btn-group" role="group">
-                    <button type="button" class="btn btn-default disabled">
-                      <strong>experience submited</strong>
-                    </button>
-                  </div>
-
-                </div>
-              </div>
+			
+			<%
+			
+			
+				} // End of while loop
+			
+			%>	
 
             </div>
           </div>
