@@ -24,9 +24,9 @@
 		ResultSet rs = null;
 		String query = null;
 		
-		int userId;
-		String first_name = "";
-		String last_name = "";
+		String userId = null;
+		String first_name = null;
+		String last_name = null;
 		
 		if(conn != null){
 			
@@ -42,11 +42,14 @@
 				
 				if(rs.next()){
 					
-					userId = rs.getInt(1);
+					userId = Integer.toString(rs.getInt(1));
 					first_name = rs.getString(2);
 					last_name = rs.getString(3);
 					
 				}
+				
+				rs.close();
+				ps.close();
 			
 			}catch(Exception e){
 				
@@ -63,9 +66,7 @@
 		
 		
 		
-%>   
-
-<%= request.getAttribute("error") %>   
+%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -111,9 +112,37 @@
                   <li class="active"><a href="./dashboard">
                     <span class="glyphicon glyphicon-th-list"></span>
                   </a></li>
+                  
+                  
+					
+				<% 
+				
+					// Finding how many new notifications user has
+					
+					query = "SELECT COUNT(*) FROM notifications WHERE user_id = ? AND seen = false";
+					ps = conn.prepareStatement(query);
+					
+					ps.setInt(1, Integer.parseInt(userId));
+					
+					rs = ps.executeQuery();
+					
+					int newNotifications = 0;
+					
+					if(rs.next()){
+						
+						newNotifications = rs.getInt(1);
+						
+					}
+					
+					rs.close();
+					ps.close();
+					
+				
+				%>	
+					
                   <li><a href="./notifications">
                     <span class="glyphicon glyphicon-bell"></span>
-                    <span class="badge _navbar-not">2</span>
+                    <span class="badge _navbar-not"><%= Integer.toString(newNotifications) %></span>
                   </a></li>
                   <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
