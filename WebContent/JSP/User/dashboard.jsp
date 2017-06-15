@@ -10,6 +10,7 @@
 	if(session.getAttribute("email") == null || !session.getAttribute("type").toString().equals("user")){
 		
 		response.sendRedirect("../");
+		return;
 		
 	}else{
 		

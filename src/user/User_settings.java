@@ -36,6 +36,7 @@ public class User_settings extends HttpServlet {
 			if(authSession.getAttribute("email") == null || !authSession.getAttribute("type").toString().equals("user")){
 				
 				response.sendRedirect("../");
+				return;
 				
 			}else{
 			
@@ -117,6 +118,7 @@ public class User_settings extends HttpServlet {
 								
 								request.setAttribute("ua_success", "Your account has been successfully updated");
 								request.getRequestDispatcher("/JSP/User/settings.jsp").forward(request, response);
+								return;
 								
 							}else{
 								
@@ -124,6 +126,7 @@ public class User_settings extends HttpServlet {
 								
 								request.setAttribute("ua_error", "Email already exists!");
 								request.getRequestDispatcher("/JSP/User/settings.jsp").forward(request, response);
+								return;
 								
 							}
 							
@@ -138,6 +141,7 @@ public class User_settings extends HttpServlet {
 						
 						request.setAttribute("ua_error", "Error connecting to database!");
 						request.getRequestDispatcher("/JSP/User/settings.jsp").forward(request, response);
+						return;
 						
 					}
 					
@@ -145,6 +149,7 @@ public class User_settings extends HttpServlet {
 					
 					request.setAttribute("ua_error", "Some fields were empty!");
 					request.getRequestDispatcher("/JSP/User/settings.jsp").forward(request, response);
+					return;
 					
 				}
 				
@@ -163,6 +168,7 @@ public class User_settings extends HttpServlet {
 			if(authSession.getAttribute("email") == null || !authSession.getAttribute("type").toString().equals("user")){
 				
 				response.sendRedirect("../");
+				return;
 				
 			}else{
 				
@@ -224,7 +230,7 @@ public class User_settings extends HttpServlet {
 									
 									request.setAttribute("up_success", "Your password has been successfully updated");
 									request.getRequestDispatcher("/JSP/User/settings.jsp").forward(request, response);
-									
+									return;
 									
 									
 								}else{
@@ -232,6 +238,7 @@ public class User_settings extends HttpServlet {
 									Database.close();
 									request.setAttribute("up_error", "Old password is incorrect!");
 									request.getRequestDispatcher("/JSP/User/settings.jsp").forward(request, response);
+									return;
 									
 								}
 								
@@ -244,6 +251,7 @@ public class User_settings extends HttpServlet {
 							
 							request.setAttribute("up_error", "Error connecting to database!");
 							request.getRequestDispatcher("/JSP/User/settings.jsp").forward(request, response);
+							return;
 							
 						}
 						
@@ -251,6 +259,7 @@ public class User_settings extends HttpServlet {
 						
 						request.setAttribute("up_error", "Passwords don't match!");
 						request.getRequestDispatcher("/JSP/User/settings.jsp").forward(request, response);
+						return;
 						
 					}
 					
@@ -258,6 +267,7 @@ public class User_settings extends HttpServlet {
 					
 					request.setAttribute("up_error", "Some fields are empty!");
 					request.getRequestDispatcher("/JSP/User/settings.jsp").forward(request, response);
+					return;
 					
 				}
 				
@@ -269,7 +279,7 @@ public class User_settings extends HttpServlet {
 		
 		
 		request.getRequestDispatcher("/JSP/User/settings.jsp").forward(request, response);
-
+		return;
 		
 	}
 

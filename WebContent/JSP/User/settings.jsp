@@ -11,6 +11,7 @@
 	if(session.getAttribute("email") == null || !session.getAttribute("type").toString().equals("user")){
 		
 		response.sendRedirect("../");
+		return;
 		
 	}else{
 		
@@ -193,15 +194,15 @@
               <form style = "border-right: 1px solid #D8D8D8;padding-right: 30px;" action="./settings" method="POST">
                 <div class="form-group">
                   <label for="exampleInputEmail1">First Name</label>
-                  <input type="text" name="first_name" class="form-control _settings-input" value="<%= first_name %>">
+                  <input type="text" name="first_name" autocomplete="off" class="form-control _settings-input" value="<%= first_name %>">
                 </div>
                 <div class="form-group">
                   <label for="exampleInputEmail1">Last Name</label>
-                  <input type="text" name="last_name" class="form-control _settings-input" value="<%= last_name %>">
+                  <input type="text" name="last_name" autocomplete="off" class="form-control _settings-input" value="<%= last_name %>">
                 </div>
                 <div class="form-group">
                   <label for="exampleInputEmail1">Email</label>
-                  <input type="email" name="email" class="form-control _settings-input" value="<%= email %>">
+                  <input type="email" name="email" autocomplete="off" class="form-control _settings-input" value="<%= email %>">
                 </div>
                 <div class="form-group">
                   <label for="exampleInputEmail1">AMKA</label>

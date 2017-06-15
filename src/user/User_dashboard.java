@@ -22,6 +22,7 @@ public class User_dashboard extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		request.getRequestDispatcher("/JSP/User/dashboard.jsp").forward(request, response);
+		return;
 		
 	}
 
