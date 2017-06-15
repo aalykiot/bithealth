@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>  
     
 <%@ 
-	page import="java.sql.Connection,java.sql.PreparedStatement,java.sql.ResultSet,java.util.Date,services.Database"
+	page import="java.sql.Connection,java.sql.PreparedStatement,java.sql.ResultSet,java.util.Date,java.text.DateFormat,java.text.SimpleDateFormat,services.Database"
 %>    
 
 <%
@@ -12,6 +12,9 @@
 		response.sendRedirect("../");
 		
 	}else{
+		
+		
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
 		
 		String email = session.getAttribute("email").toString();
 		
@@ -250,23 +253,69 @@
 			
 				String view = request.getParameter("v");
 			
-				if(view == null || !view.equals("pending") || !view.equals("completed") || !view.equals("canceled")){
+				String count_query = null;
+				int appCount = 0; // Number of appointments found
+			
+				if(view == null || (!view.equals("pending") && !view.equals("completed") && !view.equals("canceled"))){
 					
-					query = "SELECT CONCAT(d.first_name, ' ', d.last_name) AS full_name, a.appointment_id, a.date, a.status, a.review FROM appointments AS a JOIN doctors AS d ON d.doctor_id = a.doctor_id WHERE a.user_id = ? ORDER BY a.date";
+					count_query = "SELECT COUNT(*) FROM appointments AS a WHERE a.user_id = ?";
+					
+					query = "SELECT CONCAT(d.first_name, ' ', d.last_name) AS full_name, a.appointment_id, a.booked_date, a.scheduled_date, a.status, a.review FROM appointments AS a JOIN doctors AS d ON d.doctor_id = a.doctor_id WHERE a.user_id = ? ORDER BY a.scheduled_date DESC";
 					
 				}else if(view.equals("pending")){
 					
-					query = "SELECT CONCAT(d.first_name, ' ', d.last_name) AS full_name, a.appointment_id, a.date, a.status, a.review FROM appointments AS a JOIN doctors AS d ON d.doctor_id = a.doctor_id WHERE a.user_id = ? AND a.status='pending' ORDER BY a.date";
+					count_query = "SELECT COUNT(*) FROM appointments AS a WHERE a.user_id = ? AND a.status = 'pending'";
+					
+					query = "SELECT CONCAT(d.first_name, ' ', d.last_name) AS full_name, a.appointment_id, a.booked_date, a.scheduled_date, a.status, a.review FROM appointments AS a JOIN doctors AS d ON d.doctor_id = a.doctor_id WHERE a.user_id = ? AND a.status='pending' ORDER BY a.scheduled_date DESC";
 					
 				}else if(view.equals("completed")){
 					
-					query = "SELECT CONCAT(d.first_name, ' ', d.last_name) AS full_name, a.appointment_id, a.date, a.status, a.review FROM appointments AS a JOIN doctors AS d ON d.doctor_id = a.doctor_id WHERE a.user_id = ? AND a.status='completed' ORDER BY a.date";
+					count_query = "SELECT COUNT(*) FROM appointments AS a WHERE a.user_id = ? AND a.status = 'completed'";
+					
+					query = "SELECT CONCAT(d.first_name, ' ', d.last_name) AS full_name, a.appointment_id, a.booked_date, a.scheduled_date, a.status, a.review FROM appointments AS a JOIN doctors AS d ON d.doctor_id = a.doctor_id WHERE a.user_id = ? AND a.status='completed' ORDER BY a.scheduled_date DESC";
 					
 				}else if(view.equals("canceled")){
 					
-					query = "SELECT CONCAT(d.first_name, ' ', d.last_name) AS full_name, a.appointment_id, a.date, a.status, a.review FROM appointments AS a JOIN doctors AS d ON d.doctor_id = a.doctor_id WHERE a.user_id = ? AND a.status='canceled' ORDER BY a.date";
+					count_query = "SELECT COUNT(*) FROM appointments AS a WHERE a.user_id = ? AND a.status = 'canceled'";
+					
+					query = "SELECT CONCAT(d.first_name, ' ', d.last_name) AS full_name, a.appointment_id, a.booked_date, a.scheduled_date, a.status, a.review FROM appointments AS a JOIN doctors AS d ON d.doctor_id = a.doctor_id WHERE a.user_id = ? AND a.status='canceled' ORDER BY a.scheduled_date DESC";
 					
 				}
+				
+				// Retrive number of appointments from database
+				
+				ps = conn.prepareStatement(count_query);
+				
+				ps.setInt(1, Integer.parseInt(userId));
+				
+				rs = ps.executeQuery();
+				
+				if(rs.next()){
+					
+					appCount = Integer.parseInt(rs.getString(1));
+					
+				}
+				
+				rs.close();
+				ps.close();
+				
+				if(appCount == 0){
+				
+				%>
+				
+				
+				<div style="text-align: center;position: relative; top: 30px;">
+				<span style="color: #666; font-size: 100px;" class="glyphicon glyphicon-eye-close"></span><br />
+				<span style="font-weight: bold;color: #666; font-size: 40px;">No appointments found</span>
+				</div>
+				
+				
+				<%
+				
+				}
+				
+				// Retrive appointments from database
+				
 				
 				ps = conn.prepareStatement(query);
 				
@@ -281,32 +330,38 @@
 					String status = null;
 					String doctorsName = null;
 					int appId = 0;
-					Date appDate = null;
+					Date scheduledDate = null;	
+					Date bookedDate = null;
 					Boolean isReviewed = null;
 					
-					status = rs.getString(4);
 					doctorsName = rs.getString(1);
 					appId = rs.getInt(2);
-					appDate = rs.getTimestamp(3);
-					isReviewed = rs.getBoolean(5);
+					bookedDate = rs.getTimestamp(3);
+					scheduledDate = rs.getTimestamp(4);
+					status = rs.getString(5);
+					isReviewed = rs.getBoolean(6);
+					
+					Date now = new Date();
+					
+					int barProgress = (int)(100*(((double)(now.getTime() - bookedDate.getTime()) / (double)(scheduledDate.getTime() - bookedDate.getTime())))); // Calculate progressbar percentage
 					
 			
 			%>
 			
 			<% if(status.equals("pending")){ %>
-				
+			
 				<div class="panel panel-info">
 	                <div class="panel-heading">
 	                  <h3 class="panel-title">Pending</h3>
 	                  <div class="progress _progress-bar">
-	                    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" style="width: 70%">
+	                    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" style="width: <%= barProgress %>%">
 	                    </div>
 	                  </div>
 	                </div>
 	                
 	                <div class="panel-body">
 	                  <strong>Doctor's Name: </strong><a href=""><%= doctorsName %></a><br/>
-	                  <strong>Date: </strong> <%= appDate %>
+	                  <strong>Date: </strong> <%= dateFormat.format(scheduledDate) %>
 	                
 	                
 	                
@@ -331,7 +386,7 @@
 	                
 	                <div class="panel-body">
 	                  <strong>Doctor's Name: </strong><a href=""><%= doctorsName %></a><br/>
-	                  <strong>Date: </strong> <%= appDate %>
+	                  <strong>Date: </strong> <%= dateFormat.format(scheduledDate) %>
 	                
 	                
 		        <%
@@ -373,7 +428,7 @@
 	                
 	            <div class="panel-body">
 	                  <strong>Doctor's Name: </strong><a href=""><%= doctorsName %></a><br/>
-	                  <strong>Date: </strong> <%= appDate %>    
+	                  <strong>Date: </strong> <%= dateFormat.format(scheduledDate) %>    
 	        
 	        <% } %>     
 	        
@@ -384,6 +439,9 @@
 			
 			
 				} // End of while loop
+				
+				rs.close();
+				ps.close();
 			
 			%>	
 
