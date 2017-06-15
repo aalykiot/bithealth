@@ -80,6 +80,7 @@ public class Signin extends HttpServlet {
 							authSession.setAttribute("email", email);
 							authSession.setAttribute("type", "user");
 							response.sendRedirect("./user/dashboard");
+							return;
 							
 						}else{
 							
@@ -110,6 +111,7 @@ public class Signin extends HttpServlet {
 								authSession.setAttribute("email", email);
 								authSession.setAttribute("type", "doctor");
 								response.sendRedirect("./doctor/dashboard");
+								return;
 								
 							}else{
 								
@@ -119,6 +121,7 @@ public class Signin extends HttpServlet {
 								
 								request.setAttribute("error", "User or Doctor doesn't exists!");
 								request.getRequestDispatcher("/JSP/Other/signin.jsp").forward(request, response);
+								return;
 								
 							}
 							
@@ -134,6 +137,7 @@ public class Signin extends HttpServlet {
 				
 					request.setAttribute("error", "Error connecting to database!");
 					request.getRequestDispatcher("/JSP/Other/signin.jsp").forward(request, response);
+					return;
 					
 				}
 				
@@ -141,12 +145,14 @@ public class Signin extends HttpServlet {
 				
 				request.setAttribute("error", "Some fields are empty!");
 				request.getRequestDispatcher("/JSP/Other/signin.jsp").forward(request, response);
+				return;
 				
 			}
 			
 		}else{
 		
 			request.getRequestDispatcher("/JSP/Other/signin.jsp").forward(request, response);
+			return;
 			
 		}
 		

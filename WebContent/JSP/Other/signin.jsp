@@ -8,10 +8,12 @@
 		if(session.getAttribute("type").equals("user")){
 			
 			response.sendRedirect("./user/dashboard");
+			return;
 			
 		}else if(session.getAttribute("type").equals("doctor")){
 			
 			response.sendRedirect("./doctor/dashboard");
+			return;
 			
 		}
 		
