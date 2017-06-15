@@ -6,7 +6,9 @@ import javax.sql.DataSource;
 
 public class Database {
 	
-	static public Connection getConnection(){
+	private static Connection conn = null;
+	
+	public static Connection getConnection(){
 		
 		try{
 			InitialContext cxt = new InitialContext();
@@ -22,6 +24,20 @@ public class Database {
 			System.out.println(e.getMessage());
 			
 			return null;
+		}
+		
+	}
+	
+	public static void close(){
+		
+		try{
+			
+			conn.close();
+			
+		}catch(Exception e){
+			
+			System.out.println(e.getMessage());
+			
 		}
 		
 	}
