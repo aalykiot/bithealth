@@ -15,7 +15,7 @@ public class Database {
 
 			DataSource ds = (DataSource) cxt.lookup( "java:/comp/env/jdbc/bithealth" );
 			
-			Connection conn = ds.getConnection();
+			conn = ds.getConnection();
 			
 			return conn;
 

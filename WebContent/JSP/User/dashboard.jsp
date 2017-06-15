@@ -305,8 +305,8 @@
 				
 				
 				<div style="text-align: center;position: relative; top: 30px;">
-				<span style="color: #666; font-size: 100px;" class="glyphicon glyphicon-eye-close"></span><br />
-				<span style="font-weight: bold;color: #666; font-size: 40px;">No appointments found</span>
+				<span style="color: #bbb; font-size: 100px;" class="glyphicon glyphicon-eye-close"></span><br />
+				<span style="font-weight: bold;color: #bbb; font-size: 40px;">No appointments found</span>
 				</div>
 				
 				
@@ -454,4 +454,17 @@
     </body>
 </html>
 
-<% } %>
+<% 
+		Database.close();	
+
+	} 
+	
+%>
+
+
+
+
+
+
+
+
