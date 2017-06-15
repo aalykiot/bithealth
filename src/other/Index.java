@@ -126,6 +126,7 @@ public class Index extends HttpServlet {
 								// Redirect user to dashboard
 								
 								response.sendRedirect("./user/dashboard");
+								return;
 								
 								
 							}else{
@@ -134,6 +135,7 @@ public class Index extends HttpServlet {
 								
 								request.setAttribute("error", "Email or AMKA already exists!");
 								request.getRequestDispatcher("/JSP/index.jsp").forward(request, response);
+								return;
 								
 							}
 							
@@ -148,12 +150,14 @@ public class Index extends HttpServlet {
 						
 						request.setAttribute("error", "Error connecting to database!");
 						request.getRequestDispatcher("/JSP/index.jsp").forward(request, response);
+						return;
 						
 					}
 					
 				}else{
 					request.setAttribute("error", "Your AMKA is incorrect!");
 					request.getRequestDispatcher("/JSP/index.jsp").forward(request, response);
+					return;
 				}
 				
 				
@@ -161,6 +165,7 @@ public class Index extends HttpServlet {
 				
 				request.setAttribute("error", "Some fields are empty!");
 				request.getRequestDispatcher("/JSP/index.jsp").forward(request, response);
+				return;
 				
 			}
 			
@@ -168,6 +173,7 @@ public class Index extends HttpServlet {
 		}else{
 			
 			request.getRequestDispatcher("/JSP/index.jsp").forward(request, response);
+			return;
 			
 		}
 		

@@ -35,6 +35,7 @@ public class Signout extends HttpServlet {
 		}else{
 			// Visitor has no authSession send him to welcome page
 			response.sendRedirect("./");
+			return;
 		}
 		
 	}
