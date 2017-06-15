@@ -72,6 +72,9 @@ public class Index extends HttpServlet {
 								counter += Integer.parseInt(rs.getString("count"));
 							}
 							
+							rs.close();
+							ps.close();
+							
 							
 							// Check doctors table
 							
@@ -87,6 +90,9 @@ public class Index extends HttpServlet {
 							if(rs.next()){
 								counter += Integer.parseInt(rs.getString("count"));
 							}
+							
+							rs.close();
+							ps.close();
 							
 							
 							if(counter == 0){
@@ -107,6 +113,9 @@ public class Index extends HttpServlet {
 								ps.setLong(5, Long.parseLong(amka));
 								
 								ps.executeUpdate();
+								ps.close();
+								
+								Database.close();
 								
 								// Create new user session
 								
@@ -120,6 +129,8 @@ public class Index extends HttpServlet {
 								
 								
 							}else{
+								
+								Database.close();
 								
 								request.setAttribute("error", "Email or AMKA already exists!");
 								request.getRequestDispatcher("/JSP/index.jsp").forward(request, response);

@@ -68,7 +68,12 @@ public class Signin extends HttpServlet {
 							counter = Integer.parseInt(rs.getString("count"));
 						}
 						
+						rs.close();
+						ps.close();
+						
 						if(counter == 1){
+							
+							Database.close();
 							
 							// User found in users table
 							HttpSession authSession = request.getSession();
@@ -93,7 +98,12 @@ public class Signin extends HttpServlet {
 								counter = Integer.parseInt(rs.getString("count"));
 							}
 							
+							rs.close();
+							ps.close();
+							
 							if(counter == 1){
+								
+								Database.close();
 								
 								// User found in doctors table
 								HttpSession authSession = request.getSession();
@@ -104,6 +114,8 @@ public class Signin extends HttpServlet {
 							}else{
 								
 								// User doesn't exist in database
+								
+								Database.close();
 								
 								request.setAttribute("error", "User or Doctor doesn't exists!");
 								request.getRequestDispatcher("/JSP/Other/signin.jsp").forward(request, response);
