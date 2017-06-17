@@ -99,7 +99,7 @@
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand _brand" href="../" style="color:#fff;">
+                <a class="navbar-brand _brand" href="./" style="color:#fff;">
                   <span class="glyphicon glyphicon-plus _nav-glyphicon"></span>BitHealth
                 </a>
               </div>
