@@ -20,7 +20,7 @@ public class Search extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		
 		request.getRequestDispatcher("/JSP/Other/search.jsp").forward(request, response);
 		return;
 	}

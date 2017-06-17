@@ -8,7 +8,7 @@
 
 <%
 
-	if(session.getAttribute("email") == null || !session.getAttribute("type").toString().equals("user") || !session.getAttribute("type").toString().equals("doctor")){
+	if(session.getAttribute("email") == null || (!session.getAttribute("type").toString().equals("user") && !session.getAttribute("type").toString().equals("doctor"))){
 		
 		response.sendRedirect("./");
 		return;
