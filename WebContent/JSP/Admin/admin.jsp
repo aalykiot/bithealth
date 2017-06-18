@@ -4,6 +4,19 @@
 <%@
 	page import="java.sql.Connection,java.sql.PreparedStatement,java.sql.ResultSet,java.util.Date,java.text.DateFormat,java.text.SimpleDateFormat,services.Database"
 %>
+
+<%
+	Connection conn = Database.getConnection();
+	
+	PreparedStatement ps = null;
+	ResultSet rs = null;
+	String query = null;
+	
+	String doctorId = null;
+
+%>
+
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -235,6 +248,34 @@
                 
                 <%}else if(view.equals("doctors")){ 
                 //For the Doctors UI%> 
+                
+                <%
+
+					// Finding all the doctors 
+
+					query = "SELECT first_name,last_name,email,amka,speciality  FROM doctors WHERE doctor_id = ? ";
+					ps = conn.prepareStatement(query);
+					ps.setInt(1, Integer.parseInt(doctorId));
+					rs = ps.executeQuery();
+					
+					
+
+					while(rs.next()){
+						
+						String firstName = null;
+						String lastName = null;
+						String email = null;
+						long amka = 0;
+						String speciality = null;
+
+						firstName = rs.getString(1);
+						lastName = rs.getString(2);
+						email = rs.getString(3);
+						amka = rs.getInt(4);
+						speciality = rs.getString(5);
+						
+
+				%>
 
                 <table class="table table-bordered">
                   <thead>
@@ -250,78 +291,33 @@
                   <tbody>
                     <tr>
                       <th scope="row">1</th>
-                      <td>Alex</td>
-                      <td>Alikiotis</td>
-                      <td>alexalikiotis5@gmail.com</td>
-                      <td>12345678912</td>
-                      <td>Speciality</td>
+                      <td><%=firstName %></td>
+                      <td><%=lastName %></td>
+                      <td><%=email %></td>
+                      <td><%=amka %></td>
+                      <td><%=speciality %></td>
                     <tr>
-                    <tr>
-                      <th scope="row">2</th>
-                      <td>Alex</td>
-                      <td>Alikiotis</td>
-                      <td>alexalikiotis5@gmail.com</td>
-                      <td>12345678912</td>
-                      <td>Speciality</td>
-                    <tr>
-                    <tr>
-                      <th scope="row">3</th>
-                      <td>Alex</td>
-                      <td>Alikiotis</td>
-                      <td>alexalikiotis5@gmail.com</td>
-                      <td>12345678912</td>
-                      <td>Speciality</td>
-                    <tr>
-                    <tr>
-                      <th scope="row">4</th>
-                      <td>Alex</td>
-                      <td>Alikiotis</td>
-                      <td>alexalikiotis5@gmail.com</td>
-                      <td>12345678912</td>
-                      <td>Speciality</td>
-                    <tr>
-                      <tr>
-                        <th scope="row">5</th>
-                        <td>Alex</td>
-                        <td>Alikiotis</td>
-                        <td>alexalikiotis5@gmail.com</td>
-                        <td>12345678912</td>
-                        <td>Speciality</td>
-                      <tr>
-                      <tr>
-                        <th scope="row">6</th>
-                        <td>Alex</td>
-                        <td>Alikiotis</td>
-                        <td>alexalikiotis5@gmail.com</td>
-                        <td>12345678912</td>
-                        <td>Speciality</td>
-                      <tr>
-                      <tr>
-                        <th scope="row">7</th>
-                        <td>Alex</td>
-                        <td>Alikiotis</td>
-                        <td>alexalikiotis5@gmail.com</td>
-                        <td>12345678912</td>
-                        <td>Speciality</td>
-                      <tr>
-                      <tr>
-                        <th scope="row">8</th>
-                        <td>Alex</td>
-                        <td>Alikiotis</td>
-                        <td>alexalikiotis5@gmail.com</td>
-                        <td>12345678912</td>
-                        <td>Speciality</td>
-                      <tr>
                   </tbody>
                 </table> 
+                
+                <% 
+                }
+
+					rs.close();
+					ps.close();
+				%>
 
                 <center>
                   <button class="btn btn-default" data-toggle="modal" data-target="#myModal">
                     <i class="glyphicon glyphicon-plus"></i><strong> New Doctor </strong>
                   </button>
+
+                  <button class="btn btn-default" data-toggle="modal" data-target="#secModal">
+                    <i class="glyphicon glyphicon-minus"></i><strong> Delete Doctor </strong>
+                  </button>
                 </center>
 
-                <!-- Modal -->
+                <!-- Modal #1(Add Button) -->
                 <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -361,10 +357,7 @@
                               <option value="Paediatrics">Paediatrics</option>
                             </select>
                         </form>
-                        
-                       
-
-
+                                                
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -373,11 +366,45 @@
                     </div>
                   </div>
                 </div>
-				<% } %>
+            
+        
+        		<!-- Modal #2(Delete Button) -->
+                <div class="modal fade" id="secModal" tabindex="-1" role="dialog">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="secModalLabel">
+                          <i class="glyphicon glyphicon-minus"></i>
+                          Delete Doctor
+                        </h4>
+                      </div>
+                      <div class="modal-body">
+
+                        <form class="form-group">
+                            <strong>Amka</strong>
+                            <input type="text" class="form-control"/><p></p>
+                        </form>
+                                                
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Delete doctor</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
             </div>
           </div>
-        </div>
+	    </div>
+        <% } %>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="${pageContext.request.contextPath}/RESOURCES/js/bootstrap.min.js"></script>
     </body>
 </html>
+
+<%
+		Database.close();
+	
+
+%>
