@@ -249,16 +249,30 @@
                 <%}else if(view.equals("doctors")){ 
                 //For the Doctors UI%> 
                 
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>First Name</th>
+                      <th>Last Name</th>
+                      <th>Email</th>
+                      <th>Amka</th>
+                      <th>Speciality</th>
+                    </tr>
+                  </thead>
+                <tbody>
+                  <tr>
+                
                 <%
 
 					// Finding all the doctors 
 
-					query = "SELECT first_name,last_name,email,amka,speciality  FROM doctors WHERE doctor_id = ? ";
+					query = "SELECT first_name,last_name,email,amka,speciality  FROM doctors ";
 					ps = conn.prepareStatement(query);
-					ps.setInt(1, Integer.parseInt(doctorId));
+					
 					rs = ps.executeQuery();
 					
-					
+					int i = 1;
 
 					while(rs.next()){
 						
@@ -271,41 +285,33 @@
 						firstName = rs.getString(1);
 						lastName = rs.getString(2);
 						email = rs.getString(3);
-						amka = rs.getInt(4);
+						amka = rs.getLong(4);
 						speciality = rs.getString(5);
+						
 						
 
 				%>
 
-                <table class="table table-bordered">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>First Name</th>
-                      <th>Last Name</th>
-                      <th>Email</th>
-                      <th>Amka</th>
-                      <th>Speciality</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th scope="row">1</th>
+                
+                  
+                      <th scope="row"><%=i %></th>
                       <td><%=firstName %></td>
                       <td><%=lastName %></td>
                       <td><%=email %></td>
                       <td><%=amka %></td>
                       <td><%=speciality %></td>
                     <tr>
-                  </tbody>
-                </table> 
+                  
                 
                 <% 
+                i = i + 1;
                 }
 
 					rs.close();
 					ps.close();
 				%>
+				</tbody>
+              </table>
 
                 <center>
                   <button class="btn btn-default" data-toggle="modal" data-target="#myModal">
