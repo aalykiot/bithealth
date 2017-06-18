@@ -163,87 +163,57 @@
                     </tr>
                   </thead>
                   <tbody>
+                  
+                  <%
+
+					// Finding all the users 
+
+					query = "SELECT first_name,last_name,email,amka  FROM users ";
+					ps = conn.prepareStatement(query);
+					
+					rs = ps.executeQuery();
+					
+					int j = 1;
+
+					while(rs.next()){
+						
+						String fName = null;
+						String lName = null;
+						String eml = null;
+						long amkaUsers = 0;
+						
+
+						fName = rs.getString(1);
+						lName = rs.getString(2);
+						eml = rs.getString(3);
+						amkaUsers = rs.getLong(4);
+						
+						
+						
+
+				%>
+                  
                     <tr>
-                      <th scope="row">1</th>
-                      <td>Alex</td>
-                      <td>Alikiotis</td>
-                      <td>alexalikiotis5@gmail.com</td>
-                      <td>12345678912</td>
+                      <th scope="row"><%=j%></th>
+                      <td><%=fName%></td>
+                      <td><%=lName%></td>
+                      <td><%=eml%></td>
+                      <td><%=amkaUsers%></td>
                       <td>3</td>
                       <td>10</td>
                       <td>1</td>
                     <tr>
-                    <tr>
-                      <th scope="row">2</th>
-                      <td>Alex</td>
-                      <td>Alikiotis</td>
-                      <td>alexalikiotis5@gmail.com</td>
-                      <td>12345678912</td>
-                      <td>3</td>
-                      <td>10</td>
-                      <td>1</td>
-                    <tr>
-                    <tr>
-                      <th scope="row">3</th>
-                      <td>Alex</td>
-                      <td>Alikiotis</td>
-                      <td>alexalikiotis5@gmail.com</td>
-                      <td>12345678912</td>
-                      <td>3</td>
-                      <td>10</td>
-                      <td>1</td>
-                    <tr>
-                    <tr>
-                      <th scope="row">4</th>
-                      <td>Alex</td>
-                      <td>Alikiotis</td>
-                      <td>alexalikiotis5@gmail.com</td>
-                      <td>12345678912</td>
-                      <td>3</td>
-                      <td>10</td>
-                      <td>1</td>
-                    <tr>
-                      <tr>
-                        <th scope="row">5</th>
-                        <td>Alex</td>
-                        <td>Alikiotis</td>
-                        <td>alexalikiotis5@gmail.com</td>
-                        <td>12345678912</td>
-                        <td>3</td>
-                        <td>10</td>
-                        <td>1</td>
-                      <tr>
-                      <tr>
-                        <th scope="row">6</th>
-                        <td>Alex</td>
-                        <td>Alikiotis</td>
-                        <td>alexalikiotis5@gmail.com</td>
-                        <td>12345678912</td>
-                        <td>3</td>
-                        <td>10</td>
-                        <td>1</td>
-                      <tr>
-                      <tr>
-                        <th scope="row">7</th>
-                        <td>Alex</td>
-                        <td>Alikiotis</td>
-                        <td>alexalikiotis5@gmail.com</td>
-                        <td>12345678912</td>
-                        <td>3</td>
-                        <td>10</td>
-                        <td>1</td>
-                      <tr>
-                      <tr>
-                        <th scope="row">8</th>
-                        <td>Alex</td>
-                        <td>Alikiotis</td>
-                        <td>alexalikiotis5@gmail.com</td>
-                        <td>12345678912</td>
-                        <td>3</td>
-                        <td>10</td>
-                        <td>1</td>
-                      <tr>
-                  </tbody>
+                  
+                
+                <% 
+                j = j + 1;
+                }
+
+					rs.close();
+					ps.close();
+				%>
+				
+					</tbody>
                 </table>
                 
                 <%}else if(view.equals("doctors")){ 
@@ -261,7 +231,7 @@
                     </tr>
                   </thead>
                 <tbody>
-                  <tr>
+                  
                 
                 <%
 
@@ -293,7 +263,7 @@
 				%>
 
                 
-                  
+                   <tr>
                       <th scope="row"><%=i %></th>
                       <td><%=firstName %></td>
                       <td><%=lastName %></td>
