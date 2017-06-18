@@ -118,12 +118,59 @@
                   <blockquote>
                     <p style="position:relative; left: -290px;"><i>Users and Doctors</i></p>
                   </blockquote>
-                  <div class="row">
-                    <div class="col-sm-5 col-sm-offset-1">
-                      <strong><span style="font-size: 70px;">1,234</span></strong> <span style="font-size: 30px;color:#888;">Users</span>
+                  
+                    
+                    <%
+                    	//Count all Users
+	                    query = "SELECT COUNT(*) FROM users ";
+						ps = conn.prepareStatement(query);
+	
+						
+	
+						rs = ps.executeQuery();
+	
+						int users = 0;
+	
+						if(rs.next()){
+	
+							users = rs.getInt(1);
+	
+						}
+	
+						rs.close();
+						ps.close();
+                    
+                    %>
+                    <div class="row">
+                      <div class="col-sm-5 col-sm-offset-1">
+                      <strong><span style="font-size: 70px;"><%=users %></span></strong> <span style="font-size: 30px;color:#888;">Users</span>
                     </div>
+                    
+                    <%
+	                	//Count all Users
+	                    query = "SELECT COUNT(*) FROM doctors ";
+						ps = conn.prepareStatement(query);
+	
+						
+	
+						rs = ps.executeQuery();
+	
+						int doctors = 0;
+	
+						if(rs.next()){
+	
+							doctors = rs.getInt(1);
+	
+						}
+	
+						rs.close();
+						ps.close();
+                    
+                    	
+                    %>
+                    
                     <div class="col-sm-5">
-                      <strong><span style="font-size: 70px;">234</span></strong> <span style="font-size: 30px;color:#888;">Doctors</span>
+                      <strong><span style="font-size: 70px;"><%=doctors%></span></strong> <span style="font-size: 30px;color:#888;">Doctors</span>
                     </div>
                   </div>
 
@@ -305,7 +352,6 @@
                         </h4>
                       </div>
                       <div class="modal-body">
-
                         <form class="form-group">
                             <strong>First Name</strong>
                             <input type="text" class="form-control"/><p></p>
