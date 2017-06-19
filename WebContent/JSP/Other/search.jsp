@@ -108,12 +108,12 @@
 
                 <form class="navbar-form form-inline navbar-left" action="./search" method="GET">
                     <span class="glyphicon glyphicon-search _search-glyphicon" style="color:#fff;"></span>
-                    <input type="text" class="form-control _search-input" name="search_query" placeholder="Search doctors...">
+                    <input type="text" class="form-control _search-input" name="search_query" autocomplete="off" placeholder="Search doctors...">
                 </form>
 
 
                 <ul class="nav navbar-nav navbar-right">
-                  <li class="active"><a href="./<%= session.getAttribute("type") %>/dashboard">
+                  <li><a href="./<%= session.getAttribute("type") %>/dashboard">
                     <span class="glyphicon glyphicon-th-list"></span>
                   </a></li>
 	
