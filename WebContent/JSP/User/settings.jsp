@@ -105,7 +105,7 @@
 
                 <form class="navbar-form form-inline navbar-left" action="../search" method="GET">
                     <span class="glyphicon glyphicon-search _search-glyphicon" style="color:#fff;"></span>
-                    <input type="text" class="form-control _search-input" name="search_query" placeholder="Search doctors...">
+                    <input type="text" class="form-control _search-input" autocomplete="off" name="search_query" placeholder="Search doctors...">
                 </form>
 
 
