@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Settings</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/inner.css" rel="stylesheet">
+
+        <!-- Google fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+
+    </head>
+    <body>
+
+      <nav class="navbar navbar-inverse navbar-fixed-top _navbar">
+        <div class="container-fluid">
+          <div class="container _container">
+
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand _brand" href="#" style="color:#fff;">
+                  <span class="glyphicon glyphicon-plus _nav-glyphicon"></span>BitHealth
+                </a>
+              </div>
+
+              <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                <form class="navbar-form form-inline navbar-left">
+                    <span class="glyphicon glyphicon-search _search-glyphicon" style="color:#fff;"></span>
+                    <input type="text" class="form-control _search-input" placeholder="Search doctors...">
+                </form>
+
+
+                <ul class="nav navbar-nav navbar-right">
+                  <li><a href="#">
+                    <span class="glyphicon glyphicon-th-list"></span>
+                  </a></li>
+                  <li><a href="#">
+                    <span class="glyphicon glyphicon-bell"></span>
+                    <span class="badge _navbar-not">2</span>
+                  </a></li>
+                  <li class="dropdown active">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                      <span class="glyphicon glyphicon-user"></span>
+                      <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      <li class="dropdown-header">Signed in as <br/><strong>Alex Alikiotis</strong></li>
+                      <li role="separator" class="divider"></li>
+                      <li><a href="#">Settings</a></li>
+                      <li role="separator" class="divider"></li>
+                      <li><a href="#">Sign out</a></li>
+                    </ul>
+                  </li>
+                </ul>
+
+              </div><!-- /.navbar-collapse -->
+            </div>
+          </div><!-- /.container-fluid -->
+        </nav>
+
+        <div class="_empty-space"></div>
+
+
+        <div class="container _container">
+          <div class="row">
+            <div class="col-sm-12">
+              <ul class="nav nav-tabs">
+                <li role="presentation" class="active"><a href="#">
+                  <span class="glyphicon glyphicon-cog"></span>
+                  Settings
+                </a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="_empty-space-not"></div>
+
+          <div class="row">
+            <div class="col-sm-3">
+              <ul class="nav nav-pills nav-stacked">
+                <li role="presentation" class="active"><a href="#">Details & Privacy</a></li>
+              </ul>
+            </div>
+
+            <div class="col-sm-5">
+              <form style = "border-right: 1px solid #D8D8D8;padding-right: 30px;">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">First Name</label>
+                  <input type="email" class="form-control _settings-input" value="Alex" readonly>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Last Name</label>
+                  <input type="email" class="form-control _settings-input" value="Alikiotis" readonly>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Email</label>
+                  <input type="email" class="form-control _settings-input" value="alexalikiotis5@gmail.com">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">AMKA</label>
+                  <input type="email" class="form-control _settings-input" value="12345678912" readonly>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Available from</label>
+                  <select class="form-control">
+                    <option selected value='-1'>--Select Day--</option>
+                    <option value="1">Monday</option>
+                    <option value="2">Tuesday</option>
+                    <option value="3">Wednesday</option>
+                    <option value="4">Thursday</option>
+                    <option value="5">Friday</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Available to</label>
+                  <select class="form-control">
+                    <option selected value='-1'>--Select Day--</option>
+                    <option value="1">Monday</option>
+                    <option value="2">Tuesday</option>
+                    <option value="3">Wednesday</option>
+                    <option value="4">Thursday</option>
+                    <option value="5">Friday</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Available from</label>
+                  <select class="form-control">
+                    <option selected value='-1'>--Select Hour--</option>
+                    <option value="9">9:00</option>
+                    <option value="10">10:00</option>
+                    <option value="11">11:00</option>
+                    <option value="12">12:00</option>
+                    <option value="13">13:00</option>
+                    <option value="14">14:00</option>
+                    <option value="15">15:00</option>
+                    <option value="16">16:00</option>
+                    <option value="17">17:00</option>
+                    <option value="18">18:00</option>
+                    <option value="19">19:00</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Available to</label>
+                  <select class="form-control">
+                    <option selected value='-1'>--Select Hour--</option>
+                    <option value="9">9:00</option>
+                    <option value="10">10:00</option>
+                    <option value="11">11:00</option>
+                    <option value="12">12:00</option>
+                    <option value="13">13:00</option>
+                    <option value="14">14:00</option>
+                    <option value="15">15:00</option>
+                    <option value="16">16:00</option>
+                    <option value="17">17:00</option>
+                    <option value="18">18:00</option>
+                    <option value="19">19:00</option>
+                  </select>
+                </div>
+                <button type="submit" class="btn btn-md btn-success">Update settings</button>
+              </form>
+            </div>
+
+            <div class="col-sm-4">
+
+              <form>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Old Password</label>
+                  <input type="password" class="form-control _settings-input">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">New Password</label>
+                  <input type="password" class="form-control _settings-input">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Retype new password</label>
+                  <input type="password" class="form-control _settings-input">
+                </div>
+                <button type="submit" class="btn btn-md btn-success">Update password</button>
+              </form>
+
+            </div>
+
+          </div>
+        </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+    </body>
+</html>
