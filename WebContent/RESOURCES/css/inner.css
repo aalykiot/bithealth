@@ -107,3 +107,8 @@ html, body{
 .thumbnail:hover{
   background-color: #f1f1f1 !important;
 }
+
+._admin_del_btn{
+  position: relative;
+  left: 6px;
+}
