@@ -11,7 +11,7 @@
 	PreparedStatement ps = null;
 	ResultSet rs = null;
 	String query = null;
-	
+	String userId = null;
 	String doctorId = null;
 
 %>
@@ -45,7 +45,7 @@
                   <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand _dev-brand" href="#" style="color:#fff;">
-                  Developers
+                  Bithealth Developers
                 </a>
               </div>
 
@@ -179,16 +179,82 @@
                   <blockquote>
                     <p style="position:relative; left: -310px;"><i>Appointments</i></p>
                   </blockquote>
+                  
+                  <%
+
+                	
+                	int pendingApp = 0;
+                	int completedApp = 0;
+                	int canceledApp = 0;
+
+                	// Pending appointments
+
+					query = "SELECT COUNT(*) FROM appointments WHERE  status = 'pending'";
+					ps = conn.prepareStatement(query);
+
+					
+
+					rs = ps.executeQuery();
+
+					if(rs.next()){
+
+						pendingApp = Integer.parseInt(rs.getString(1));
+
+					}
+
+					rs.close();
+					ps.close();
+
+					// Completed appointments
+
+					query = "SELECT COUNT(*) FROM appointments WHERE  status = 'completed'";
+					ps = conn.prepareStatement(query);
+
+					
+
+					rs = ps.executeQuery();
+
+					if(rs.next()){
+
+						completedApp = Integer.parseInt(rs.getString(1));
+
+					}
+
+					rs.close();
+					ps.close();
+
+					// Canceled appointments
+
+					query = "SELECT COUNT(*) FROM appointments WHERE  status = 'canceled'";
+					ps = conn.prepareStatement(query);
+
+					
+
+					rs = ps.executeQuery();
+
+					if(rs.next()){
+
+						canceledApp = Integer.parseInt(rs.getString(1));
+
+					}
+
+					rs.close();
+					ps.close();
+
+					
+
+
+                %>
 
                   <div class="row">
                     <div class="col-sm-4">
-                      <strong><span style="font-size: 50px;">1,234</span></strong> <span style="font-size: 20px;color:#888;">Pending</span>
+                      <strong><span style="font-size: 50px;"><%=pendingApp%></span></strong> <span style="font-size: 20px;color:#888;">Pending</span>
                     </div>
                     <div class="col-sm-4">
-                      <strong><span style="font-size: 50px;">234</span></strong> <span style="font-size: 20px;color:#888;">Completed</span>
+                      <strong><span style="font-size: 50px;"><%=completedApp%></span></strong> <span style="font-size: 20px;color:#888;">Completed</span>
                     </div>
                     <div class="col-sm-4">
-                      <strong><span style="font-size: 50px;">34</span></strong> <span style="font-size: 20px;color:#888;">Canceled</span>
+                      <strong><span style="font-size: 50px;"><%=canceledApp%></span></strong> <span style="font-size: 20px;color:#888;">Canceled</span>
                     </div>
                   </div>
                 </center>
@@ -215,12 +281,16 @@
 
 					// Finding all the users 
 
-					query = "SELECT first_name,last_name,email,amka  FROM users ";
+					query = "SELECT first_name,last_name,email,amka,COUNT(status) FROM appointments INNER JOIN users ON users.user_id = appointments.user_id  WHERE status = 'pending' GROUP BY users.user_id ";
 					ps = conn.prepareStatement(query);
-					
 					rs = ps.executeQuery();
 					
+					
+					
 					int j = 1;
+					int pendingStatus = 0;
+					int completedStatus = 0;
+					int canceledStatus = 0;
 
 					while(rs.next()){
 						
@@ -234,7 +304,7 @@
 						lName = rs.getString(2);
 						eml = rs.getString(3);
 						amkaUsers = rs.getLong(4);
-						
+						pendingStatus = rs.getInt(5);
 						
 						
 
@@ -246,9 +316,9 @@
                       <td><%=lName%></td>
                       <td><%=eml%></td>
                       <td><%=amkaUsers%></td>
-                      <td>3</td>
-                      <td>10</td>
-                      <td>1</td>
+                      <td><%=pendingStatus%></td>
+                      <td><%=completedStatus%></td>
+                      <td><%=canceledStatus%></td>
                     <tr>
                   
                 
@@ -317,6 +387,7 @@
                       <td><%=email %></td>
                       <td><%=amka %></td>
                       <td><%=speciality %></td>
+                      <td><button class="btn btn-danger btn-sm _admin_del_btn"><span class="glyphicon glyphicon-remove"></span></button></td>
                     <tr>
                   
                 
@@ -334,10 +405,6 @@
                   <button class="btn btn-default" data-toggle="modal" data-target="#myModal">
                     <i class="glyphicon glyphicon-plus"></i><strong> New Doctor </strong>
                   </button>
-
-                  <button class="btn btn-default" data-toggle="modal" data-target="#secModal">
-                    <i class="glyphicon glyphicon-minus"></i><strong> Delete Doctor </strong>
-                  </button>
                 </center>
 
                 <!-- Modal #1(Add Button) -->
@@ -352,73 +419,98 @@
                         </h4>
                       </div>
                       <div class="modal-body">
-                        <form class="form-group">
-                            <strong>First Name</strong>
-                            <input type="text" class="form-control"/><p></p>
-                            <strong>Last Name</strong>
-                            <input type="text" class="form-control"/><p></p>
-                            <strong>Email</strong>
-                            <input type="email" class="form-control"/><p></p>
-                            <strong>Password</strong>
-                            <input type="password" class="form-control"/><p></p>
-                            <strong>Amka</strong>
-                            <input type="text" class="form-control"/><p></p>
-                            <strong>Speciality</strong>
-                            <select class="form-control">
-                              <option selected value='-1'>--Select Speciality--</option>
-                              <option value="Pathology">Pathology</option>
-                              <option value="Cardiology">Cardiology</option>
-                              <option value="Endocrinology">Endocrinology</option>
-                              <option value="Gastroenterology">Gastroenterology</option>
-                              <option value="Microbiology">Microbiology</option>
-                              <option value="Nephrology">Nephrology</option>
-                              <option value="Neurology">Neurology</option>
-                              <option value="Ophthalmology">Ophthalmology</option>
-                              <option value="Orthodontics">Orthodontics</option>
-                              <option value="Orthopaedics">Orthopaedics</option>
-                              <option value="Paediatrics">Paediatrics</option>
-                            </select>
-                        </form>
-                                                
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Add doctor</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-            
-        
-        		<!-- Modal #2(Delete Button) -->
-                <div class="modal fade" id="secModal" tabindex="-1" role="dialog">
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="secModalLabel">
-                          <i class="glyphicon glyphicon-minus"></i>
-                          Delete Doctor
-                        </h4>
-                      </div>
-                      <div class="modal-body">
 
-                        <form class="form-group">
-                            <strong>Amka</strong>
-                            <input type="text" class="form-control"/><p></p>
-                        </form>
-                                                
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Delete doctor</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-            </div>
-          </div>
-	    </div>
+	                 <form class="form-group">
+	                     <strong>First Name</strong>
+	                     <input type="text" class="form-control"/><p></p>
+	                     <strong>Last Name</strong>
+	                     <input type="text" class="form-control"/><p></p>
+	                     <strong>Email</strong>
+	                     <input type="email" class="form-control"/><p></p>
+	                     <strong>Password</strong>
+	                     <input type="password" class="form-control"/><p></p>
+	                     <strong>Amka</strong>
+	                     <input type="text" class="form-control"/><p></p>
+	                     <strong>Speciality</strong>
+	                     <select class="form-control">
+	                       <option selected value='-1'>--Select Speciality--</option>
+	                       <option value="Pathology">Pathology</option>
+	                       <option value="Cardiology">Cardiology</option>
+	                       <option value="Endocrinology">Endocrinology</option>
+	                       <option value="Gastroenterology">Gastroenterology</option>
+	                       <option value="Microbiology">Microbiology</option>
+	                       <option value="Nephrology">Nephrology</option>
+	                       <option value="Neurology">Neurology</option>
+	                       <option value="Ophthalmology">Ophthalmology</option>
+	                       <option value="Orthodontics">Orthodontics</option>
+	                       <option value="Orthopaedics">Orthopaedics</option>
+	                       <option value="Paediatrics">Paediatrics</option>
+	                     </select><p></p>
+	
+	                     <strong>Available from</strong>
+	                     <select class="form-control">
+	                       <option selected value='-1'>--Select Day--</option>
+	                       <option value="1">Monday</option>
+	                       <option value="2">Tuesday</option>
+	                       <option value="3">Wednesday</option>
+	                       <option value="4">Thursday</option>
+	                       <option value="5">Friday</option>
+	                     </select><p></p>
+	
+	                     <strong>Available to</strong>
+	                     <select class="form-control">
+	                       <option selected value='-1'>--Select Day--</option>
+	                       <option value="1">Monday</option>
+	                       <option value="2">Tuesday</option>
+	                       <option value="3">Wednesday</option>
+	                       <option value="4">Thursday</option>
+	                       <option value="5">Friday</option>
+	                     </select><p></p>
+	
+	                     <strong>Available from</strong>
+	                     <select class="form-control">
+	                       <option selected value='-1'>--Select Hour--</option>
+	                       <option value="9">9:00</option>
+	                       <option value="10">10:00</option>
+	                       <option value="11">11:00</option>
+	                       <option value="12">12:00</option>
+	                       <option value="13">13:00</option>
+	                       <option value="14">14:00</option>
+	                       <option value="15">15:00</option>
+	                       <option value="16">16:00</option>
+	                       <option value="17">17:00</option>
+	                       <option value="18">18:00</option>
+	                       <option value="19">19:00</option>
+	                     </select><p></p>
+	
+	                     <strong>Available to</strong>
+	                     <select class="form-control">
+	                       <option selected value='-1'>--Select Hour--</option>
+	                       <option value="9">9:00</option>
+	                       <option value="10">10:00</option>
+	                       <option value="11">11:00</option>
+	                       <option value="12">12:00</option>
+	                       <option value="13">13:00</option>
+	                       <option value="14">14:00</option>
+	                       <option value="15">15:00</option>
+	                       <option value="16">16:00</option>
+	                       <option value="17">17:00</option>
+	                       <option value="18">18:00</option>
+	                       <option value="19">19:00</option>
+	                     </select><p></p>
+	
+	                 </form>
+		    		 </div>
+	                 <div class="modal-footer">
+	                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	                   <button type="button" class="btn btn-primary">Add doctor</button>
+	                 </div>
+	               </div>
+	             </div>
+	           </div>
+	       </div>
+	     </div>
+	   </div>
         <% } %>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="${pageContext.request.contextPath}/RESOURCES/js/bootstrap.min.js"></script>
