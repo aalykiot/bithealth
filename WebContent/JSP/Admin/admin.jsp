@@ -281,7 +281,7 @@
 
 					// Finding all the users 
 
-					query = "SELECT first_name,last_name,email,amka,COUNT(status) FROM appointments INNER JOIN users ON users.user_id = appointments.user_id  WHERE status = 'pending' GROUP BY users.user_id ";
+					query = "SELECT u.first_name,u.last_name,u.email,u.amka,(SELECT COUNT(*) FROM appointments WHERE status='pending' and appointments.user_id = u.user_id) as PenCount,(SELECT COUNT(*) FROM appointments WHERE status='completed' and appointments.user_id = u.user_id) as ComCount,(SELECT COUNT(*) FROM appointments WHERE status='canceled' and appointments.user_id = u.user_id) as CanCount FROM users u ORDER BY user_id ";
 					ps = conn.prepareStatement(query);
 					rs = ps.executeQuery();
 					
@@ -305,6 +305,8 @@
 						eml = rs.getString(3);
 						amkaUsers = rs.getLong(4);
 						pendingStatus = rs.getInt(5);
+						completedStatus = rs.getInt(6);
+						canceledStatus = rs.getInt(7);
 						
 						
 
