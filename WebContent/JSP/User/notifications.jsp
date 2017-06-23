@@ -265,7 +265,7 @@
 		                      <span style="color: #428bca;" class="glyphicon glyphicon-asterisk"></span>
 		                  </div>
 		                  <div class="media-body">
-		                    <p class="media-heading"> Doctor <strong><a href="#"><%= doctorsName %></a></strong> canceled your appointment on <i><b><%= dateFormat.format(scheduledDate) %></b></i></p>
+		                    <p class="media-heading"> Your appointment with doctor <strong><a href="#"><%= doctorsName %></a></strong> on <i><b><%= dateFormat.format(scheduledDate) %></b></i> has been canceled</p>
 		                  </div>
 		                </div>
             	
@@ -323,7 +323,7 @@
 		                  	<% } %>
 		                  </div>
 		                  <div class="media-body">
-		                    <p class="media-heading"> Doctor <strong><a href="#"><%= doctorsName %></a></strong> canceled your appointment on <i><b><%= dateFormat.format(scheduledDate) %></b></i></p>
+		                    <p class="media-heading"> Your appointment with doctor <strong><a href="#"><%= doctorsName %></a></strong> on <i><b><%= dateFormat.format(scheduledDate) %></b></i> has been canceled</p>
 		                  </div>
 		                </div>
             	

@@ -160,6 +160,18 @@
             </div>
           </div><!-- /.container-fluid -->
         </nav>
+        
+       	<%
+       		// Update appointments
+       		
+       		query = "UPDATE appointments SET status = 'completed' WHERE scheduled_date <= NOW() AND status = 'pending' AND user_id = ?";
+       		ps = conn.prepareStatement(query);
+       		
+       		ps.setInt(1, Integer.parseInt(userId));
+       		ps.executeUpdate();
+       		ps.close();
+       	
+       	%>
 
         <div class="_empty-space"></div>
 
@@ -170,7 +182,7 @@
               <div class="list-group">
                 <a href="#" class="list-group-item disabled">
                   Appointments
-                  <button type="button" class="btn btn-sm btn-success _book-app-button">
+                  <button type="button" onclick="location.href = '../../appointment/new';" class="btn btn-sm btn-success _book-app-button">
                     <i class="glyphicon glyphicon-plus"></i><strong> Book new appointment</strong>
                   </button>
                 </a>
@@ -363,12 +375,13 @@
 	                <div class="panel-body">
 	                  <strong>Doctor's Name: </strong><a href=""><%= doctorsName %></a><br/>
 	                  <strong>Date: </strong> <%= dateFormat.format(scheduledDate) %>
-	                
-	                
-	            <input type="hidden" name="appointment_id" value="<%= appId %>"/>    
-	          	<div class="btn-group _panel-btn-group" role="group">
-                    <button type="button" class="btn btn-danger btn-sm"><b>Cancel</b></button>
-            	</div>
+	                     
+		          	<div class="btn-group _panel-btn-group" role="group">
+		          		<form action="../appointment/cancel" method="POST">
+			          		<input type="hidden" name="appointment_id" value="<%= appId %>"/>
+		                    <button type="submit" name="cancel_submit" class="btn btn-danger btn-sm"><b>Cancel</b></button>
+	                    </form>
+	            	</div>
 				
 			<% }else if(status.equals("completed")){ %>
 			
