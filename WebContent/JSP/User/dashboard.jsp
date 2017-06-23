@@ -182,7 +182,7 @@
               <div class="list-group">
                 <a href="#" class="list-group-item disabled">
                   Appointments
-                  <button type="button" onclick="location.href = '../../appointment/new';" class="btn btn-sm btn-success _book-app-button">
+                  <button type="button" onclick="location.href = '../appointment/new';" class="btn btn-sm btn-success _book-app-button">
                     <i class="glyphicon glyphicon-plus"></i><strong> Book new appointment</strong>
                   </button>
                 </a>
