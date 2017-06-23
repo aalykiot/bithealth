@@ -248,16 +248,16 @@
 
                   <select class="form-control" name="search_hour">
                     <option selected value='-1'>--Select Hour--</option>
-                    <option value='9'>9:00 AM - 10:00 AM</option>
-                    <option value='10'>10:00 AM - 11:00 AM</option>
-                    <option value='11'>11:00 AM - 12:00 PM</option>
-                    <option value='12'>12:00 PM - 1:00 PM</option>
-                    <option value='13'>1:00 PM - 2:00 PM</option>
-                    <option value='14'>2:00 PM - 3:00 PM</option>
-                    <option value='15'>3:00 PM - 4:00 PM</option>
-                    <option value='16'>4:00 PM - 5:00 PM</option>
-                    <option value='17'>5:00 PM - 6:00 PM</option>
-                    <option value='18'>6:00 PM - 7:00 PM</option>
+                    <option value='9'>9:00 - 10:00</option>
+                    <option value='10'>10:00 - 11:00</option>
+                    <option value='11'>11:00 - 12:00</option>
+                    <option value='12'>12:00 - 13:00</option>
+                    <option value='13'>13:00 - 14:00</option>
+                    <option value='14'>14:00 - 15:00</option>
+                    <option value='15'>15:00 - 16:00</option>
+                    <option value='16'>16:00 - 17:00</option>
+                    <option value='17'>17:00 - 18:00</option>
+                    <option value='18'>18:00 - 19:00</option>
                   </select>
 
                   <div style="height: 10px;"></div>
@@ -298,7 +298,7 @@
 				request.getRequestDispatcher("/JSP/Appointment/step1-appointment.jsp").forward(request, response);
 			}
 			
-			query = "SELECT scheduled_date FROM appointments WHERE doctor_id = ? ORDER BY scheduled_date";
+			query = "SELECT scheduled_date FROM appointments WHERE doctor_id = ? AND status = 'pending' ORDER BY scheduled_date";
 			
 			ps = conn.prepareStatement(query);
 			

@@ -22,11 +22,11 @@ import javax.servlet.http.HttpSession;
 
 import services.Database;
 
-@WebServlet(name="Appointment", urlPatterns={"/appointment/new"})
-public class Appointment extends HttpServlet {
+@WebServlet(name="Appointment_new", urlPatterns={"/appointment/new"})
+public class Appointment_new extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public Appointment() {
+    public Appointment_new() {
         super();
         
     }
@@ -70,7 +70,7 @@ public class Appointment extends HttpServlet {
 						String scheduledDate = year + '-' + month + '-' + day + ' ' + hour + ":00:00";
 						Timestamp schedule = Timestamp.valueOf(scheduledDate);
 						
-						query = "SELECT user_id, first_name, last_name FROM users WHERE email = ? ";
+						query = "SELECT user_id FROM users WHERE email = ? ";
 						
 						ps = conn.prepareStatement(query);
 						ps.setString(1, email);
@@ -86,7 +86,7 @@ public class Appointment extends HttpServlet {
 						rs.close();
 						ps.close();
 						
-						query = "SELECT COUNT(*) FROM appointments WHERE scheduled_date = ? ";
+						query = "SELECT COUNT(*) FROM appointments WHERE scheduled_date = ? AND status = 'pending'";
 						
 						ps = conn.prepareStatement(query);
 						
