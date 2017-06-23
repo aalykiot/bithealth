@@ -22,7 +22,7 @@ import javax.servlet.http.HttpSession;
 
 import services.Database;
 
-@WebServlet(name="Appointment", urlPatterns={"/appointment"})
+@WebServlet(name="Appointment", urlPatterns={"/appointment/new"})
 public class Appointment extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -35,7 +35,8 @@ public class Appointment extends HttpServlet {
 		
 		HttpSession authSession = request.getSession();
 		
-		authSession.setAttribute("email", "rcooki@patch.com");
+		String email = "cbennettl@gmail.com";
+		authSession.setAttribute("email", email);
 		authSession.setAttribute("type", "user");
 		
 		request.setAttribute("requested_doctor", request.getParameter("requested_doctor"));
@@ -63,11 +64,27 @@ public class Appointment extends HttpServlet {
 					String query = null;
 					try {
 						
-						int userId = 4;
+						int userId = 0;
 						int doctorId = Integer.parseInt(request.getParameter("requested_doctor"));
 						String status ="pending";
 						String scheduledDate = year + '-' + month + '-' + day + ' ' + hour + ":00:00";
 						Timestamp schedule = Timestamp.valueOf(scheduledDate);
+						
+						query = "SELECT user_id, first_name, last_name FROM users WHERE email = ? ";
+						
+						ps = conn.prepareStatement(query);
+						ps.setString(1, email);
+						
+						rs = ps.executeQuery(); // Execute query
+						
+						if(rs.next()){
+							
+							userId = rs.getInt(1);
+							
+						}
+						
+						rs.close();
+						ps.close();
 						
 						query = "SELECT COUNT(*) FROM appointments WHERE scheduled_date = ? ";
 						

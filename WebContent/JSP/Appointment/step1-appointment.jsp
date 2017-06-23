@@ -174,7 +174,7 @@
             </div>
 
             <div class="col-sm-8">
-              <form class="form-inline" action="./appointment" method="GET">
+              <form class="form-inline" action="./new" method="GET">
                   <input style="width: 437px;" type="text" class="form-control" placeholder="Doctor's name..." name="appointment_query">
                   <select class="form-control" name="option">
                     <option>Pathology</option>
@@ -268,7 +268,7 @@
         		
         %>
         		
-        <a href=<%="./appointment?requested_doctor=" + doctorId %>>
+        <a href=<%="./new?requested_doctor=" + doctorId %>>
             <div class="col-sm-3">
               <div class="thumbnail">
                 <center>
