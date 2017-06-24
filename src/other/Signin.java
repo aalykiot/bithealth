@@ -73,7 +73,7 @@ public class Signin extends HttpServlet {
 						
 						if(counter == 1){
 							
-							Database.close();
+							Database.close(conn);
 							
 							// User found in users table
 							HttpSession authSession = request.getSession();
@@ -104,7 +104,7 @@ public class Signin extends HttpServlet {
 							
 							if(counter == 1){
 								
-								Database.close();
+								Database.close(conn);
 								
 								// User found in doctors table
 								HttpSession authSession = request.getSession();
@@ -117,7 +117,7 @@ public class Signin extends HttpServlet {
 								
 								// User doesn't exist in database
 								
-								Database.close();
+								Database.close(conn);
 								
 								request.setAttribute("error", "User or Doctor doesn't exists!");
 								request.getRequestDispatcher("/JSP/Other/signin.jsp").forward(request, response);
