@@ -28,15 +28,15 @@ public class Database {
 		
 	}
 	
-	public static void close(){
+	public static void close(Connection extConn){
 		
 		try{
 			
-			conn.close();
+			extConn.close();
 			
 		}catch(Exception e){
 			
-			System.out.println(e.getMessage());
+			System.out.println("Connection to database is null and can not be closed!");
 			
 		}
 		
