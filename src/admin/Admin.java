@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import services.Database;
-import services.Encryption;
 
 @WebServlet(name="Admin_dashboard", urlPatterns={"/admin/dashboard"})
 public class Admin extends HttpServlet {
