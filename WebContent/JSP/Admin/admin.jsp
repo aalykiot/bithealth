@@ -433,7 +433,7 @@
                       <div class="modal-body">
                       
 
-	                 <form class="form-group" method = "post" action =" Amdin.java">
+	                 <form class="form-group" method = "post" action ="./dashboard">
 	                     <strong>First Name</strong>
 	                     <input type="text" autocomplete="off" value = "<%=fName %>" class="form-control"/><p></p>
 	                     <strong>Last Name</strong>
@@ -512,13 +512,15 @@
 	                       <option value="19">19:00</option>
 	                     </select><p></p>
 	
-	                 </form>
+	                 
 	                 
 		    		 </div>
 	                 <div class="modal-footer">
 	                   <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
 	                   <button type="submit" name = "b1" class="btn btn-primary"  >Add doctor</button>
 	                 </div>
+	                 
+	                 </form>
 	                 
 	                 <% 
               
