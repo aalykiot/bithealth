@@ -43,7 +43,7 @@ public class Admin extends HttpServlet {
             String hourFrom=request.getParameter("hourFrom");
             String hourTo=request.getParameter("hourTo"); 
             
-            if(!fName.isEmpty() && !lName.isEmpty() && !eml.isEmpty() && !pass.isEmpty() && !amka.isEmpty() && !speciality.isEmpty() && !dayFrom.isEmpty()  && !dayTo.isEmpty() && !hourFrom.isEmpty() && !hourTo.isEmpty()  ){
+            if( fName != null && lName != null && eml != null && pass != null && amka != null  && speciality != null && dayFrom != null  && dayTo != null && hourFrom != null && hourTo != null && !fName.isEmpty() && !lName.isEmpty() && !eml.isEmpty() && !pass.isEmpty() && !amka.isEmpty() && !speciality.isEmpty() && !dayFrom.isEmpty()  && !dayTo.isEmpty() && !hourFrom.isEmpty() && !hourTo.isEmpty()  ){
             	
             	Connection conn = Database.getConnection();
 				
@@ -61,27 +61,25 @@ public class Admin extends HttpServlet {
 						ps = conn.prepareStatement(query);
 					    
 	
-						ps.setString(2, fName);
-		 				ps.setString(3, lName);
-		 				ps.setString(4, eml);
-		 				ps.setString(5, pass);
-		 				ps.setString(6, amka);
-		 				ps.setString(7, speciality);
-		 				ps.setString(8, dayFrom);
-		 				ps.setString(9, dayTo);
-		 				ps.setString(10, hourFrom);
-		 				ps.setString(11, hourTo);
+						ps.setString(1, fName);
+		 				ps.setString(2, lName);
+		 				ps.setString(3, eml);
+		 				ps.setString(4, pass);
+		 				ps.setString(5, amka);
+		 				ps.setString(6, speciality);
+		 				ps.setString(7, dayFrom);
+		 				ps.setString(8, dayTo);
+		 				ps.setString(9, hourFrom);
+		 				ps.setString(10, hourTo);
 					
 		 				ps.executeUpdate();
 						
 						ps.close();
 						
-						Database.close();
-						
-						
 						
 						request.setAttribute("ua_success", "You have successfully added a new doctor");
 						request.getRequestDispatcher("/JSP/Admin/admin.jsp").forward(request, response);
+						Database.close();
 						return;
 						
 						
@@ -94,6 +92,8 @@ public class Admin extends HttpServlet {
 			request.setAttribute("ua_error", "Some fields were empty!");
 			request.getRequestDispatcher("/JSP/Admin/admin.jsp").forward(request, response);
 			return;
+			
+			
 		}
 		
 		request.getRequestDispatcher("/JSP/Admin/admin.jsp").forward(request, response);

@@ -12,16 +12,7 @@
 	ResultSet rs = null;
 	String query = null;
 	
-	String fName = request.getParameter("firstName");
-    String lName = request.getParameter("lastName");
-    String eml = request.getParameter("email");
-    String pass = request.getParameter("password");
-    String amka = request.getParameter("amka");
-    String speciality = request.getParameter("speciality");
-    String dayFrom=request.getParameter("dayFrom");
-    String dayTo=request.getParameter("dayTo");
-    String hourFrom=request.getParameter("hourFrom");
-    String hourTo=request.getParameter("hourTo");  
+	
 	
 
 %>
@@ -522,7 +513,7 @@
 	                 
 	                 </form>
 	                 
-	                 <% 
+	          <% 
               
               	// if success show success message
               
