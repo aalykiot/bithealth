@@ -92,10 +92,14 @@ public class Admin extends HttpServlet {
 			
 				}
 			
+            }else{
+            	request.getRequestDispatcher("/JSP/Admin/admin.jsp").forward(request, response);
+          	  	return;
             }
           
           }else{
-		       System.out.println("skata");
+        	  request.getRequestDispatcher("/JSP/Admin/admin.jsp").forward(request, response);
+        	  return;
 	      }
 		
            

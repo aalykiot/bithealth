@@ -513,27 +513,6 @@
 	                 
 	                 </form>
 	                 
-	          <% 
-              
-              	// if success show success message
-              
-              	if(request.getAttribute("ua_success") != null){
-              
-              %>
-              	<div class="alert alert-success" id="success-alert"><%= request.getAttribute("ua_success") %></div>
-              
-              <% } %>
-              
-              <% 
-              
-          		 // if error show error message
-              
-              	if(request.getAttribute("ua_error") != null){
-              
-              %>
-              	<div class="alert alert-danger"><%= request.getAttribute("ua_error") %></div>
-              
-              <% } %>
 	               </div>
 	             </div>
 	           </div>
