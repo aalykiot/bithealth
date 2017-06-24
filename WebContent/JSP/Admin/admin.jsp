@@ -435,17 +435,17 @@
 
 	                 <form class="form-group" method = "post" action ="./dashboard">
 	                     <strong>First Name</strong>
-	                     <input type="text" autocomplete="off" value = "<%=fName %>" class="form-control"/><p></p>
+	                     <input type="text" autocomplete="off" name = "fName" class="form-control"/><p></p>
 	                     <strong>Last Name</strong>
-	                     <input type="text" autocomplete="off" value = "<%=lName %>" class="form-control"/><p></p>
+	                     <input type="text" autocomplete="off" name = "lName" class="form-control"/><p></p>
 	                     <strong>Email</strong>
-	                     <input type="email" autocomplete="off" value = "<%=eml %>" class="form-control"/><p></p>
+	                     <input type="email" autocomplete="off" name = "eml" class="form-control"/><p></p>
 	                     <strong>Password</strong>
-	                     <input type="password" autocomplete="off" value = "<%=pass %>" class="form-control"/><p></p>
+	                     <input type="password" autocomplete="off" name = "pass" class="form-control"/><p></p>
 	                     <strong>Amka</strong>
-	                     <input type="text" autocomplete="off" value = "<%=amka %>" class="form-control"/><p></p>
+	                     <input type="text" autocomplete="off" name = "amka" class="form-control"/><p></p>
 	                     <strong>Speciality</strong>
-	                     <select  value = "<%=speciality %>" class="form-control">
+	                     <select  name = "speciality" class="form-control">
 	                       <option selected value='-1'>--Select Speciality--</option>
 	                       <option value="Pathology">Pathology</option>
 	                       <option value="Cardiology">Cardiology</option>
@@ -461,7 +461,7 @@
 	                     </select><p></p>
 	
 	                     <strong>Available from(Day)</strong>
-	                     <select value = "<%=dayFrom %>" class="form-control">
+	                     <select name = "dayFrom" class="form-control">
 	                       <option selected value='-1'>--Select Day--</option>
 	                       <option value="1">Monday</option>
 	                       <option value="2">Tuesday</option>
@@ -471,7 +471,7 @@
 	                     </select><p></p>
 	
 	                     <strong>Available to(Day)</strong>
-	                     <select value = "<%=dayTo %>" class="form-control">
+	                     <select name = "dayTo" class="form-control">
 	                       <option selected value='-1'>--Select Day--</option>
 	                       <option value="1">Monday</option>
 	                       <option value="2">Tuesday</option>
@@ -481,7 +481,7 @@
 	                     </select><p></p>
 	
 	                     <strong>Available from(Hour)</strong>
-	                     <select value = "<%=hourFrom %>" class="form-control">
+	                     <select name = "hourFrom" class="form-control">
 	                       <option selected value='-1'>--Select Hour--</option>
 	                       <option value="9">9:00</option>
 	                       <option value="10">10:00</option>
@@ -497,7 +497,7 @@
 	                     </select><p></p>
 	
 	                     <strong>Available to(Hour)</strong>
-	                     <select  class="form-control" value ="<%=hourTo %>">
+	                     <select  class="form-control" name ="hourTo">
 	                       <option selected value='-1'>--Select Hour--</option>
 	                       <option value="9">9:00</option>
 	                       <option value="10">10:00</option>
