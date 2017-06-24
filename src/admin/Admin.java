@@ -32,10 +32,10 @@ public class Admin extends HttpServlet {
 		
 		
 		if(request.getParameter("b1") != null ){
-			String fName = request.getParameter("firstName");
-            String lName = request.getParameter("lastName");
-            String eml = request.getParameter("email");
-            String pass = request.getParameter("password");
+			String fName = request.getParameter("fName");
+            String lName = request.getParameter("lName");
+            String eml = request.getParameter("eml");
+            String pass = request.getParameter("pass");
             String amka = request.getParameter("amka");
             String speciality = request.getParameter("speciality");
             String dayFrom=request.getParameter("dayFrom");
@@ -43,7 +43,11 @@ public class Admin extends HttpServlet {
             String hourFrom=request.getParameter("hourFrom");
             String hourTo=request.getParameter("hourTo"); 
             
-            if( fName != null && lName != null && eml != null && pass != null && amka != null  && speciality != null && dayFrom != null  && dayTo != null && hourFrom != null && hourTo != null && !fName.isEmpty() && !lName.isEmpty() && !eml.isEmpty() && !pass.isEmpty() && !amka.isEmpty() && !speciality.isEmpty() && !dayFrom.isEmpty()  && !dayTo.isEmpty() && !hourFrom.isEmpty() && !hourTo.isEmpty()  ){
+            if( fName != null && lName != null && eml != null && pass != null && amka != null  && speciality != null && dayFrom != null  && dayTo != null && hourFrom != null && hourTo != null   ){
+            	
+            	if( !fName.isEmpty() && !lName.isEmpty() && !eml.isEmpty() && !pass.isEmpty() && !amka.isEmpty() && !speciality.isEmpty() && !dayFrom.isEmpty()  && !dayTo.isEmpty() && !hourFrom.isEmpty() && !hourTo.isEmpty()){
+            		
+            	
             	
             	Connection conn = Database.getConnection();
 				
@@ -65,12 +69,12 @@ public class Admin extends HttpServlet {
 		 				ps.setString(2, lName);
 		 				ps.setString(3, eml);
 		 				ps.setString(4, pass);
-		 				ps.setString(5, amka);
+		 				ps.setLong(5, Long.parseLong(amka));
 		 				ps.setString(6, speciality);
-		 				ps.setString(7, dayFrom);
-		 				ps.setString(8, dayTo);
-		 				ps.setString(9, hourFrom);
-		 				ps.setString(10, hourTo);
+		 				ps.setInt(7, Integer.parseInt(dayFrom));
+		 				ps.setInt(8, Integer.parseInt(dayTo));
+		 				ps.setInt(9, Integer.parseInt(hourFrom));
+		 				ps.setInt(10, Integer.parseInt(hourTo));
 					
 		 				ps.executeUpdate();
 						
@@ -86,23 +90,24 @@ public class Admin extends HttpServlet {
 						}catch (Exception e) {
 							// show error
 							System.out.println(e.getMessage());
-            }
+						}
 			
+				}
+			
+            }
 		}else{
-			request.setAttribute("ua_error", "Some fields were empty!");
-			request.getRequestDispatcher("/JSP/Admin/admin.jsp").forward(request, response);
-			return;
-			
-			
-		}
+		       System.out.println("skata");
+	      }
 		
-		request.getRequestDispatcher("/JSP/Admin/admin.jsp").forward(request, response);
-		return;
-            }
-		}
-		
-		
+           
+      }
+		 	request.getRequestDispatcher("/JSP/Admin/admin.jsp").forward(request, response);
+		 	return;
 	}
+	
+		
+		
+	
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
