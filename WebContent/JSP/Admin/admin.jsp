@@ -11,8 +11,18 @@
 	PreparedStatement ps = null;
 	ResultSet rs = null;
 	String query = null;
-	String userId = null;
-	String doctorId = null;
+	
+	String fName = request.getParameter("firstName");
+    String lName = request.getParameter("lastName");
+    String eml = request.getParameter("email");
+    String pass = request.getParameter("password");
+    String amka = request.getParameter("amka");
+    String speciality = request.getParameter("speciality");
+    String dayFrom=request.getParameter("dayFrom");
+    String dayTo=request.getParameter("dayTo");
+    String hourFrom=request.getParameter("hourFrom");
+    String hourTo=request.getParameter("hourTo");  
+	
 
 %>
 
@@ -294,15 +304,15 @@
 
 					while(rs.next()){
 						
-						String fName = null;
-						String lName = null;
-						String eml = null;
+						String firName = null;
+						String lastName = null;
+						String email = null;
 						long amkaUsers = 0;
 						
 
-						fName = rs.getString(1);
-						lName = rs.getString(2);
-						eml = rs.getString(3);
+						firName = rs.getString(1);
+						lastName = rs.getString(2);
+						email = rs.getString(3);
 						amkaUsers = rs.getLong(4);
 						pendingStatus = rs.getInt(5);
 						completedStatus = rs.getInt(6);
@@ -314,9 +324,9 @@
                   
                     <tr>
                       <th scope="row"><%=j%></th>
-                      <td><%=fName%></td>
-                      <td><%=lName%></td>
-                      <td><%=eml%></td>
+                      <td><%=firName%></td>
+                      <td><%=lastName%></td>
+                      <td><%=email%></td>
                       <td><%=amkaUsers%></td>
                       <td><%=pendingStatus%></td>
                       <td><%=completedStatus%></td>
@@ -368,14 +378,14 @@
 						String firstName = null;
 						String lastName = null;
 						String email = null;
-						long amka = 0;
-						String speciality = null;
+						long amk = 0;
+						String specialty = null;
 
 						firstName = rs.getString(1);
 						lastName = rs.getString(2);
 						email = rs.getString(3);
-						amka = rs.getLong(4);
-						speciality = rs.getString(5);
+						amk = rs.getLong(4);
+						specialty = rs.getString(5);
 						
 						
 
@@ -387,8 +397,8 @@
                       <td><%=firstName %></td>
                       <td><%=lastName %></td>
                       <td><%=email %></td>
-                      <td><%=amka %></td>
-                      <td><%=speciality %></td>
+                      <td><%=amk %></td>
+                      <td><%=specialty %></td>
                       <td><button class="btn btn-danger btn-sm _admin_del_btn"><span class="glyphicon glyphicon-remove"></span></button></td>
                     <tr>
                   
@@ -421,20 +431,21 @@
                         </h4>
                       </div>
                       <div class="modal-body">
+                      
 
-	                 <form class="form-group">
+	                 <form class="form-group" method = "post" action =" Amdin.java">
 	                     <strong>First Name</strong>
-	                     <input type="text" class="form-control"/><p></p>
+	                     <input type="text" autocomplete="off" value = "<%=fName %>" class="form-control"/><p></p>
 	                     <strong>Last Name</strong>
-	                     <input type="text" class="form-control"/><p></p>
+	                     <input type="text" autocomplete="off" value = "<%=lName %>" class="form-control"/><p></p>
 	                     <strong>Email</strong>
-	                     <input type="email" class="form-control"/><p></p>
+	                     <input type="email" autocomplete="off" value = "<%=eml %>" class="form-control"/><p></p>
 	                     <strong>Password</strong>
-	                     <input type="password" class="form-control"/><p></p>
+	                     <input type="password" autocomplete="off" value = "<%=pass %>" class="form-control"/><p></p>
 	                     <strong>Amka</strong>
-	                     <input type="text" class="form-control"/><p></p>
+	                     <input type="text" autocomplete="off" value = "<%=amka %>" class="form-control"/><p></p>
 	                     <strong>Speciality</strong>
-	                     <select class="form-control">
+	                     <select  value = "<%=speciality %>" class="form-control">
 	                       <option selected value='-1'>--Select Speciality--</option>
 	                       <option value="Pathology">Pathology</option>
 	                       <option value="Cardiology">Cardiology</option>
@@ -449,8 +460,8 @@
 	                       <option value="Paediatrics">Paediatrics</option>
 	                     </select><p></p>
 	
-	                     <strong>Available from</strong>
-	                     <select class="form-control">
+	                     <strong>Available from(Day)</strong>
+	                     <select value = "<%=dayFrom %>" class="form-control">
 	                       <option selected value='-1'>--Select Day--</option>
 	                       <option value="1">Monday</option>
 	                       <option value="2">Tuesday</option>
@@ -459,8 +470,8 @@
 	                       <option value="5">Friday</option>
 	                     </select><p></p>
 	
-	                     <strong>Available to</strong>
-	                     <select class="form-control">
+	                     <strong>Available to(Day)</strong>
+	                     <select value = "<%=dayTo %>" class="form-control">
 	                       <option selected value='-1'>--Select Day--</option>
 	                       <option value="1">Monday</option>
 	                       <option value="2">Tuesday</option>
@@ -469,8 +480,8 @@
 	                       <option value="5">Friday</option>
 	                     </select><p></p>
 	
-	                     <strong>Available from</strong>
-	                     <select class="form-control">
+	                     <strong>Available from(Hour)</strong>
+	                     <select value = "<%=hourFrom %>" class="form-control">
 	                       <option selected value='-1'>--Select Hour--</option>
 	                       <option value="9">9:00</option>
 	                       <option value="10">10:00</option>
@@ -485,8 +496,8 @@
 	                       <option value="19">19:00</option>
 	                     </select><p></p>
 	
-	                     <strong>Available to</strong>
-	                     <select class="form-control">
+	                     <strong>Available to(Hour)</strong>
+	                     <select  class="form-control" value ="<%=hourTo %>">
 	                       <option selected value='-1'>--Select Hour--</option>
 	                       <option value="9">9:00</option>
 	                       <option value="10">10:00</option>
@@ -502,11 +513,34 @@
 	                     </select><p></p>
 	
 	                 </form>
+	                 
 		    		 </div>
 	                 <div class="modal-footer">
-	                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	                   <button type="button" class="btn btn-primary">Add doctor</button>
+	                   <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
+	                   <button type="submit" name = "b1" class="btn btn-primary"  >Add doctor</button>
 	                 </div>
+	                 
+	                 <% 
+              
+              	// if success show success message
+              
+              	if(request.getAttribute("ua_success") != null){
+              
+              %>
+              	<div class="alert alert-success" id="success-alert"><%= request.getAttribute("ua_success") %></div>
+              
+              <% } %>
+              
+              <% 
+              
+          		 // if error show error message
+              
+              	if(request.getAttribute("ua_error") != null){
+              
+              %>
+              	<div class="alert alert-danger"><%= request.getAttribute("ua_error") %></div>
+              
+              <% } %>
 	               </div>
 	             </div>
 	           </div>
