@@ -50,33 +50,30 @@ public class Admin extends HttpServlet {
 				if(conn != null){
 					
 					PreparedStatement ps = null;
-					ResultSet rs = null;
+					
 					String query = null;
 					
 					try {
 						
-						// Check users table
 						
-						query = "INSERT INTO doctors VALUES(null,?,?,?,?,?,?,?,?,?,?,null,null)";
+						
+						query = "INSERT INTO doctors(first_name,last_name,email,password,amka,speciality,day_from,day_to,hour_from,hour_to) VALUES(?,?,?,?,?,?,?,?,?,?)";
 						ps = conn.prepareStatement(query);
-						rs = ps.executeQuery();
+					    
+	
+						ps.setString(2, fName);
+		 				ps.setString(3, lName);
+		 				ps.setString(4, eml);
+		 				ps.setString(5, pass);
+		 				ps.setString(6, amka);
+		 				ps.setString(7, speciality);
+		 				ps.setString(8, dayFrom);
+		 				ps.setString(9, dayTo);
+		 				ps.setString(10, hourFrom);
+		 				ps.setString(11, hourTo);
+					
+		 				ps.executeUpdate();
 						
-						
-						
-						if(rs.next()){
-							ps.setString(2, fName);
-			 				ps.setString(3, lName);
-			 				ps.setString(4, eml);
-			 				ps.setString(5, pass);
-			 				ps.setString(6, amka);
-			 				ps.setString(7, speciality);
-			 				ps.setString(8, dayFrom);
-			 				ps.setString(9, dayTo);
-			 				ps.setString(10, hourFrom);
-			 				ps.setString(11, hourTo);
-						}
-						
-						rs.close();
 						ps.close();
 						
 						Database.close();
@@ -90,7 +87,7 @@ public class Admin extends HttpServlet {
 						
 						}catch (Exception e) {
 							// show error
-							response.getWriter().println(e.getMessage());
+							System.out.println(e.getMessage());
             }
 			
 		}else{
