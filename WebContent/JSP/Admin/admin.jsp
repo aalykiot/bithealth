@@ -357,7 +357,7 @@
 
 					// Finding all the doctors 
 
-					query = "SELECT first_name,last_name,email,amka,speciality  FROM doctors ";
+					query = "SELECT  first_name,last_name,email,amka,speciality,doctor_id  FROM doctors ";
 					ps = conn.prepareStatement(query);
 					
 					rs = ps.executeQuery();
@@ -366,6 +366,7 @@
 
 					while(rs.next()){
 						
+						int docId = 0;
 						String firstName = null;
 						String lastName = null;
 						String email = null;
@@ -377,12 +378,13 @@
 						email = rs.getString(3);
 						amk = rs.getLong(4);
 						specialty = rs.getString(5);
+						docId = rs.getInt(6);
 						
 						
 
 				%>
-
-                
+				   <form  method = "post" action ="./dashboard" >
+					  <input type = "hidden" name = "doctorID"  value = "<%=docId%>" >
                    <tr>
                       <th scope="row"><%=i %></th>
                       <td><%=firstName %></td>
@@ -390,9 +392,9 @@
                       <td><%=email %></td>
                       <td><%=amk %></td>
                       <td><%=specialty %></td>
-                      <td><button class="btn btn-danger btn-sm _admin_del_btn"><span class="glyphicon glyphicon-remove"></span></button></td>
+                      <td><button type="sumbit" name = "deleteButton" class="btn btn-danger btn-sm _admin_del_btn"><span class="glyphicon glyphicon-remove"></span></button></td>
                     <tr>
-                  
+                  </form>
                 
                 <% 
                 i = i + 1;
@@ -401,6 +403,11 @@
 					rs.close();
 					ps.close();
 				%>
+	
+				
+				
+				
+				
 				</tbody>
               </table>
 
@@ -508,7 +515,7 @@
 		    		 </div>
 	                 <div class="modal-footer">
 	                   <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
-	                   <button type="submit" name = "b1" class="btn btn-primary"  >Add doctor</button>
+	                   <button type="submit" name = "insertButton" class="btn btn-primary"  >Add doctor</button>
 	                 </div>
 	                 
 	                 </form>

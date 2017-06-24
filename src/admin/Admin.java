@@ -27,7 +27,9 @@ public class Admin extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		if(request.getParameter("b1") != null ){
+		//Insert Doctor into the Database
+		
+		if(request.getParameter("insertButton") != null ){
 			String fName = request.getParameter("fName");
             String lName = request.getParameter("lName");
             String eml = request.getParameter("eml");
@@ -104,14 +106,71 @@ public class Admin extends HttpServlet {
 	      }
 		
            
-      }else{
-    	  request.getRequestDispatcher("/JSP/Admin/admin.jsp").forward(request, response);
-    	  return;  
       }
+		//Delete Doctor from the Database
+		else if(request.getParameter("deleteButton") != null ){
+			    String docId = request.getParameter("doctorID");
+			    System.out.println(Integer.parseInt(docId));
+            	Connection conn = Database.getConnection();
+				
+				if(conn != null){
+					
+					PreparedStatement ps = null;
+					
+					String query = null;
+					
+					try {
+						
+						query = "DELETE FROM notifications WHERE doctor_id = ?";
+						ps = conn.prepareStatement(query);
+						ps.setInt(1, Integer.parseInt(docId));
+		 				ps.executeUpdate();
+						
+						ps.close();
+						
+						query = "DELETE FROM appointments WHERE doctor_id = ?";
+						ps = conn.prepareStatement(query);
+						ps.setInt(1, Integer.parseInt(docId));
+		 				ps.executeUpdate();
+						
+						ps.close();
+						
+						query = "DELETE FROM doctors WHERE doctor_id = ?";
+						ps = conn.prepareStatement(query);
+						ps.setInt(1, Integer.parseInt(docId));
+		 				ps.executeUpdate();
+						
+						ps.close();
+						
+						
+						Database.close(); 
+						
+						
+						response.sendRedirect("./dashboard?v=doctors");
+						return;
+						
+						
+						}catch (Exception e) {
+							// show error
+							System.out.println(e.getMessage());
+						}
+			
+				}
+			
+            }else{
+            	Database.close();
+            	
+            	request.getRequestDispatcher("/JSP/Admin/admin.jsp").forward(request, response);
+          	  	return;
+            }
 		
 	}
 	
+	
+	
 		
+	
+	
 		
 	
 
