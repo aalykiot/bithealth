@@ -93,11 +93,13 @@ public class Admin extends HttpServlet {
 				}
 			
             }else{
+            	Database.close();
             	request.getRequestDispatcher("/JSP/Admin/admin.jsp").forward(request, response);
           	  	return;
             }
           
           }else{
+        	  Database.close();
         	  request.getRequestDispatcher("/JSP/Admin/admin.jsp").forward(request, response);
         	  return;
 	      }
