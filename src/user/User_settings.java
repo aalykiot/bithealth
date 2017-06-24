@@ -112,7 +112,7 @@ public class User_settings extends HttpServlet {
 								
 								ps.executeUpdate();
 								
-								Database.close();
+								Database.close(conn);
 								
 								authSession.setAttribute("email", email); // change session for the new email
 								
@@ -122,7 +122,7 @@ public class User_settings extends HttpServlet {
 								
 							}else{
 								
-								Database.close();
+								Database.close(conn);
 								
 								request.setAttribute("ua_error", "Email already exists!");
 								request.getRequestDispatcher("/JSP/User/settings.jsp").forward(request, response);
@@ -225,7 +225,7 @@ public class User_settings extends HttpServlet {
 									
 									ps.executeUpdate();
 									
-									Database.close();
+									Database.close(conn);
 									
 									
 									request.setAttribute("up_success", "Your password has been successfully updated");
@@ -235,7 +235,7 @@ public class User_settings extends HttpServlet {
 									
 								}else{
 									
-									Database.close();
+									Database.close(conn);
 									request.setAttribute("up_error", "Old password is incorrect!");
 									request.getRequestDispatcher("/JSP/User/settings.jsp").forward(request, response);
 									return;

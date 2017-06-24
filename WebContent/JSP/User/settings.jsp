@@ -297,7 +297,7 @@
 </html>
 <%
 	
-	Database.close();
+	Database.close(conn);
 
 	}
 

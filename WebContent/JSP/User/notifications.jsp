@@ -362,6 +362,6 @@
 
 <% 
 	
-	Database.close();
+	Database.close(conn);
 	
 	} %>
