@@ -40,14 +40,14 @@ public class Admin extends HttpServlet {
             String dayTo=request.getParameter("dayTo");
             String hourFrom=request.getParameter("hourFrom");
             String hourTo=request.getParameter("hourTo"); 
-            
+            Connection conn = Database.getConnection();
             if( fName != null && lName != null && eml != null && pass != null && amka != null  && speciality != null && dayFrom != null  && dayTo != null && hourFrom != null && hourTo != null   ){
             	
             	if( !fName.isEmpty() && !lName.isEmpty() && !eml.isEmpty() && !pass.isEmpty() && !amka.isEmpty() && !speciality.isEmpty() && !dayFrom.isEmpty()  && !dayTo.isEmpty() && !hourFrom.isEmpty() && !hourTo.isEmpty()){
             		
             	
             	
-            	Connection conn = Database.getConnection();
+            	
 				
 				if(conn != null){
 					
@@ -79,7 +79,7 @@ public class Admin extends HttpServlet {
 						ps.close();
 						
 						
-						Database.close();
+						Database.close(conn);
 						
 						
 						response.sendRedirect("./dashboard?v=doctors");
@@ -94,13 +94,13 @@ public class Admin extends HttpServlet {
 				}
 			
             }else{
-            	Database.close();
+            	Database.close(conn);
             	request.getRequestDispatcher("/JSP/Admin/admin.jsp").forward(request, response);
           	  	return;
             }
           
           }else{
-        	  Database.close();
+        	  Database.close(conn);
         	  request.getRequestDispatcher("/JSP/Admin/admin.jsp").forward(request, response);
         	  return;
 	      }
@@ -111,7 +111,7 @@ public class Admin extends HttpServlet {
 		else if(request.getParameter("deleteButton") != null ){
 			    String docId = request.getParameter("doctorID");
 			    System.out.println(Integer.parseInt(docId));
-            	Connection conn = Database.getConnection();
+			    Connection conn = Database.getConnection();
 				
 				if(conn != null){
 					
@@ -143,7 +143,7 @@ public class Admin extends HttpServlet {
 						ps.close();
 						
 						
-						Database.close(); 
+						Database.close(conn); 
 						
 						
 						response.sendRedirect("./dashboard?v=doctors");
@@ -158,7 +158,7 @@ public class Admin extends HttpServlet {
 				}
 			
             }else{
-            	Database.close();
+            	
             	
             	request.getRequestDispatcher("/JSP/Admin/admin.jsp").forward(request, response);
           	  	return;
