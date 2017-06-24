@@ -28,9 +28,6 @@ public class Admin extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		request.getRequestDispatcher("/JSP/Admin/admin.jsp").forward(request, response);
-		
-		
 		if(request.getParameter("b1") != null ){
 			String fName = request.getParameter("fName");
             String lName = request.getParameter("lName");
@@ -81,9 +78,10 @@ public class Admin extends HttpServlet {
 						ps.close();
 						
 						
-						request.setAttribute("ua_success", "You have successfully added a new doctor");
-						request.getRequestDispatcher("/JSP/Admin/admin.jsp").forward(request, response);
 						Database.close();
+						
+						
+						response.sendRedirect("./dashboard?v=doctors");
 						return;
 						
 						
@@ -95,14 +93,17 @@ public class Admin extends HttpServlet {
 				}
 			
             }
-		}else{
+          
+          }else{
 		       System.out.println("skata");
 	      }
 		
            
+      }else{
+    	  request.getRequestDispatcher("/JSP/Admin/admin.jsp").forward(request, response);
+    	  return;  
       }
-		 	request.getRequestDispatcher("/JSP/Admin/admin.jsp").forward(request, response);
-		 	return;
+		
 	}
 	
 		
