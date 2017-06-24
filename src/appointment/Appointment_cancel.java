@@ -101,7 +101,7 @@ public class Appointment_cancel extends HttpServlet {
 						//ps.executeUpdate();
 						ps.close();
 						
-						Database.close();
+						Database.close(conn);
 						
 						response.sendRedirect("../user/dashboard");
 						return;

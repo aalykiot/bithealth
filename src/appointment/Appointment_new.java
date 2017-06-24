@@ -147,7 +147,7 @@ public class Appointment_new extends HttpServlet {
 								
 								request.setAttribute("error", "Entries already booked");
 							}
-							Database.close();
+							Database.close(conn);
 						}
 						else{
 							
