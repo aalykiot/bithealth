@@ -409,7 +409,7 @@
 	                  	</div>
 		        
 		        <% }else{ %>
-		        	<form action="./appointment/review" class="_panel-btn-group" method="POST">
+		        	<form action="../appointment/review" class="_panel-btn-group" method="POST">
 		        		<input type="hidden" name="appointment_id" value="<%= appId %>"/>
 		        		<div class="btn-group" role="group">
 		                    <button type="button" class="btn btn-default disabled">
