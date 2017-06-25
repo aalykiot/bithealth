@@ -27,17 +27,15 @@ public class Appointment_review extends HttpServlet {
 		
 		HttpSession authSession = request.getSession(false);
 		
-		int appointmentId = Integer.parseInt(request.getParameter("appointment_id"));
-		
 		if(authSession.getAttribute("email") != null){
 			
 			if(authSession.getAttribute("type").equals("user")){			
 			
 				if(request.getParameter("good_review") != null){
 					
-					Connection conn = Database.getConnection();
+					int appointmentId = Integer.parseInt(request.getParameter("appointment_id"));
 					
-					if(authSession.getAttribute("good_review") != null ){
+					Connection conn = Database.getConnection();
 						
 						PreparedStatement ps = null;
 						ResultSet rs = null;
@@ -88,12 +86,13 @@ public class Appointment_review extends HttpServlet {
 							Database.close(conn);
 											
 						} catch (Exception e) {
-							//if there is an error					
+							System.out.println(e.getMessage());					
 						}
-					}	
 		
 				}
 				else if(request.getParameter("bad_review") != null ){
+					
+					int appointmentId = Integer.parseInt(request.getParameter("appointment_id"));
 					
 					Connection conn = Database.getConnection();
 					
@@ -146,7 +145,7 @@ public class Appointment_review extends HttpServlet {
 							Database.close(conn);
 											
 						} catch (Exception e) {
-							//if there is an error						
+							System.out.println(e.getMessage());							
 						}
 					}
 					

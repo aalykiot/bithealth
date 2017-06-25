@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import services.Database;
 
-@WebServlet(name="Appointment_cancel", urlPatterns={"/Appointment/cancel"})
+@WebServlet(name="Appointment_cancel", urlPatterns={"/appointment/cancel"})
 public class Appointment_cancel extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -98,7 +98,7 @@ public class Appointment_cancel extends HttpServlet {
 							ps.setInt(2, doctorId);
 							ps.setInt(3, appointmentId);
 							
-							//ps.executeUpdate();
+							ps.executeUpdate();
 							ps.close();
 							
 							Database.close(conn);
@@ -107,7 +107,7 @@ public class Appointment_cancel extends HttpServlet {
 							return;
 						}
 						catch(Exception e){
-							//if there is an error
+							System.out.println(e.getMessage());
 						}
 				}
 			}
@@ -187,7 +187,7 @@ public class Appointment_cancel extends HttpServlet {
 							return;
 						}
 						catch(Exception e){
-							//if there is an error
+							System.out.println(e.getMessage());
 							
 						}
 					}
