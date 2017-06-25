@@ -404,7 +404,7 @@
 		        
 			        	<div class="btn-group _panel-btn-group" role="group">
 		                    <button type="button" class="btn btn-default disabled">
-		                      <strong>experience submited</strong>
+		                      <strong>submitted <span class="glyphicon glyphicon-ok"></span></strong>
 		                    </button>
 	                  	</div>
 		        
