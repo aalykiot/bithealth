@@ -104,7 +104,7 @@ public class Appointment_review extends HttpServlet {
 						
 						try{
 							
-							query = "SELECT doctor_id FROM appointments WHERE appointments_id= ? ";
+							query = "SELECT doctor_id FROM appointments WHERE appointment_id= ? ";
 							
 							ps = conn.prepareStatement(query);
 							ps.setInt(1, appointmentId);
