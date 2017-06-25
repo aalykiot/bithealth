@@ -28,127 +28,135 @@ public class Appointment_review extends HttpServlet {
 		HttpSession authSession = request.getSession();
 		
 		request.getSession(false);
-		int appointmentId = (int) authSession.getAttribute("appointment_id");
+		int appointmentId = Integer.parseInt(request.getParameter("appointment_id"));
+        String email = authSession.getAttribute("email").toString();
+
 		
-		if(authSession.getAttribute("good_review") != null){
+		if(email != null){
 			
-			Connection conn = Database.getConnection();
+			if(authSession.getAttribute("type").equals("user")){			
 			
-			if(authSession.getAttribute("good_review") != null ){
-				
-					PreparedStatement ps = null;
-					ResultSet rs = null;
-					String query = null;
-				try{
+				if(request.getParameter("good_review") != null){
 					
-					query = "SELECT doctor_id FROM appointments WHERE appointment_id= ? ";
+					Connection conn = Database.getConnection();
 					
-					ps = conn.prepareStatement(query);
-					ps.setInt(1, appointmentId);
-					
-					rs = ps.executeQuery(); // Execute query
-
-					int doctorId = 0;
-					
-					if(rs.next()){
+					if(authSession.getAttribute("good_review") != null ){
 						
-						doctorId = rs.getInt(1);
-						
-					}
-					
-					rs.close();
-					ps.close();
-					
-
-					query = "UPDATE appointments SET review = 'true' WHERE appointment_id = ?";
-
-					ps = conn.prepareStatement(query);
-					
-					ps.setInt(1, appointmentId);
-					
-					ps.executeUpdate();
-					
-					ps.close();
-					
-					
-					query = "UPDATE doctors SET good_review = good_review + 1 WHERE doctor_id = ?";
-
-					ps = conn.prepareStatement(query);
-					
-					ps.setInt(1, doctorId);
-					
-					ps.executeUpdate();
-					
-					ps.close();
-					
-					Database.close(conn);
-									
-				} catch (Exception e) {
-					// show error
-					System.out.println(e.getMessage());
+							PreparedStatement ps = null;
+							ResultSet rs = null;
+							String query = null;
+						try{
+							
+							query = "SELECT doctor_id FROM appointments WHERE appointment_id= ? ";
+							
+							ps = conn.prepareStatement(query);
+							ps.setInt(1, appointmentId);
+							
+							rs = ps.executeQuery(); // Execute query
+		
+							int doctorId = 0;
+							
+							if(rs.next()){
+								
+								doctorId = rs.getInt(1);
+								
+							}
+							
+							rs.close();
+							ps.close();
+							
+		
+							query = "UPDATE appointments SET review = 'true' WHERE appointment_id = ?";
+		
+							ps = conn.prepareStatement(query);
+							
+							ps.setInt(1, appointmentId);
+							
+							ps.executeUpdate();
+							
+							ps.close();
+							
+							
+							query = "UPDATE doctors SET good_review = good_review + 1 WHERE doctor_id = ?";
+		
+							ps = conn.prepareStatement(query);
+							
+							ps.setInt(1, doctorId);
+							
+							ps.executeUpdate();
+							
+							ps.close();
+							
+							Database.close(conn);
+											
+						} catch (Exception e) {
+							// show error
+							System.out.println(e.getMessage());
+						}
+					}	
+		
 				}
-			}	
-
-		}
-		else if(authSession.getAttribute("bad_review") != null ){
-			
-			Connection conn = Database.getConnection();
-			
-			if(conn != null){
-				
-					PreparedStatement ps = null;
-					ResultSet rs = null;
-					String query = null;
-				try{
+				else if(request.getParameter("bad_review") != null ){
 					
-					query = "SELECT doctor_id FROM appointments WHERE appointments_id= ? ";
+					Connection conn = Database.getConnection();
 					
-					ps = conn.prepareStatement(query);
-					ps.setInt(1, appointmentId);
-					
-					rs = ps.executeQuery(); // Execute query
-
-					int doctorId = 0;
-					
-					if(rs.next()){
+					if(conn != null){
 						
-						doctorId = rs.getInt(1);
-						
+							PreparedStatement ps = null;
+							ResultSet rs = null;
+							String query = null;
+						try{
+							
+							query = "SELECT doctor_id FROM appointments WHERE appointments_id= ? ";
+							
+							ps = conn.prepareStatement(query);
+							ps.setInt(1, appointmentId);
+							
+							rs = ps.executeQuery(); // Execute query
+		
+							int doctorId = 0;
+							
+							if(rs.next()){
+								
+								doctorId = rs.getInt(1);
+								
+							}
+							
+							rs.close();
+							ps.close();
+							
+		
+							query = "UPDATE appointments SET review = 'true' WHERE appointment_id = ?";
+		
+							ps = conn.prepareStatement(query);
+							
+							ps.setInt(1, appointmentId);
+							
+							ps.executeUpdate();
+							
+							ps.close();
+							
+							
+							query = "UPDATE doctors SET bad_review = bad_review + 1 WHERE doctor_id = ?";
+		
+							ps = conn.prepareStatement(query);
+							
+							ps.setInt(1, doctorId);
+							
+							ps.executeUpdate();
+							
+							ps.close();
+							
+							Database.close(conn);
+											
+						} catch (Exception e) {
+							// show error
+							System.out.println(e.getMessage());
+						}
 					}
 					
-					rs.close();
-					ps.close();
-					
-
-					query = "UPDATE appointments SET review = 'true' WHERE appointment_id = ?";
-
-					ps = conn.prepareStatement(query);
-					
-					ps.setInt(1, appointmentId);
-					
-					ps.executeUpdate();
-					
-					ps.close();
-					
-					
-					query = "UPDATE doctors SET bad_review = bad_review + 1 WHERE doctor_id = ?";
-
-					ps = conn.prepareStatement(query);
-					
-					ps.setInt(1, doctorId);
-					
-					ps.executeUpdate();
-					
-					ps.close();
-					
-					Database.close(conn);
-									
-				} catch (Exception e) {
-					// show error
-					System.out.println(e.getMessage());
 				}
 			}
-			
 		}
 	}
 

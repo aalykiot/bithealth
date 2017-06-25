@@ -174,7 +174,7 @@
             </div>
 
             <div class="col-sm-8">
-              <form class="form-inline" action="./new" method="GET">
+              <form class="form-inline" action="./new" method="POST">
                   <input style="width: 437px;" type="text" class="form-control" placeholder="Doctor's name..." name="appointment_query">
                   <select class="form-control" name="option">
                     <option>Pathology</option>

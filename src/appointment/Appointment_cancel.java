@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import services.Database;
 
-@WebServlet(name="Appointment_cancel", urlPatterns={"/Appointment_cancel/new"})
+@WebServlet(name="Appointment_cancel", urlPatterns={"/Appointment/cancel"})
 public class Appointment_cancel extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -25,105 +25,178 @@ public class Appointment_cancel extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		HttpSession authSession = request.getSession();
-		
-		request.getSession(false);
+		HttpSession authSession = request.getSession(false);
+
 		String email = authSession.getAttribute("email").toString();
 		
-		if(authSession.getAttribute("email") != null ){
-		
-			int appointmentId = Integer.parseInt(request.getParameter("appointment_id"));
-			int userId = 0;
+		if(request.getParameter("cancel_submit") != null){
 			
-			Connection conn = Database.getConnection();
+			if(email != null){
+				
+				if(authSession.getAttribute("type").equals("user")){
 			
-			if(conn != null){
+					int appointmentId = Integer.parseInt(request.getParameter("appointment_id"));
+					int userId = 0;
 				
-				if(request.getParameter("cancel_submit") != null){
-					
-					PreparedStatement ps = null;
-					ResultSet rs = null;
-					String query = null;
-					
-					try{
-						
-						query = "SELECT user_id FROM users WHERE email = ? ";
-						
-						ps = conn.prepareStatement(query);
-						ps.setString(1, email);
-						
-						rs = ps.executeQuery(); // Execute query
-						
-						if(rs.next()){
-							
-							userId = rs.getInt(1);
-							
-						}
-						
-						rs.close();
-						ps.close();
-						
-						//Update pending status to canceled
-						query = "UPDATE appointments SET status = 'canceled' WHERE appointment_id = ?";
+					Connection conn = Database.getConnection();
 				
-						ps = conn.prepareStatement(query);
+					if(conn != null){
+					
+						PreparedStatement ps = null;
+						ResultSet rs = null;
+						String query = null;
 						
-						ps.setInt(1, appointmentId);
-						
-						ps.executeUpdate();
-						
-						//Find doctor id
-						query = "SELECT doctor_id FROM appointments WHERE appointment_id = ? ";
-						
-						ps = conn.prepareStatement(query);
-						
-						ps.setInt(1, appointmentId);
-						
-						rs = ps.executeQuery();
-						
-						int doctorId = 0;
-						
-						if(rs.next()){
-							doctorId =  rs.getInt(1);
+						try{
+							
+							query = "SELECT user_id FROM users WHERE email = ? ";
+							
+							ps = conn.prepareStatement(query);
+							ps.setString(1, email);
+							
+							rs = ps.executeQuery(); // Execute query
+							
+							if(rs.next()){
+								
+								userId = rs.getInt(1);
+								
+							}
+							
+							rs.close();
+							ps.close();
+							
+							//Update pending status to canceled
+							query = "UPDATE appointments SET status = 'canceled' WHERE appointment_id = ?";
+					
+							ps = conn.prepareStatement(query);
+							
+							ps.setInt(1, appointmentId);
+							
+							ps.executeUpdate();
+							
+							//Find doctor id
+							query = "SELECT doctor_id FROM appointments WHERE appointment_id = ? ";
+							
+							ps = conn.prepareStatement(query);
+							
+							ps.setInt(1, appointmentId);
+							
+							rs = ps.executeQuery();
+							
+							int doctorId = 0;
+							
+							if(rs.next()){
+								doctorId =  rs.getInt(1);
+							}
+								
+							rs.close();
+							ps.close();
+							
+							query = "INSERT INTO notifications(user_id,doctor_id,appointment_id) VALUES ( ?, ?, ?) ";
+							
+							ps = conn.prepareStatement(query);
+							
+							ps.setInt(1, userId);
+							ps.setInt(2, doctorId);
+							ps.setInt(3, appointmentId);
+							
+							//ps.executeUpdate();
+							ps.close();
+							
+							Database.close(conn);
+							
+							response.sendRedirect("../user/dashboard");
+							return;
 						}
-						
-						rs.close();
-						ps.close();
-						
-						query = "INSERT INTO notifications(user_id,doctor_id,appointment_id) VALUES ( ?, ?, ?) ";
-						
-						ps = conn.prepareStatement(query);
-						
-						ps.setInt(1, userId);
-						ps.setInt(2, doctorId);
-						ps.setInt(3, appointmentId);
-						
-						//ps.executeUpdate();
-						ps.close();
-						
-						Database.close(conn);
-						
-						response.sendRedirect("../user/dashboard");
-						return;
-					}
-					catch(Exception e){
-						//if there is an error
-					}
+						catch(Exception e){
+							//if there is an error
+						}
 				}
-				else{
+			}
+			else if(authSession.getAttribute("type").equals("doctor")){
 					
-					response.sendRedirect("../");
-					return;
+				int appointmentId = Integer.parseInt(request.getParameter("appointment_id"));
+				int doctorId = 0;
+				
+				Connection conn = Database.getConnection();
+				
+				if(conn != null){
+						
+						PreparedStatement ps = null;
+						ResultSet rs = null;
+						String query = null;
+						
+						try{
+							
+							query = "SELECT doctor_id FROM doctors WHERE email = ? ";
+							
+							ps = conn.prepareStatement(query);
+							ps.setString(1, email);
+							
+							rs = ps.executeQuery(); // Execute query
+							
+							if(rs.next()){
+								
+								doctorId = rs.getInt(1);
+								
+							}
+							
+							rs.close();
+							ps.close();
+							
+							//Update pending status to canceled
+							query = "UPDATE appointments SET status = 'canceled' WHERE appointment_id = ?";
+					
+							ps = conn.prepareStatement(query);
+							
+							ps.setInt(1, appointmentId);
+							
+							ps.executeUpdate();
+							
+							//Find user id
+							query = "SELECT user_id FROM appointments WHERE appointment_id = ? ";
+							
+							ps = conn.prepareStatement(query);
+							
+							ps.setInt(1, appointmentId);
+							
+							rs = ps.executeQuery();
+							
+							int userId = 0;
+							
+							if(rs.next()){
+								userId =  rs.getInt(1);
+							}
+							
+							rs.close();
+							ps.close();
+							
+							query = "INSERT INTO notifications(user_id,doctor_id,appointment_id) VALUES ( ?, ?, ?) ";
+							
+							ps = conn.prepareStatement(query);
+							
+							ps.setInt(1, userId);
+							ps.setInt(2, doctorId);
+							ps.setInt(3, appointmentId);
+							
+							//ps.executeUpdate();
+							ps.close();
+							
+							Database.close(conn);
+							
+							response.sendRedirect("../doctor/dashboard");
+							return;
+						}
+						catch(Exception e){
+							//if there is an error
+						}
+					}
 				}
 			}
 		}
-		else{
-			
-			response.sendRedirect("../");
-			return;
-		}
+		response.sendRedirect("../");
+		return;
 	}
-
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		doGet(request, response);

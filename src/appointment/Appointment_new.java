@@ -33,150 +33,167 @@ public class Appointment_new extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		HttpSession authSession = request.getSession();
-		
-		String email = "JohnR@yagoo.com";
-		authSession.setAttribute("email", email);
-		authSession.setAttribute("type", "user");
-		
+	    HttpSession authSession = request.getSession(false);
+
+        String email = authSession.getAttribute("email").toString();
+		  
 		request.setAttribute("requested_doctor", request.getParameter("requested_doctor"));
 		
-		String day = request.getParameter("search_day");
-		String month = request.getParameter("search_month");
-		String year = request.getParameter("search_year");
-		String hour = request.getParameter("search_hour");
-		
-		if(request.getParameter("requested_doctor") == null){
-				
-				request.getRequestDispatcher("/JSP/Appointment/step1-appointment.jsp").forward(request, response);		
-				return;
-		}
-		else if(request.getParameter("submit") != null){
-		
-			if(!day.equals("-1") && !month.equals("-1") && !year.equals("-1") && !hour.equals("-1") ){
-				
-				Connection conn = Database.getConnection();
-								
-				if(conn != null){
+		if(email != null){
+			
+			if(authSession.getAttribute("type").equals("user")){
 					
-					PreparedStatement ps = null;
-					ResultSet rs = null;
-					String query = null;
-					try {
+				authSession.setAttribute("type", "user");
+				
+				String day = request.getParameter("search_day");
+				String month = request.getParameter("search_month");
+				String year = request.getParameter("search_year");
+				String hour = request.getParameter("search_hour");
+				
+				if(request.getParameter("requested_doctor") == null){
 						
-						int userId = 0;
-						int doctorId = Integer.parseInt(request.getParameter("requested_doctor"));
-						String status ="pending";
-						String scheduledDate = year + '-' + month + '-' + day + ' ' + hour + ":00:00";
-						Timestamp schedule = Timestamp.valueOf(scheduledDate);
+						request.getRequestDispatcher("/JSP/Appointment/step1-appointment.jsp").forward(request, response);		
+						return;
+				}
+				else if(request.getParameter("submit") != null){
+				
+					if(!day.equals("-1") && !month.equals("-1") && !year.equals("-1") && !hour.equals("-1") ){
 						
-						int dayFrom = 0;
-						int dayTo = 0;
-						int hourFrom= 0;
-						int hourTo = 0;
-						
-						Calendar c = Calendar.getInstance();
-						c.setTime(schedule);
-						int dayOfWeek = c.get(Calendar.DAY_OF_WEEK) - 1;
-						
-						query = "SELECT day_from, day_to, hour_from, hour_to FROM doctors WHERE doctor_id = ? ";
-						
-						ps = conn.prepareStatement(query);
-						ps.setInt(1, doctorId);
-						
-						rs = ps.executeQuery(); // Execute query
-						
-						if(rs.next()){
+						Connection conn = Database.getConnection();
+										
+						if(conn != null){
 							
-							dayFrom = rs.getInt(1);
-							dayTo = rs.getInt(2);
-							hourFrom = rs.getInt(3);
-							hourTo = rs.getInt(4);
+							PreparedStatement ps = null;
+							ResultSet rs = null;
+							String query = null;
+							try {
+								
+								int userId = 0;
+								int doctorId = Integer.parseInt(request.getParameter("requested_doctor"));
+								String status ="pending";
+								String scheduledDate = year + '-' + month + '-' + day + ' ' + hour + ":00:00";
+								Timestamp schedule = Timestamp.valueOf(scheduledDate);
+								
+								int dayFrom = 0;
+								int dayTo = 0;
+								int hourFrom= 0;
+								int hourTo = 0;
+								
+								Calendar c = Calendar.getInstance();
+								c.setTime(schedule);
+								int dayOfWeek = c.get(Calendar.DAY_OF_WEEK) - 1;
+								
+								String now = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date());
+								Timestamp thistime = Timestamp.valueOf(now);
+								
+								long millisecondNow = thistime.getTime();
+								long millisecondThen = schedule.getTime();
+								
+								if(millisecondNow < millisecondThen){
+									query = "SELECT day_from, day_to, hour_from, hour_to FROM doctors WHERE doctor_id = ? ";
+									
+									ps = conn.prepareStatement(query);
+									ps.setInt(1, doctorId);
+									
+									rs = ps.executeQuery(); // Execute query
+									
+									if(rs.next()){
+										
+										dayFrom = rs.getInt(1);
+										dayTo = rs.getInt(2);
+										hourFrom = rs.getInt(3);
+										hourTo = rs.getInt(4);
+										
+									}
+			
+									if(hourFrom <= Integer.parseInt(hour) && hourTo >= Integer.parseInt(hour) && dayFrom <= dayOfWeek && dayTo >= dayOfWeek){
+										
+										query = "SELECT user_id FROM users WHERE email = ? ";
+										
+										ps = conn.prepareStatement(query);
+										ps.setString(1, email);
+										
+										rs = ps.executeQuery(); // Execute query
+										
+										if(rs.next()){
+											
+											userId = rs.getInt(1);
+											
+										}
+										
+										rs.close();
+										ps.close();
+										
+										query = "SELECT COUNT(*) FROM appointments WHERE scheduled_date = ? AND status = 'pending'";
+										
+										ps = conn.prepareStatement(query);
+										
+										ps.setTimestamp(1, schedule);
+										
+										rs = ps.executeQuery();
+										
+										int counter = 0;
+										
+										if(rs.next()){
+											counter += Integer.parseInt(rs.getString("count"));
+										}
+										
+										rs.close();
+										ps.close();
+										
+										if(counter == 0){
+											query = "INSERT INTO appointments(user_id,doctor_id,booked_date,scheduled_date,status) VALUES ( ?, ?, now(), ?, ?) ";
+											
+											ps = conn.prepareStatement(query);
+											
+											ps.setInt(1, userId);
+											ps.setInt(2, doctorId);
+											ps.setTimestamp(3, schedule);
+											ps.setString(4, status);
+											
+											ps.executeUpdate();
+											ps.close();
+										}
+										else{
+											
+											request.setAttribute("error", "Entries already booked");
+										}
+										Database.close(conn);
+									}
+									else{
+										request.setAttribute("error", "The doctor is not available at this time");
+									}
+								}
+								else{
+									
+									request.setAttribute("error", "You can't do that");
+								}
+								
+								
+							} catch (Exception e) {
+								// show error
+								System.out.println(e.getMessage());
+								request.setAttribute("error", "Error connecting to database!");
+							}
 							
+						}else{
+							
+							request.setAttribute("error", "Error connecting to database!");
+		
 						}
-
-						if(hourFrom <= Integer.parseInt(hour) && hourTo >= Integer.parseInt(hour) && dayFrom <= dayOfWeek && dayTo >= dayOfWeek){
 							
-							query = "SELECT user_id FROM users WHERE email = ? ";
-							
-							ps = conn.prepareStatement(query);
-							ps.setString(1, email);
-							
-							rs = ps.executeQuery(); // Execute query
-							
-							if(rs.next()){
-								
-								userId = rs.getInt(1);
-								
-							}
-							
-							rs.close();
-							ps.close();
-							
-							query = "SELECT COUNT(*) FROM appointments WHERE scheduled_date = ? AND status = 'pending'";
-							
-							ps = conn.prepareStatement(query);
-							
-							ps.setTimestamp(1, schedule);
-							
-							rs = ps.executeQuery();
-							
-							int counter = 0;
-							
-							if(rs.next()){
-								counter += Integer.parseInt(rs.getString("count"));
-							}
-							
-							rs.close();
-							ps.close();
-							
-							if(counter == 0){
-								query = "INSERT INTO appointments(user_id,doctor_id,booked_date,scheduled_date,status) VALUES ( ?, ?, now(), ?, ?) ";
-								
-								ps = conn.prepareStatement(query);
-								
-								ps.setInt(1, userId);
-								ps.setInt(2, doctorId);
-								ps.setTimestamp(3, schedule);
-								ps.setString(4, status);
-								
-								ps.executeUpdate();
-								ps.close();
-							}
-							else{
-								
-								request.setAttribute("error", "Entries already booked");
-							}
-							Database.close(conn);
-						}
-						else{
-							
-							request.setAttribute("error", "The doctor is not available at this time");
-						}
+					}
+					else{
+						request.setAttribute("error", "Some fields are incorrect");
 						
-						
-					} catch (Exception e) {
-						// show error
-						System.out.println(e.getMessage());
-						request.setAttribute("error", "Error connecting to database!");
 					}
 					
-				}else{
-					
-					request.setAttribute("error", "Error connecting to database!");
-
 				}
-					
+		
+				request.getRequestDispatcher("/JSP/Appointment/step2-appointment.jsp").forward(request, response);
+				return;
 			}
-			else{
-				request.setAttribute("error", "Some fields are incorrect");
-				
-			}
-			
 		}
-
-		request.getRequestDispatcher("/JSP/Appointment/step2-appointment.jsp").forward(request, response);
-		return;
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

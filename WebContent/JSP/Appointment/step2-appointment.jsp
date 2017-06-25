@@ -189,7 +189,7 @@
             <div class="col-sm-8">
 
               <center>
-              <form class="form-inline well" action="./new" method="GET">
+              <form class="form-inline well" action="./new" method="POST">
 
                   <select class="form-control" name="search_day" >
                     <option selected value='-1'>--Select Day--</option>
