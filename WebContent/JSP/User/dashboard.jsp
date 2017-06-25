@@ -409,21 +409,22 @@
 	                  	</div>
 		        
 		        <% }else{ %>
-		        
-		        		<div class="btn-group _panel-btn-group" role="group">
+		        	<form action="./appointment/review" class="_panel-btn-group" method="POST">
+		        		<input type="hidden" name="appointment_id" value="<%= appId %>"/>
+		        		<div class="btn-group" role="group">
 		                    <button type="button" class="btn btn-default disabled">
 		                      <strong>experience</strong>
 		                    </button>
-		                    <button type="button" class="btn btn-default">
+		                    <button type="submit" name="good_review" class="btn btn-default">
 		                      <span class="glyphicon glyphicon-thumbs-up"></span>
 		                      Good
 		                    </button>
-		                    <button type="button" class="btn btn-default">
+		                    <button type="submit" name="bad_review" class="btn btn-default">
 		                      <span class="glyphicon glyphicon-thumbs-down"></span>
 		                      Bad
 		                    </button>
 		                  </div>
-		        
+		        	</form>
 		        <% } %>       
 	                
 	        <% }else{ %>
