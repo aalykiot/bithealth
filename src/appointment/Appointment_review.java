@@ -25,14 +25,11 @@ public class Appointment_review extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		HttpSession authSession = request.getSession();
+		HttpSession authSession = request.getSession(false);
 		
-		request.getSession(false);
 		int appointmentId = Integer.parseInt(request.getParameter("appointment_id"));
-        String email = authSession.getAttribute("email").toString();
-
 		
-		if(email != null){
+		if(authSession.getAttribute("email") != null){
 			
 			if(authSession.getAttribute("type").equals("user")){			
 			
@@ -42,9 +39,10 @@ public class Appointment_review extends HttpServlet {
 					
 					if(authSession.getAttribute("good_review") != null ){
 						
-							PreparedStatement ps = null;
-							ResultSet rs = null;
-							String query = null;
+						PreparedStatement ps = null;
+						ResultSet rs = null;
+						String query = null;
+						
 						try{
 							
 							query = "SELECT doctor_id FROM appointments WHERE appointment_id= ? ";
@@ -90,8 +88,7 @@ public class Appointment_review extends HttpServlet {
 							Database.close(conn);
 											
 						} catch (Exception e) {
-							// show error
-							System.out.println(e.getMessage());
+							//if there is an error					
 						}
 					}	
 		
@@ -102,9 +99,10 @@ public class Appointment_review extends HttpServlet {
 					
 					if(conn != null){
 						
-							PreparedStatement ps = null;
-							ResultSet rs = null;
-							String query = null;
+						PreparedStatement ps = null;
+						ResultSet rs = null;
+						String query = null;
+						
 						try{
 							
 							query = "SELECT doctor_id FROM appointments WHERE appointments_id= ? ";
@@ -116,10 +114,8 @@ public class Appointment_review extends HttpServlet {
 		
 							int doctorId = 0;
 							
-							if(rs.next()){
-								
-								doctorId = rs.getInt(1);
-								
+							if(rs.next()){							
+								doctorId = rs.getInt(1);								
 							}
 							
 							rs.close();
@@ -150,14 +146,15 @@ public class Appointment_review extends HttpServlet {
 							Database.close(conn);
 											
 						} catch (Exception e) {
-							// show error
-							System.out.println(e.getMessage());
+							//if there is an error						
 						}
 					}
 					
 				}
 			}
 		}
+		response.sendRedirect("../");
+		return;
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

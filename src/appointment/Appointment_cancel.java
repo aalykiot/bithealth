@@ -26,17 +26,16 @@ public class Appointment_cancel extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession authSession = request.getSession(false);
-
-		String email = authSession.getAttribute("email").toString();
 		
 		if(request.getParameter("cancel_submit") != null){
 			
-			if(email != null){
+			if(authSession.getAttribute("email") != null){
 				
 				if(authSession.getAttribute("type").equals("user")){
 			
 					int appointmentId = Integer.parseInt(request.getParameter("appointment_id"));
 					int userId = 0;
+					String email = authSession.getAttribute("email").toString();
 				
 					Connection conn = Database.getConnection();
 				
@@ -116,6 +115,7 @@ public class Appointment_cancel extends HttpServlet {
 					
 				int appointmentId = Integer.parseInt(request.getParameter("appointment_id"));
 				int doctorId = 0;
+				String email = authSession.getAttribute("email").toString();
 				
 				Connection conn = Database.getConnection();
 				
@@ -188,6 +188,7 @@ public class Appointment_cancel extends HttpServlet {
 						}
 						catch(Exception e){
 							//if there is an error
+							
 						}
 					}
 				}

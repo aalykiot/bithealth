@@ -34,12 +34,10 @@ public class Appointment_new extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 	    HttpSession authSession = request.getSession(false);
-
-        String email = authSession.getAttribute("email").toString();
 		  
 		request.setAttribute("requested_doctor", request.getParameter("requested_doctor"));
-		
-		if(email != null){
+
+		if(authSession.getAttribute("email") != null){
 			
 			if(authSession.getAttribute("type").equals("user")){
 					
@@ -71,6 +69,7 @@ public class Appointment_new extends HttpServlet {
 								int userId = 0;
 								int doctorId = Integer.parseInt(request.getParameter("requested_doctor"));
 								String status ="pending";
+								String email = authSession.getAttribute("email").toString();
 								String scheduledDate = year + '-' + month + '-' + day + ' ' + hour + ":00:00";
 								Timestamp schedule = Timestamp.valueOf(scheduledDate);
 								
@@ -90,6 +89,7 @@ public class Appointment_new extends HttpServlet {
 								long millisecondThen = schedule.getTime();
 								
 								if(millisecondNow < millisecondThen){
+									
 									query = "SELECT day_from, day_to, hour_from, hour_to FROM doctors WHERE doctor_id = ? ";
 									
 									ps = conn.prepareStatement(query);
@@ -116,9 +116,7 @@ public class Appointment_new extends HttpServlet {
 										rs = ps.executeQuery(); // Execute query
 										
 										if(rs.next()){
-											
-											userId = rs.getInt(1);
-											
+											userId = rs.getInt(1);									
 										}
 										
 										rs.close();
@@ -142,6 +140,7 @@ public class Appointment_new extends HttpServlet {
 										ps.close();
 										
 										if(counter == 0){
+											
 											query = "INSERT INTO appointments(user_id,doctor_id,booked_date,scheduled_date,status) VALUES ( ?, ?, now(), ?, ?) ";
 											
 											ps = conn.prepareStatement(query);
@@ -161,31 +160,30 @@ public class Appointment_new extends HttpServlet {
 										Database.close(conn);
 									}
 									else{
+										
 										request.setAttribute("error", "The doctor is not available at this time");
 									}
 								}
 								else{
 									
-									request.setAttribute("error", "You can't do that");
+									request.setAttribute("error", "The date is not possible");
 								}
 								
 								
 							} catch (Exception e) {
-								// show error
-								System.out.println(e.getMessage());
+
 								request.setAttribute("error", "Error connecting to database!");
 							}
 							
 						}else{
 							
 							request.setAttribute("error", "Error connecting to database!");
-		
 						}
 							
 					}
 					else{
-						request.setAttribute("error", "Some fields are incorrect");
 						
+						request.setAttribute("error", "Some fields are incorrect");					
 					}
 					
 				}
@@ -194,6 +192,8 @@ public class Appointment_new extends HttpServlet {
 				return;
 			}
 		}
+		response.sendRedirect("../");
+		return;
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

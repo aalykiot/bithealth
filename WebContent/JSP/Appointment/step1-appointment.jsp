@@ -7,67 +7,69 @@
 
 
 <%
-	if(session.getAttribute("email") == null || (!session.getAttribute("type").toString().equals("user") && !session.getAttribute("type").toString().equals("doctor"))){
+	if(session.getAttribute("email") == null){
 		
-		response.sendRedirect("./");
+		response.sendRedirect("../");
 		return;
 		
 	}else{
 		
-		String email = session.getAttribute("email").toString();
-		String searchQuery = request.getParameter("appointment_query");
-		String option = request.getParameter("option");
-		
-		if(searchQuery != null){
-			searchQuery = searchQuery.trim(); // If appointment_query isn't null trim extra white spaces
-		}else{
-			searchQuery = "";
-		}
-	
-		Connection conn = Database.getConnection();
-		
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		String query = null;
-		
-		String userId = null;
-		String first_name = null;
-		String last_name = null;
-		
-		if(conn != null){
-			
-			try{
-			
-			
-				query = "SELECT user_id, first_name, last_name FROM users WHERE email = ? ";
-				
-				ps = conn.prepareStatement(query);
-				ps.setString(1, email);
-				
-				rs = ps.executeQuery(); // Execute query
-				
-				if(rs.next()){
+		if(session.getAttribute("type").toString().equals("user") || session.getAttribute("type").toString().equals("doctor")){
 					
-					userId = Integer.toString(rs.getInt(1));
-					first_name = rs.getString(2);
-					last_name = rs.getString(3);
+			String email = session.getAttribute("email").toString();
+			String searchQuery = request.getParameter("appointment_query");
+			String option = request.getParameter("option");
+			
+			if(searchQuery != null){
+				searchQuery = searchQuery.trim(); // If appointment_query isn't null trim extra white spaces
+			}else{
+				searchQuery = "";
+			}
+		
+			Connection conn = Database.getConnection();
+			
+			PreparedStatement ps = null;
+			ResultSet rs = null;
+			String query = null;
+			
+			String userId = null;
+			String first_name = null;
+			String last_name = null;
+			
+			if(conn != null){
+				
+				try{
+				
+				
+					query = "SELECT user_id, first_name, last_name FROM users WHERE email = ? ";
+					
+					ps = conn.prepareStatement(query);
+					ps.setString(1, email);
+					
+					rs = ps.executeQuery(); // Execute query
+					
+					if(rs.next()){
+						
+						userId = Integer.toString(rs.getInt(1));
+						first_name = rs.getString(2);
+						last_name = rs.getString(3);
+						
+					}
+					
+					rs.close();
+					ps.close();
+				
+				}catch(Exception e){
+					
+					request.setAttribute("error", e.getMessage());
 					
 				}
 				
-				rs.close();
-				ps.close();
-			
-			}catch(Exception e){
 				
-				request.setAttribute("error", e.getMessage());
 				
+			}else{
+				// Send user to an error page
 			}
-			
-			
-			
-		}else{
-			// Send user to an error page
-		}
 %>
     
 <!DOCTYPE html>
@@ -317,5 +319,11 @@
 
 <%
 	Database.close(conn);
+
 	}
+	else{
+		response.sendRedirect("../");
+		return;
+	}
+}
 %>

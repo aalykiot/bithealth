@@ -2,17 +2,19 @@
     pageEncoding="UTF-8"%>
     
     <%@ 
-	page import="java.sql.Connection,java.sql.PreparedStatement,java.sql.ResultSet,java.util.Date,java.text.DateFormat,java.text.SimpleDateFormat,services.Database"
+	page import="java.sql.Connection,java.sql.PreparedStatement,java.sql.ResultSet,java.util.Date,java.text.DateFormat,java.text.SimpleDateFormat,services.Database,java.time.DayOfWeek"
 %> 
     
     
     <%
-	if(session.getAttribute("email") == null || (!session.getAttribute("type").toString().equals("user") && !session.getAttribute("type").toString().equals("doctor"))){
+	if(session.getAttribute("email") == null){
 		
-		response.sendRedirect("./");
+		response.sendRedirect("../");
 		return;
 		
 	}else{
+		
+		if(session.getAttribute("type").toString().equals("user") || session.getAttribute("type").toString().equals("doctor")){
 		
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
 		
@@ -189,6 +191,42 @@
             <div class="col-sm-8">
 
               <center>
+              
+              <%
+              	int doctorId = Integer.parseInt(request.getParameter("requested_doctor"));
+                           	
+				int dayFrom = 0;
+				int dayTo = 0;
+				int hourFrom= 0;
+				int hourTo = 0;
+				
+				query = "SELECT day_from, day_to, hour_from, hour_to FROM doctors WHERE doctor_id = ? ";
+				
+				ps = conn.prepareStatement(query);
+				ps.setInt(1, doctorId);
+				
+				rs = ps.executeQuery(); // Execute query
+				
+				if(rs.next()){
+					
+					dayFrom = rs.getInt(1);
+					dayTo = rs.getInt(2);
+					hourFrom = rs.getInt(3);
+					hourTo = rs.getInt(4);
+					
+				}
+				
+				DayOfWeek dayFromWeek = DayOfWeek.of(dayFrom);
+				DayOfWeek dayToWeek = DayOfWeek.of(dayTo);
+              
+              %>
+              
+              <div class="panel panel-default">
+				<div class="panel-body">
+				Doctors available appointments:  <b><%= dayFromWeek %></b> - <b><%= dayToWeek %></b> | <b><%= hourFrom %>:00</b> - <b><%= hourTo %>:00</b>
+				</div>
+			   </div>
+
               <form class="form-inline well" action="./new" method="POST">
 
                   <select class="form-control" name="search_day" >
@@ -261,7 +299,7 @@
                   </select>
 
                   <div style="height: 10px;"></div>
-                <button type="submit" class="btn btn-success" name="submit">Check & book appointment</button>
+                <button type="submit" class="btn btn-success" name="submit">Book appointment</button>
                  <input type="hidden" name="requested_doctor" value= <%=searchQuery%>>
               </form>
             </center>
@@ -357,4 +395,9 @@
 <%
 	Database.close(conn);
 	}
+	else{
+		response.sendRedirect("../");
+		return;
+	}
+}
 %>
