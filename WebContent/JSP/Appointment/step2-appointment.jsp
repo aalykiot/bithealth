@@ -14,7 +14,7 @@
 		
 	}else{
 		
-		if(session.getAttribute("type").toString().equals("user") || session.getAttribute("type").toString().equals("doctor")){
+		if(session.getAttribute("type").toString().equals("user")){
 		
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
 		
@@ -100,7 +100,7 @@
     </head>
     <body>
 
-      <nav class="navbar navbar-inverse navbar-fixed-top _navbar">
+		<nav class="navbar navbar-inverse navbar-fixed-top _navbar">
         <div class="container-fluid">
           <div class="container _container">
 
@@ -111,37 +111,63 @@
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand _brand" href="#" style="color:#fff;">
+                <a class="navbar-brand _brand" href="../" style="color:#fff;">
                   <span class="glyphicon glyphicon-plus _nav-glyphicon"></span>BitHealth
                 </a>
               </div>
 
               <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
-                <form class="navbar-form form-inline navbar-left">
+                <form class="navbar-form form-inline navbar-left" action="../search" method="GET">
                     <span class="glyphicon glyphicon-search _search-glyphicon" style="color:#fff;"></span>
-                    <input type="text" class="form-control _search-input" placeholder="Search doctors...">
+                    <input type="text" class="form-control _search-input" autocomplete="off" name="search_query" placeholder="Search doctors...">
                 </form>
 
 
                 <ul class="nav navbar-nav navbar-right">
-                  <li><a href="#">
+                  <li><a href="../user/dashboard">
                     <span class="glyphicon glyphicon-th-list"></span>
                   </a></li>
-                  <li><a href="#">
+	
+				<% 
+				
+					// Finding how many new notifications user has
+					
+					query = "SELECT COUNT(*) FROM notifications WHERE user_id = ? AND seen = false";
+					ps = conn.prepareStatement(query);
+					
+					ps.setInt(1, Integer.parseInt(userId));
+					
+					rs = ps.executeQuery();
+					
+					int newNotifications = 0;
+					
+					if(rs.next()){
+						
+						newNotifications = rs.getInt(1);
+						
+					}
+					
+					rs.close();
+					ps.close();
+					
+				
+				%>	
+					
+                  <li><a href="../user/notifications">
                     <span class="glyphicon glyphicon-bell"></span>
-                    <span class="badge _navbar-not">2</span>
+                    <span class="badge _navbar-not"><%= Integer.toString(newNotifications) %></span>
                   </a></li>
                   <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
                       <span class="glyphicon glyphicon-user"></span>
                       <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                      <li class="dropdown-header">Signed in as <br/><strong>Alex Alikiotis</strong></li>
+                      <li class="dropdown-header">Signed in as <br/><strong><%= first_name + " " + last_name %></strong></li>
                       <li role="separator" class="divider"></li>
-                      <li><a href="#">Settings</a></li>
+                      <li><a href="../user/settings">Settings</a></li>
                       <li role="separator" class="divider"></li>
-                      <li><a href="#">Sign out</a></li>
+                      <li><a href="../signout">Sign out</a></li>
                     </ul>
                   </li>
                 </ul>

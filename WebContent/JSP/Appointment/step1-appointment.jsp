@@ -14,16 +14,20 @@
 		
 	}else{
 		
-		if(session.getAttribute("type").toString().equals("user") || session.getAttribute("type").toString().equals("doctor")){
+		if(session.getAttribute("type").toString().equals("user")){
 					
 			String email = session.getAttribute("email").toString();
-			String searchQuery = request.getParameter("appointment_query");
-			String option = request.getParameter("option");
+			String searchQuery = request.getParameter("search_query");
+			String speciality = request.getParameter("speciality");
 			
 			if(searchQuery != null){
 				searchQuery = searchQuery.trim(); // If appointment_query isn't null trim extra white spaces
 			}else{
 				searchQuery = "";
+			}
+			
+			if(speciality == null){
+				speciality = "All";
 			}
 		
 			Connection conn = Database.getConnection();
@@ -88,7 +92,7 @@
     </head>
     <body>
 
-      <nav class="navbar navbar-inverse navbar-fixed-top _navbar">
+	<nav class="navbar navbar-inverse navbar-fixed-top _navbar">
         <div class="container-fluid">
           <div class="container _container">
 
@@ -99,37 +103,63 @@
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand _brand" href="#" style="color:#fff;">
+                <a class="navbar-brand _brand" href="../" style="color:#fff;">
                   <span class="glyphicon glyphicon-plus _nav-glyphicon"></span>BitHealth
                 </a>
               </div>
 
               <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
-                <form class="navbar-form form-inline navbar-left">
+                <form class="navbar-form form-inline navbar-left" action="../search" method="GET">
                     <span class="glyphicon glyphicon-search _search-glyphicon" style="color:#fff;"></span>
-                    <input type="text" class="form-control _search-input" placeholder="Search doctors...">
+                    <input type="text" class="form-control _search-input" autocomplete="off" name="search_query" placeholder="Search doctors...">
                 </form>
 
 
                 <ul class="nav navbar-nav navbar-right">
-                  <li><a href="#">
+                  <li><a href="../user/dashboard">
                     <span class="glyphicon glyphicon-th-list"></span>
                   </a></li>
-                  <li><a href="#">
+	
+				<% 
+				
+					// Finding how many new notifications user has
+					
+					query = "SELECT COUNT(*) FROM notifications WHERE user_id = ? AND seen = false";
+					ps = conn.prepareStatement(query);
+					
+					ps.setInt(1, Integer.parseInt(userId));
+					
+					rs = ps.executeQuery();
+					
+					int newNotifications = 0;
+					
+					if(rs.next()){
+						
+						newNotifications = rs.getInt(1);
+						
+					}
+					
+					rs.close();
+					ps.close();
+					
+				
+				%>	
+					
+                  <li><a href="../user/notifications">
                     <span class="glyphicon glyphicon-bell"></span>
-                    <span class="badge _navbar-not">2</span>
+                    <span class="badge _navbar-not"><%= Integer.toString(newNotifications) %></span>
                   </a></li>
                   <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
                       <span class="glyphicon glyphicon-user"></span>
                       <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                      <li class="dropdown-header">Signed in as <br/><strong>Alex Alikiotis</strong></li>
+                      <li class="dropdown-header">Signed in as <br/><strong><%= first_name + " " + last_name %></strong></li>
                       <li role="separator" class="divider"></li>
-                      <li><a href="#">Settings</a></li>
+                      <li><a href="../user/settings">Settings</a></li>
                       <li role="separator" class="divider"></li>
-                      <li><a href="#">Sign out</a></li>
+                      <li><a href="../signout">Sign out</a></li>
                     </ul>
                   </li>
                 </ul>
@@ -174,50 +204,65 @@
             </div>
 
             </div>
-
+			
             <div class="col-sm-8">
-              <form class="form-inline" action="./new" method="POST">
-                  <input style="width: 437px;" type="text" class="form-control" placeholder="Doctor's name..." name="appointment_query">
-                  <select class="form-control" name="option">
-                    <option>Pathology</option>
-                    <option>Cardiology</option>
-                    <option>Endocrinology</option>
-                    <option>Gastroenterology</option>
-                    <option>Microbiology</option>
-                    <option>Nephrology</option>
-                    <option>Neurology</option>
-                    <option>Ophthalmology</option>
-                    <option>Orthodontics</option>
-                    <option>Orthopaedics</option>
-                    <option>Paediatrics</option>
+              <form class="form-inline" action="./new" method="GET">
+                  <input style="width: 437px;" type="text" class="form-control" placeholder="Doctor's name..." value="<%= searchQuery %>" name="search_query">
+                  <select class="form-control" name="speciality">
+                  
+                  	<% 
+                  	
+        			String[] specialityArray = {"All","Pathology","Cardiology", "Endocrinology", "Gastroenterology", "Microbiology", "Nephrology", "Neurology", "Ophthalmology", "Orthodontics", "Orthopaedics", "Paediatrics"};
+                  	
+                  	for(int i=0; i <= 11; i++){
+                  	
+                  	%>
+                  	
+                  	<% if(speciality.equals(specialityArray[i])){ %>
+                  		
+                  	<option selected><%= specialityArray[i] %></option>
+                  	
+                  	<% }else{ %>
+                  		
+                  	<option><%= specialityArray[i] %></option>
+                  		
+                  	<% } %>
+                  	
+                  	<% } %>
+                  	
                   </select>
                   <button type="submit" class="btn btn-default">Search</button>
                   
               </form>
-
-
-              <!-- if we dont have results
-
-              <center><span style="font-size: 200px;position: relative; top: 150px; color: #E6E6E6;" class="glyphicon glyphicon-search"></span></center>
-
-              -->
-
-              <!-- if we have results -->
 
 <%
         
         	if(!searchQuery.isEmpty()){
         		
         		try{
-        		
-        		query = "SELECT COUNT(*) FROM doctors WHERE speciality ILIKE ? AND (CONCAT(first_name, ' ', last_name) ILIKE ? OR CONCAT(last_name, ' ', first_name) ILIKE ?)";
-        		
-        		
-        		ps = conn.prepareStatement(query);
-        		
-        		ps.setString(1, "%" + option + "%");
-				ps.setString(2, "%" + searchQuery + "%");
-				ps.setString(3, "%" + searchQuery + "%");
+        			
+        		if(speciality.equals("All")){
+        			
+            		query = "SELECT COUNT(*) FROM doctors WHERE (CONCAT(first_name, ' ', last_name) ILIKE ? OR CONCAT(last_name, ' ', first_name) ILIKE ?)";
+            		
+            		
+            		ps = conn.prepareStatement(query);
+            		
+    				ps.setString(1, "%" + searchQuery + "%");
+    				ps.setString(2, "%" + searchQuery + "%");
+        			
+        		}else{
+        			
+            		query = "SELECT COUNT(*) FROM doctors WHERE speciality = ? AND (CONCAT(first_name, ' ', last_name) ILIKE ? OR CONCAT(last_name, ' ', first_name) ILIKE ?)";
+            		
+            		
+            		ps = conn.prepareStatement(query);
+            		
+            		ps.setString(1, speciality);
+    				ps.setString(2, "%" + searchQuery + "%");
+    				ps.setString(3, "%" + searchQuery + "%");
+        			
+        		}
         		
         		
         		rs = ps.executeQuery();
@@ -227,6 +272,7 @@
         		if(rs.next()){
         			results = Integer.parseInt(rs.getString(1));
         		}
+      
         		
         		rs.close();
         		ps.close();
@@ -236,25 +282,38 @@
         
         <% if(results == 0){ %>
         		<div class="row">
-        		<div style="text-align: center;position: relative; top: 30px;">
+        		<div style="text-align: center;position: relative; top: 60px;">
 				<span style="color: #bbb; font-size: 100px;" class="glyphicon glyphicon-search"></span><br />
 				<span style="font-weight: bold;color: #bbb; font-size: 40px;">No results found</span>
-				</div>
+				</div></div>
         
         <% }else{ %>
-        		<span><b><%= results %></b> result(s) found for <b><i><%= searchQuery %></i></b></span><hr>
+        		<hr><span><b><%= results %></b> result(s) found for <b><i><%= searchQuery %></i></b></span><hr>
         		<div class="row">
         <%		
         		}
         
-        		query = "SELECT doctor_id, CONCAT(first_name, ' ', last_name) AS full_name, good_review, bad_review FROM doctors WHERE speciality ILIKE ? AND (CONCAT(first_name, ' ', last_name) ILIKE ? OR CONCAT(last_name, ' ', first_name) ILIKE ?)";
-		
-				ps = conn.prepareStatement(query);
-				
-        		ps.setString(1, "%" + option + "%");
-				ps.setString(2, "%" + searchQuery + "%");
-				ps.setString(3, "%" + searchQuery + "%");
-				
+				if(speciality.equals("All")){
+					
+	        		query = "SELECT doctor_id, CONCAT(first_name, ' ', last_name) AS full_name, good_review, bad_review FROM doctors WHERE (CONCAT(first_name, ' ', last_name) ILIKE ? OR CONCAT(last_name, ' ', first_name) ILIKE ?)";
+	        		
+					ps = conn.prepareStatement(query);
+					
+					ps.setString(1, "%" + searchQuery + "%");
+					ps.setString(2, "%" + searchQuery + "%");
+					
+				}else{
+					
+	        		query = "SELECT doctor_id, CONCAT(first_name, ' ', last_name) AS full_name, good_review, bad_review FROM doctors WHERE speciality ILIKE ? AND (CONCAT(first_name, ' ', last_name) ILIKE ? OR CONCAT(last_name, ' ', first_name) ILIKE ?)";
+	        		
+					ps = conn.prepareStatement(query);
+					
+	        		ps.setString(1, speciality);
+					ps.setString(2, "%" + searchQuery + "%");
+					ps.setString(3, "%" + searchQuery + "%");
+					
+				}
+        
 				
 				rs = ps.executeQuery();
         
@@ -271,7 +330,7 @@
         %>
         		
         <a href=<%="./new?requested_doctor=" + doctorId %>>
-            <div class="col-sm-3">
+            <div class="col-sm-4">
               <div class="thumbnail">
                 <center>
                   <span class="glyphicon glyphicon-user _doctor-icon"></span>
@@ -306,6 +365,13 @@
         		}
         
         %>   
+        
+        <% }else{ %>
+        
+        	<div style="text-align: center;position: relative; top: 60px;">
+			<span style="color: #bbb; font-size: 100px;" class="glyphicon glyphicon-search"></span><br />
+			<span style="font-weight: bold;color: #bbb; font-size: 40px;">No results found</span>
+			</div>
         
         <% } %>
 
