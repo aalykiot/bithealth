@@ -122,42 +122,72 @@ public class Appointment_new extends HttpServlet {
 										rs.close();
 										ps.close();
 										
-										query = "SELECT COUNT(*) FROM appointments WHERE scheduled_date = ? AND status = 'pending'";
+										query = "SELECT COUNT(*) FROM appointments WHERE doctor_id = ? AND scheduled_date = ? AND status = 'pending'";
 										
 										ps = conn.prepareStatement(query);
 										
-										ps.setTimestamp(1, schedule);
+										ps.setInt(1, doctorId);
+										ps.setTimestamp(2, schedule);
 										
 										rs = ps.executeQuery();
 										
-										int counter = 0;
+										int counterDoctor = 0;
 										
 										if(rs.next()){
-											counter += Integer.parseInt(rs.getString("count"));
+											counterDoctor += Integer.parseInt(rs.getString("count"));
 										}
 										
 										rs.close();
 										ps.close();
 										
-										if(counter == 0){
+										if(counterDoctor == 0){
 											
-											query = "INSERT INTO appointments(user_id,doctor_id,booked_date,scheduled_date,status) VALUES ( ?, ?, now(), ?, ?) ";
+											query = "SELECT COUNT(*) FROM appointments WHERE user_id = ? AND scheduled_date = ? AND status = 'pending'";
 											
 											ps = conn.prepareStatement(query);
 											
 											ps.setInt(1, userId);
-											ps.setInt(2, doctorId);
-											ps.setTimestamp(3, schedule);
-											ps.setString(4, status);
+											ps.setTimestamp(2, schedule);
 											
-											ps.executeUpdate();
+											rs = ps.executeQuery();
+											
+											int counterUser = 0;
+											
+											if(rs.next()){
+												counterUser += Integer.parseInt(rs.getString("count"));
+											}
+											
+											rs.close();
 											ps.close();
+											
+											if(counterUser == 0){
+											
+												query = "INSERT INTO appointments(user_id,doctor_id,booked_date,scheduled_date,status) VALUES ( ?, ?, now(), ?, ?) ";
+												
+												ps = conn.prepareStatement(query);
+												
+												ps.setInt(1, userId);
+												ps.setInt(2, doctorId);
+												ps.setTimestamp(3, schedule);
+												ps.setString(4, status);
+												
+												ps.executeUpdate();
+												ps.close();
+												
+												Database.close(conn);
+												
+												response.sendRedirect("../user/dashboard");
+												return;
+											}
+											else{
+												request.setAttribute("error", "User has another appointment at this time");
+											}
+											
 										}
 										else{
 											
 											request.setAttribute("error", "Entries already booked");
 										}
-										Database.close(conn);
 									}
 									else{
 										
