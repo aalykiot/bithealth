@@ -403,7 +403,6 @@
 
 	
 		%>
-		<%if(counter != 0){ %>
 				<tr>
                     <td>
                       <%= dateFormat.format(scheduled_date) %>  
@@ -411,10 +410,14 @@
                     </td>
 				</tr>
 
-        <% } } %>
+        <% } %>
+        
+        <% if(counter != 0){ %>
         	                  
                 </table>
               </div>
+              
+        <% } %>      
 
             </div>
 
