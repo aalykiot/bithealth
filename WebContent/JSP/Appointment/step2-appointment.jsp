@@ -362,6 +362,23 @@
 				request.getRequestDispatcher("/JSP/Appointment/step1-appointment.jsp").forward(request, response);
 			}
 			
+			query = "SELECT COUNT(*) FROM appointments WHERE doctor_id = ? AND status = 'pending'";
+			
+			ps = conn.prepareStatement(query);
+			
+			ps.setInt(1, doctorId);
+			
+			rs = ps.executeQuery();
+			
+			int counter = 0;
+			
+			if(rs.next()){
+				counter += Integer.parseInt(rs.getString("count"));
+			}
+			
+			rs.close();
+			ps.close();
+			
 			query = "SELECT scheduled_date FROM appointments WHERE doctor_id = ? AND status = 'pending' ORDER BY scheduled_date";
 			
 			ps = conn.prepareStatement(query);
@@ -369,14 +386,16 @@
 			ps.setInt(1, Integer.parseInt(searchQuery) );
 			
 			rs = ps.executeQuery();
+
+			
+		if(counter != 0){
 		%>
-		
 	              <div class="panel panel-default">
 
                 <div class="panel-heading"><strong>Dr. <%= doctorName %>  </strong> booked dates</div>
                 <table class="table">
                   
-		<%			
+		<%	}		
 			
 			while(rs.next()){
 				
@@ -384,6 +403,7 @@
 
 	
 		%>
+		<%if(counter != 0){ %>
 				<tr>
                     <td>
                       <%= dateFormat.format(scheduled_date) %>  
@@ -391,7 +411,7 @@
                     </td>
 				</tr>
 
-        <% } %>
+        <% } } %>
         	                  
                 </table>
               </div>

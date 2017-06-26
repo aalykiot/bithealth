@@ -26,7 +26,7 @@ public class Appointment_cancel extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession authSession = request.getSession(false);
-		
+			
 		if(request.getParameter("cancel_submit") != null){
 			
 			if(authSession.getAttribute("email") != null){
