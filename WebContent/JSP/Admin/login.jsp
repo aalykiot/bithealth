@@ -17,7 +17,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Developer Console</title>
+    <title>Developers Console</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/adminl.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/RESOURCES/css/bootstrap.min.css" rel="stylesheet">
@@ -36,7 +36,7 @@
         <div class="panel _panel panel-default" >
             <div class="panel-heading">
                 <div class="panel-title text-center _dev-brand">
-                  <span class="glyphicon glyphicon-plus" style="font-size: 12px;position: relative; top: -1px;"></span>Bithealth Developer Console
+                  <span class="glyphicon glyphicon-plus" style="font-size: 12px;position: relative; top: -1px;"></span>Bithealth Developers Console
                 </div>
             </div>
 
@@ -96,19 +96,19 @@ function(){for(var a=0,b=["ms","moz","webkit","o"],c=0;c<b.length&&!window.reque
 $(function(){
 
   $('#particles').particleground({
-      minSpeedX: 0.1,
+      minSpeedX: 0.4,
       maxSpeedX: 0.7,
-      minSpeedY: 0.1,
+      minSpeedY: 0.4,
       maxSpeedY: 0.7,
       directionX: 'center', // 'center', 'left' or 'right'. 'center' = dots bounce off edges
       directionY: 'center', // 'center', 'up' or 'down'. 'center' = dots bounce off edges
-      density: 5500, // How many particles will be generated: one particle every n pixels
+      density: 5000, // How many particles will be generated: one particle every n pixels
       dotColor: '#D7D7D7',
-      lineColor: '#D7D7D7',
-      particleRadius: 4, // Dot size
+      lineColor: '#D2D2D2',
+      particleRadius: 5, // Dot size
       lineWidth: 0.5,
       curvedLines: true,
-      proximity: 125, // How close two dots need to be before they join
+      proximity: 150, // How close two dots need to be before they join
       parallax: false
   });
 

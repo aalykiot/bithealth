@@ -39,7 +39,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Developer Console</title>
+        <title>Developers Console</title>
         <link href="${pageContext.request.contextPath}/RESOURCES/css/bootstrap.min.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/RESOURCES/css/inner.css" rel="stylesheet">
 
@@ -61,7 +61,7 @@
                   <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand _dev-brand" href="#" style="color:#fff;">
-                  <span class="glyphicon glyphicon-plus" style="font-size: 13px;position:relative;top:-1px;"></span>Developer Console
+                  <span class="glyphicon glyphicon-plus" style="font-size: 13px;position:relative;top:-1px;"></span>Developers Console
                 </a>
               </div>
 

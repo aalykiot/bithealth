@@ -15,11 +15,11 @@ import javax.servlet.http.HttpSession;
 import services.Database;
 
 @WebServlet(name="Admin_dashboard", urlPatterns={"/admin/dashboard"})
-public class Admin extends HttpServlet {
+public class Admin_dashboard extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 
-    public Admin() {
+    public Admin_dashboard() {
         super();
 
     }
@@ -169,13 +169,6 @@ public class Admin extends HttpServlet {
 	}
 	
 	
-	
-		
-	
-	
-		
-	
-
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
