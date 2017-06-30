@@ -354,7 +354,7 @@ $(function(){
       particleRadius: 4, // Dot size
       lineWidth: 0.5,
       curvedLines: true,
-      proximity: 130, // How close two dots need to be before they join
+      proximity: 125, // How close two dots need to be before they join
       parallax: false
   });
 
