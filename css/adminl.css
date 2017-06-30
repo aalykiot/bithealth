@@ -1,13 +1,26 @@
-body {
-    background-color: white;
+html,body {
+    height:100%;
+    margin:0;
+    padding:0
 }
 
 #loginbox {
-    margin-top: 30px;
+    width: 450px;
+    margin: -40px auto 0 auto;
 }
 
-#loginbox > div:first-child {
-    padding-bottom: 10px;
+._container-fluid{
+  height:100%;
+  display:table;
+  width: 100%;
+  padding: 0;
+}
+
+._row-fluid {height: 100%; display:table-cell; vertical-align: middle;}
+
+._centering {
+  float:none;
+  margin:0 auto;
 }
 
 .iconmelon {
@@ -40,6 +53,11 @@ body {
     right: 0;
     position: absolute;
     z-index: -2;
+    -webkit-filter: blur(2px);
+    -moz-filter: blur(2px);
+    -o-filter: blur(2px);
+    -ms-filter: blur(2px);
+    filter: blur(2px);
 }
 
 .iconmelon,
@@ -65,9 +83,4 @@ body {
     font-size: 1.2em;
     font-family: 'Open Sans', sans-serif;
     color: #8D8D8D;
-}
-
-._panel{
-  margin: 20% auto;
-  width: 400px;
 }
