@@ -2,19 +2,34 @@
     pageEncoding="UTF-8"%>
 
 <%@
-	page import="java.sql.Connection,java.sql.PreparedStatement,java.sql.ResultSet,java.util.Date,java.text.DateFormat,java.text.SimpleDateFormat,services.Database"
+	page import="java.sql.Connection,java.sql.PreparedStatement,java.sql.ResultSet,services.Database"
 %>
 
 <%
-	Connection conn = Database.getConnection();
 	
-	PreparedStatement ps = null;
-	ResultSet rs = null;
-	String query = null;
+	// Tell browser not to cache this page
 	
-	
-	
+	response.setHeader("Cache-Control","no-cache,no-store,must-revalidate");
+	response.setHeader("Pragma","no-cache");
+	response.setDateHeader("Expires", 0);
 
+	if(session.getAttribute("username") == null || !session.getAttribute("type").toString().equals("admin")){
+		
+		response.sendRedirect("./login");
+		return;
+		
+	}else{
+		
+		
+		String username = session.getAttribute("username").toString();
+		
+		Connection conn = Database.getConnection();
+		
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String query = null;
+
+	
 %>
 
 
@@ -24,7 +39,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Admin Panel</title>
+        <title>Developer Console</title>
         <link href="${pageContext.request.contextPath}/RESOURCES/css/bootstrap.min.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/RESOURCES/css/inner.css" rel="stylesheet">
 
@@ -46,7 +61,7 @@
                   <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand _dev-brand" href="#" style="color:#fff;">
-                  Bithealth Developers
+                  <span class="glyphicon glyphicon-plus" style="font-size: 13px;position:relative;top:-1px;"></span>Developer Console
                 </a>
               </div>
 
@@ -59,9 +74,9 @@
                       <span class="glyphicon glyphicon-user"></span>
                       <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                      <li class="dropdown-header">Signed in as <br/><strong>Alex Alikiotis</strong></li>
+                      <li class="dropdown-header">Signed in as <br/><strong><%= username %></strong></li>
                       <li role="separator" class="divider"></li>
-                      <li><a href="#">Sign out</a></li>
+                      <li><a href="../signout">Sign out</a></li>
                     </ul>
                   </li>
                 </ul>
@@ -534,6 +549,6 @@
 
 <%
 		Database.close(conn);
-	
+	}
 
 %>
