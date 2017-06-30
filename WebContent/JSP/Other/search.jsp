@@ -8,6 +8,12 @@
 
 <%
 
+	// Tell browser not to cache this page
+	
+	response.setHeader("Cache-Control","no-cache,no-store,must-revalidate");
+	response.setHeader("Pragma","no-cache");
+	response.setDateHeader("Expires", 0);
+
 	if(session.getAttribute("email") == null || (!session.getAttribute("type").toString().equals("user") && !session.getAttribute("type").toString().equals("doctor"))){
 		
 		response.sendRedirect("./");
