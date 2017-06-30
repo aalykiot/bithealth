@@ -87,7 +87,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 							
 							Database.close(conn);
 							
-							request.setAttribute("error", "Admin doesn't exists!");
+							request.setAttribute("error", "Username or Password is incorrect!");
 							request.getRequestDispatcher("/JSP/Admin/login.jsp").forward(request, response);
 							return;
 							

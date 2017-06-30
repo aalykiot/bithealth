@@ -1,11 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
+
+<%
+	if(session.getAttribute("username") == null || !session.getAttribute("type").toString().equals("admin")){
+		
+		response.sendRedirect("../");
+		return;
+		
+	}else{
+
+%>
+		
         
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Admin login</title>
+    <title>Developer Console</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/adminl.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/RESOURCES/css/bootstrap.min.css" rel="stylesheet">
@@ -46,25 +58,21 @@
                         <!-- Button -->
                         <div class="col-sm-12 controls">
                             <button type="submit" name="submit" class="btn btn-primary pull-right"><i class="glyphicon glyphicon-log-in"></i> Log in</button>
+                        	<% 
+            
+            				if(request.getAttribute("error") != null){
+            
+            				%>
+
+            				<div class="alert alert-danger" style="padding: 6px;margin-bottom: -10px;" role="alert"><%= request.getAttribute("error") %></div>
+            
+            				<% } %>
                         </div>
                     </div>
 
                 </form>
 
             </div>
-            <% 
-            
-            	if(request.getAttribute("error") != null){
-            
-            %>
-            
-            	<div class="row">
-                	<div class="col-lg-4 col-lg-offset-4 _signin-header">
-                    	<div class="alert alert-danger" role="alert"><%= request.getAttribute("error") %></div>
-                	</div>
-            	</div>
-            
-            <% } %>
             
         </div>
         
@@ -354,4 +362,6 @@ $(function(){
 </script>
 </body>
 </html>
+
+<% } %>
 
