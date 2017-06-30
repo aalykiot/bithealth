@@ -28,10 +28,17 @@ public class Signout extends HttpServlet {
 		
 		if(authSession != null){
 			if(authSession.getAttribute("email") != null || authSession.getAttribute("username") != null){
-				// Invalidate session
-				authSession.invalidate();
-				response.sendRedirect("./");
-				return;
+				if(authSession.getAttribute("username") != null){
+					// Invalidate admin session
+					authSession.invalidate();
+					response.sendRedirect("./admin/login");
+					return;
+				}else{
+					// Invalidate user or doctor session
+					authSession.invalidate();
+					response.sendRedirect("./");
+					return;
+				}
 			}else{
 				response.sendRedirect("./");
 				return;
