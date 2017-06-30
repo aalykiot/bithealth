@@ -115,7 +115,7 @@ public class Index extends HttpServlet {
 								ps.executeUpdate();
 								ps.close();
 								
-								Database.close();
+								Database.close(conn);
 								
 								// Create new user session
 								
@@ -131,7 +131,7 @@ public class Index extends HttpServlet {
 								
 							}else{
 								
-								Database.close();
+								Database.close(conn);
 								
 								request.setAttribute("error", "Email or AMKA already exists!");
 								request.getRequestDispatcher("/JSP/index.jsp").forward(request, response);

@@ -26,11 +26,23 @@ public class Signout extends HttpServlet {
 
 		HttpSession authSession = request.getSession(false);
 		
-		if(authSession != null && authSession.getAttribute("email") != null){
-			// Invalidate session
-			authSession.invalidate();
-			response.sendRedirect("./");
-			return;
+		if(authSession != null){
+			if(authSession.getAttribute("email") != null || authSession.getAttribute("username") != null){
+				if(authSession.getAttribute("username") != null){
+					// Invalidate admin session
+					authSession.invalidate();
+					response.sendRedirect("./admin/login");
+					return;
+				}else{
+					// Invalidate user or doctor session
+					authSession.invalidate();
+					response.sendRedirect("./");
+					return;
+				}
+			}else{
+				response.sendRedirect("./");
+				return;
+			}
 			
 		}else{
 			// Visitor has no authSession send him to welcome page
