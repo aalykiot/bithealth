@@ -349,8 +349,8 @@ $(function(){
       directionX: 'center', // 'center', 'left' or 'right'. 'center' = dots bounce off edges
       directionY: 'center', // 'center', 'up' or 'down'. 'center' = dots bounce off edges
       density: 5500, // How many particles will be generated: one particle every n pixels
-      dotColor: '#ddd',
-      lineColor: '#ddd',
+      dotColor: '#D7D7D7',
+      lineColor: '#D7D7D7',
       particleRadius: 4, // Dot size
       lineWidth: 0.5,
       curvedLines: true,
