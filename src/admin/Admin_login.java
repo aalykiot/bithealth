@@ -26,11 +26,7 @@ public class Admin_login extends HttpServlet {
 
 
 protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	HttpSession authSession = request.getSession();
-	
-	authSession.setAttribute("username","George");
-	authSession.setAttribute("type","admin");
-	
+
 		if(request.getParameter("submit") != null){
 			
 			String username = request.getParameter("username");
@@ -79,10 +75,10 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 							Database.close(conn);
 							
 							// Admin found in admins table
-							//HttpSession authSession = request.getSession();
+							HttpSession authSession = request.getSession();
 							authSession.setAttribute("usename", username);
 							authSession.setAttribute("type", "admin");
-							response.sendRedirect("./admin/login");
+							response.sendRedirect("./dashboard");
 							return;
 											
 						}else{
@@ -104,7 +100,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 				}else{
 				
 					request.setAttribute("error", "Error connecting to database!");
-					request.getRequestDispatcher("/JSP/Other/signin.jsp").forward(request, response);
+					request.getRequestDispatcher("/JSP/Admin/login.jsp").forward(request, response);
 					return;
 					
 				}
