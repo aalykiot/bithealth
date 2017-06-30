@@ -3,9 +3,9 @@
 
 
 <%
-	if(session.getAttribute("username") == null || !session.getAttribute("type").toString().equals("admin")){
+	if(session.getAttribute("username") != null){
 		
-		response.sendRedirect("../");
+		response.sendRedirect("./dashboard");
 		return;
 		
 	}else{

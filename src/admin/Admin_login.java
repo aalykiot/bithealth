@@ -76,7 +76,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 							
 							// Admin found in admins table
 							HttpSession authSession = request.getSession();
-							authSession.setAttribute("usename", username);
+							authSession.setAttribute("username", username);
 							authSession.setAttribute("type", "admin");
 							response.sendRedirect("./dashboard");
 							return;
