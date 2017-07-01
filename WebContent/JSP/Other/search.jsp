@@ -14,7 +14,7 @@
 	response.setHeader("Pragma","no-cache");
 	response.setDateHeader("Expires", 0);
 
-	if(session.getAttribute("email") == null || (!session.getAttribute("type").toString().equals("user") && !session.getAttribute("type").toString().equals("doctor"))){
+	if(session.getAttribute("email") == null && (!session.getAttribute("type").toString().equals("user") || !session.getAttribute("type").toString().equals("doctor"))){
 		
 		response.sendRedirect("./");
 		return;
@@ -37,16 +37,23 @@
 		ResultSet rs = null;
 		String query = null;
 		
-		String userId = null;
+		String sId = null;
 		String first_name = null;
 		String last_name = null;
 		
 		if(conn != null){
 			
 			try{
-			
-			
-				query = "SELECT user_id, first_name, last_name FROM users WHERE email = ? ";
+				
+				if(session.getAttribute("type").toString().equals("user")){
+					
+					query = "SELECT user_id, first_name, last_name FROM users WHERE email = ? ";
+					
+				}else{
+					
+					query = "SELECT doctor_id, first_name, last_name FROM doctors WHERE email = ? ";
+					
+				}
 				
 				ps = conn.prepareStatement(query);
 				ps.setString(1, email);
@@ -55,7 +62,7 @@
 				
 				if(rs.next()){
 					
-					userId = Integer.toString(rs.getInt(1));
+					sId = Integer.toString(rs.getInt(1));
 					first_name = rs.getString(2);
 					last_name = rs.getString(3);
 					
@@ -66,7 +73,7 @@
 			
 			}catch(Exception e){
 				
-				request.setAttribute("error", e.getMessage());
+				System.out.println("Runtime-log: " + e.getMessage());
 				
 			}
 			
@@ -125,12 +132,21 @@
 	
 				<% 
 				
-					// Finding how many new notifications user has
+					// Finding how many new notifications
 					
-					query = "SELECT COUNT(*) FROM notifications WHERE user_id = ? AND seen = false";
+					if(session.getAttribute("type").toString().equals("user")){
+						
+						query = "SELECT COUNT(*) FROM notifications WHERE user_id = ? AND seen = false";
+						
+					}else{
+						
+						query = "SELECT COUNT(*) FROM notifications WHERE doctor_id = ? AND seen = false";
+						
+					}
+					
 					ps = conn.prepareStatement(query);
 					
-					ps.setInt(1, Integer.parseInt(userId));
+					ps.setInt(1, Integer.parseInt(sId));
 					
 					rs = ps.executeQuery();
 					
@@ -239,8 +255,17 @@
         		
         		
         %>
+        
+        <% if(session.getAttribute("type").toString().equals("user")){ %>
+        
+        	<a href="<%="./new?requested_doctor=" + doctorId %>">
+        
+        <% }else{ %>
+        
+        	<a href="#">
+        
+        <% } %>
         		
-        <a href="#">
             <div class="col-sm-3">
               <div class="thumbnail">
                 <center>
@@ -272,7 +297,7 @@
         		
         		
         		}catch(Exception e){
-        			request.setAttribute("debug", e.getMessage());
+        			System.out.println("Runtime-log: " + e.getMessage());
         		}
         
         %>   
