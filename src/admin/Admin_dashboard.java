@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import services.Database;
+import services.Encryption;
 
 @WebServlet(name="Admin_dashboard", urlPatterns={"/admin/dashboard"})
 public class Admin_dashboard extends HttpServlet {
@@ -23,7 +24,8 @@ public class Admin_dashboard extends HttpServlet {
         super();
 
     }
-
+    
+    
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -34,12 +36,13 @@ public class Admin_dashboard extends HttpServlet {
             String lName = request.getParameter("lName");
             String eml = request.getParameter("eml");
             String pass = request.getParameter("pass");
+            String hashPass = Encryption.hash(pass);
             String amka = request.getParameter("amka");
             String speciality = request.getParameter("speciality");
-            String dayFrom=request.getParameter("dayFrom");
-            String dayTo=request.getParameter("dayTo");
-            String hourFrom=request.getParameter("hourFrom");
-            String hourTo=request.getParameter("hourTo"); 
+            String dayFrom = request.getParameter("dayFrom");
+            String dayTo = request.getParameter("dayTo");
+            String hourFrom = request.getParameter("hourFrom");
+            String hourTo = request.getParameter("hourTo"); 
             Connection conn = Database.getConnection();
             if( fName != null && lName != null && eml != null && pass != null && amka != null  && speciality != null && dayFrom != null  && dayTo != null && hourFrom != null && hourTo != null   ){
             	
@@ -66,7 +69,7 @@ public class Admin_dashboard extends HttpServlet {
 						ps.setString(1, fName);
 		 				ps.setString(2, lName);
 		 				ps.setString(3, eml);
-		 				ps.setString(4, pass);
+		 				ps.setString(4, hashPass);
 		 				ps.setLong(5, Long.parseLong(amka));
 		 				ps.setString(6, speciality);
 		 				ps.setInt(7, Integer.parseInt(dayFrom));
@@ -95,13 +98,13 @@ public class Admin_dashboard extends HttpServlet {
 			
             }else{
             	Database.close(conn);
-            	request.getRequestDispatcher("/JSP/Admin/admin.jsp").forward(request, response);
+            	request.getRequestDispatcher("/JSP/Admin/dashboard.jsp").forward(request, response);
           	  	return;
             }
           
           }else{
         	  Database.close(conn);
-        	  request.getRequestDispatcher("/JSP/Admin/admin.jsp").forward(request, response);
+        	  request.getRequestDispatcher("/JSP/Admin/dashboard.jsp").forward(request, response);
         	  return;
 	      }
 		
@@ -160,7 +163,7 @@ public class Admin_dashboard extends HttpServlet {
             }else{
             	
             	
-            	request.getRequestDispatcher("/JSP/Admin/admin.jsp").forward(request, response);
+            	request.getRequestDispatcher("/JSP/Admin/dashboard.jsp").forward(request, response);
           	  	return;
             }
 		
@@ -169,6 +172,9 @@ public class Admin_dashboard extends HttpServlet {
 	}
 	
 	
+
+	
+
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
