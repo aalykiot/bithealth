@@ -180,7 +180,7 @@ public class Appointment_new extends HttpServlet {
 												return;
 											}
 											else{
-												request.setAttribute("error", "User has another appointment at this time");
+												request.setAttribute("error", "You have another appointment at this time");
 											}
 											
 										}
