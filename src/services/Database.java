@@ -36,7 +36,7 @@ public class Database {
 			
 		}catch(Exception e){
 			
-			System.out.println("Connection to database is null and can not be closed!");
+			System.out.println("Runtime-log: " + e.getMessage());
 			
 		}
 		

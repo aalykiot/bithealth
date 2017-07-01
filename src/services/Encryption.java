@@ -19,6 +19,7 @@ public class Encryption {
 			return sb.toString();
 			
 		}catch(Exception e){
+			System.out.println("Runtime-log: " + e.getMessage());
 			return null;
 		}
 	}
