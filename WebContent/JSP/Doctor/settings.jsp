@@ -3,7 +3,7 @@
     
    
 <%@ 
-	page import="java.sql.Connection,java.sql.PreparedStatement,java.sql.ResultSet,services.Database"
+	page import="java.sql.Connection,java.sql.PreparedStatement,java.sql.ResultSet,services.Database,java.util.Calendar"
 %>     
     
 <%
@@ -210,10 +210,13 @@
                 </div>
                 
                    <% 
-                   
+                                      
                     String dayFrom = null;
+                	String dayTo = null;
+                	String hourFrom = null;
+                	String hourTo = null;
                     try{
-						query = "SELECT day_from from doctors WHERE doctor_id = ";
+						query = "SELECT day_from, day_to, hour_from, hour_to FROM doctors WHERE doctor_id = ? ";
 					
 						ps = conn.prepareStatement(query);
 						
@@ -224,20 +227,51 @@
 						if(rs.next()){
 						
 						dayFrom = rs.getString(1);
+						dayTo = rs.getString(2);
+						hourFrom = rs.getString(3);
+						hourTo = rs.getString(4);
 				
 						}
 						
 					}catch(Exception e){
 	        			request.setAttribute("debug", e.getMessage());
 	        		}
+                    
+                   
+                    dayFrom = dayOfWeek(dayFrom);
+                    dayTo = dayOfWeek(dayTo);
+
         			%>
+        			
+        			<%! 
+					   public String dayOfWeek(String day) { 
+					      
+                        if(day.equals("1")){
+                        	return "Monday";
+                        }
+                        else if(day.equals("2")){
+                        	return "Tuesday";
+                        }
+                        else if(day.equals("3")){
+                        	return "Wednesday";
+   						}
+                        else if(day.equals("4")){
+                        	return "Thrusday";
+                        }
+                        else if(day.equals("5")){
+                        	return "Friday";
+                        }
+                        return null;
+                        
+					   } 
+					%>
         			
         			
                  <div class="form-group"> 
                  <label for="exampleInputEmail1">Available from</label> 
                  <select  class="form-control" name ="DayFrom">
                  
-                   <option selected value='-1'>--Select Day--</option> 
+                    
                    <% 
                  	
         	     	String[] dayArray = {"Monday","Tuesday","Wednesday", "Thursday", "Friday"};
@@ -246,7 +280,7 @@
                  	
                  	%>
                  	
-                 	<% if(dayFrom.equals(Integer.toString(i)) ){ %>
+                 	<% if(dayFrom == dayArray[i] ){ %>
                  		
                  	<option selected value=<%= i+1 %> > <%= dayArray[i] %></option>
                  	
@@ -263,46 +297,76 @@
                 <div class="form-group"> 
                   <label for="exampleInputEmail1">Available to</label> 
                   <select  class="form-control" name ="DayTo">
-                    <option selected value='-1'>--Select Day--</option> 
-                    <option value="1">Monday</option> 
-                    <option value="2">Tuesday</option> 
-                    <option value="3">Wednesday</option> 
-                    <option value="4">Thursday</option> 
-                    <option value="5">Friday</option> 
+                  
+                   <% 
+                 	
+                 	for(int i=0; i < 5; i++){
+                 	
+                 	%>
+                 	
+                 	<% if(dayTo == dayArray[i] ){ %>
+                 		
+                 	<option selected value=<%= i+1 %> > <%= dayArray[i] %></option>
+                 	
+                 	<% }else{ %>
+                 		
+                 	<option value=<%= i+1 %> > <%= dayArray[i] %></option>
+                 		
+                 	<% } %>
+                 	
+                 	<% } %>
                   </select> 
                 </div> 
                 <div class="form-group"> 
                   <label for="exampleInputEmail1">Available from</label> 
                   <select  class="form-control" name ="hourFrom">
+                        	                 	
                     <option selected value='-1'>--Select Hour--</option> 
-                    <option value="9">9:00</option> 
-                    <option value="10">10:00</option> 
-                    <option value="11">11:00</option> 
-                    <option value="12">12:00</option> 
-                    <option value="13">13:00</option> 
-                    <option value="14">14:00</option> 
-                    <option value="15">15:00</option> 
-                    <option value="16">16:00</option> 
-                    <option value="17">17:00</option> 
-                    <option value="18">18:00</option> 
-                    <option value="19">19:00</option> 
+                    
+                    <% 
+        	     	String[] hourArray = {"9","10","11","12","13","14","15","16","17","18","19"};
+                    
+                 	for(int i=0; i < 11; i++){
+                 	
+                 	%>
+                 	
+                 	<% if(hourFrom.equals(hourArray[i]) ){ %>
+                 		
+                 	<option selected value=<%= i+9 %> > <%= hourArray[i] %>:00</option>
+                 	
+                 	<% }else{ %>
+                 		
+                 	<option value=<%= i+9 %> > <%= hourArray[i] %>:00</option>
+                 		
+                 	<% } %>
+                 	
+                 	<% } %>
+                 	
+                 
                   </select> 
                 </div> 
                 <div class="form-group"> 
                   <label for="exampleInputEmail1">Available to</label> 
                   <select  class="form-control" name ="hourTo">
                     <option selected value='-1'>--Select Hour--</option> 
-                    <option value="9">9:00</option> 
-                    <option value="10">10:00</option> 
-                    <option value="11">11:00</option> 
-                    <option value="12">12:00</option> 
-                    <option value="13">13:00</option> 
-                    <option value="14">14:00</option> 
-                    <option value="15">15:00</option> 
-                    <option value="16">16:00</option> 
-                    <option value="17">17:00</option> 
-                    <option value="18">18:00</option> 
-                    <option value="19">19:00</option> 
+                    
+                    <% 
+                    
+                 	for(int i=0; i < 11; i++){
+                 	
+                 	%>
+                 	
+                 	<% if(hourTo.equals(hourArray[i]) ){ %>
+                 		
+                 	<option selected value=<%= i+9 %> > <%= hourArray[i] %>:00</option>
+                 	
+                 	<% }else{ %>
+                 		
+                 	<option value=<%= i+9 %> > <%= hourArray[i] %>:00</option>
+                 		
+                 	<% } %>
+                 	
+                 	<% } %>
                   </select> 
                 </div> 
                 <button type="submit" name="update_settings" class="btn btn-md btn-success">Update settings</button>
