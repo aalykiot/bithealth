@@ -113,7 +113,7 @@ public class Admin_dashboard extends HttpServlet {
 		//Delete Doctor from the Database
 		else if(request.getParameter("deleteButton") != null ){
 			    String docId = request.getParameter("doctorID");
-			    System.out.println(Integer.parseInt(docId));
+			    
 			    Connection conn = Database.getConnection();
 				
 				if(conn != null){
