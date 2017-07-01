@@ -40,6 +40,10 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 				String firstName = request.getParameter("first_name");
 				String lastName = request.getParameter("last_name");
 				String email = request.getParameter("email");
+	            String dayFrom=request.getParameter("dayFrom");
+	            String dayTo=request.getParameter("dayTo");
+	            String hourFrom=request.getParameter("hourFrom");
+	            String hourTo=request.getParameter("hourTo");
 				
 				if(!firstName.isEmpty() && !lastName.isEmpty() && !email.isEmpty()){
 					
@@ -55,7 +59,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 						
 						try {
 							
-							// Check users table
+							// Check doctors table
 							
 							query = "SELECT COUNT(*) FROM doctors WHERE email = ? ";
 							
@@ -75,7 +79,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 							ps.close();
 							
 							
-							// Check doctors table
+							// Check users table
 							
 							query = "SELECT COUNT(*) FROM users WHERE email = ? ";
 							
@@ -96,20 +100,24 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 							if(counter == 0 || email.equals(authSession.getAttribute("email"))){
 								
 
-								// Update users database
+								// Update doctors database
 								
-								query = "UPDATE doctors SET first_name = ?, last_name = ?, email = ? WHERE email = ?";
+								query = "UPDATE doctors SET first_name = ?, last_name = ?, email = ?, day_from = ?, day_to = ?, hour_from = ?, hour_to = ?  WHERE email = ?";
 
 								ps = conn.prepareStatement(query);
 								
 								ps.setString(1, firstName);
 								ps.setString(2, lastName);
-								ps.setString(3, email);
-								ps.setString(4, authSession.getAttribute("email").toString());
+								ps.setString(3, email);							
+								ps.setString(4, dayFrom);
+								ps.setString(5, dayTo);
+								ps.setString(6, hourFrom);
+								ps.setString(7, hourTo);							
+								ps.setString(8, authSession.getAttribute("email").toString());
 								
 								ps.executeUpdate();
 								
-								Database.close();
+								Database.close(conn);
 								
 								authSession.setAttribute("email", email); // change session for the new email
 								
@@ -119,7 +127,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 								
 							}else{
 								
-								Database.close();
+								Database.close(conn);
 								
 								request.setAttribute("ua_error", "Email already exists!");
 								request.getRequestDispatcher("/JSP/Doctor/settings.jsp").forward(request, response);
@@ -222,7 +230,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 									
 									ps.executeUpdate();
 									
-									Database.close();
+									Database.close(conn);
 									
 									
 									request.setAttribute("up_success", "Your password has been successfully updated");
@@ -232,7 +240,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 									
 								}else{
 									
-									Database.close();
+									Database.close(conn);
 									request.setAttribute("up_error", "Old password is incorrect!");
 									request.getRequestDispatcher("/JSP/Doctor/settings.jsp").forward(request, response);
 									return;

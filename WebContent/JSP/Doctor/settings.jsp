@@ -208,20 +208,61 @@
                   <label for="exampleInputEmail1">AMKA</label>
                   <input type="email" class="form-control _settings-input" value="<%= amka %>" readonly>
                 </div>
+                
+                   <% 
+                   
+                    String dayFrom = null;
+                    try{
+						query = "SELECT day_from from doctors WHERE doctor_id = ";
+					
+						ps = conn.prepareStatement(query);
+						
+						ps.setInt(1, Integer.parseInt(doctorId) );
+						
+						rs = ps.executeQuery();
+						
+						if(rs.next()){
+						
+						dayFrom = rs.getString(1);
+				
+						}
+						
+					}catch(Exception e){
+	        			request.setAttribute("debug", e.getMessage());
+	        		}
+        			%>
+        			
+        			
                  <div class="form-group"> 
-                  <label for="exampleInputEmail1">Available from</label> 
-                  <select class="form-control"> 
-                    <option selected value='-1'>--Select Day--</option> 
-                    <option value="1">Monday</option> 
-                    <option value="2">Tuesday</option> 
-                    <option value="3">Wednesday</option> 
-                    <option value="4">Thursday</option> 
-                    <option value="5">Friday</option> 
+                 <label for="exampleInputEmail1">Available from</label> 
+                 <select  class="form-control" name ="DayFrom">
+                 
+                   <option selected value='-1'>--Select Day--</option> 
+                   <% 
+                 	
+        	     	String[] dayArray = {"Monday","Tuesday","Wednesday", "Thursday", "Friday"};
+                 	
+                 	for(int i=0; i < 5; i++){
+                 	
+                 	%>
+                 	
+                 	<% if(dayFrom.equals(Integer.toString(i)) ){ %>
+                 		
+                 	<option selected value=<%= i+1 %> > <%= dayArray[i] %></option>
+                 	
+                 	<% }else{ %>
+                 		
+                 	<option value=<%= i+1 %> > <%= dayArray[i] %></option>
+                 		
+                 	<% } %>
+                 	
+                 	<% } %>
+                 	
                   </select> 
                 </div> 
                 <div class="form-group"> 
                   <label for="exampleInputEmail1">Available to</label> 
-                  <select class="form-control"> 
+                  <select  class="form-control" name ="DayTo">
                     <option selected value='-1'>--Select Day--</option> 
                     <option value="1">Monday</option> 
                     <option value="2">Tuesday</option> 
@@ -232,7 +273,7 @@
                 </div> 
                 <div class="form-group"> 
                   <label for="exampleInputEmail1">Available from</label> 
-                  <select class="form-control"> 
+                  <select  class="form-control" name ="hourFrom">
                     <option selected value='-1'>--Select Hour--</option> 
                     <option value="9">9:00</option> 
                     <option value="10">10:00</option> 
@@ -249,7 +290,7 @@
                 </div> 
                 <div class="form-group"> 
                   <label for="exampleInputEmail1">Available to</label> 
-                  <select class="form-control"> 
+                  <select  class="form-control" name ="hourTo">
                     <option selected value='-1'>--Select Hour--</option> 
                     <option value="9">9:00</option> 
                     <option value="10">10:00</option> 
@@ -353,7 +394,7 @@
 </html>
 <%
 	
-	Database.close();
+	Database.close(conn);
 
 	}
 
