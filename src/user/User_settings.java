@@ -134,7 +134,7 @@ public class User_settings extends HttpServlet {
 							
 						} catch (Exception e) {
 							// show error
-							response.getWriter().println(e.getMessage());
+							System.out.println("Runtime-log: " + e.getMessage());
 						}
 						
 					}else{
@@ -244,7 +244,7 @@ public class User_settings extends HttpServlet {
 								
 							}catch(Exception e){
 								// show error
-								response.getWriter().println(e.getMessage());
+								System.out.println("Runtime-log: " + e.getMessage());
 							}
 						
 						}else{
