@@ -143,7 +143,7 @@ public class Index extends HttpServlet {
 							
 						} catch (Exception e) {
 							// show error
-							response.getWriter().println(e.getMessage());
+							System.out.println("Runtime-log: " + e.getMessage());
 						}
 						
 					}else{

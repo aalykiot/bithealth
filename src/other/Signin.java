@@ -130,7 +130,7 @@ public class Signin extends HttpServlet {
 						
 						
 					}catch(Exception e){
-						response.getWriter().println(e.getMessage());
+						System.out.println("Runtime-log: " + e.getMessage());
 					}
 					
 				}else{
