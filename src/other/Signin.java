@@ -86,7 +86,7 @@ public class Signin extends HttpServlet {
 								response.sendRedirect("./user/dashboard");
 								return;
 								
-							}else{ // Visitor has authSession (propably has logged in as user/doctor)
+							}else{ // Visitor has authSession (propably has logged in as admin)
 								
 								authSession.setAttribute("email", email);
 								authSession.setAttribute("type", "user");
