@@ -75,11 +75,23 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 							Database.close(conn);
 							
 							// Admin found in admins table
-							HttpSession authSession = request.getSession();
-							authSession.setAttribute("username", username);
-							authSession.setAttribute("type", "admin");
-							response.sendRedirect("./dashboard");
-							return;
+							
+							HttpSession authSession = request.getSession(false);
+							
+							if(authSession == null){ // Visitor has no authSession
+								
+								authSession = request.getSession();
+								authSession.setAttribute("username", username);
+								response.sendRedirect("./dashboard");
+								return;
+								
+							}else{ // Visitor has authSession (propably has logged in as user/doctor)
+								
+								authSession.setAttribute("username", username);
+								response.sendRedirect("./dashboard");
+								return;
+								
+							}
 											
 						}else{
 							
