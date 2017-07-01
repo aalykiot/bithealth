@@ -258,7 +258,7 @@
         
         <% if(session.getAttribute("type").toString().equals("user")){ %>
         
-        	<a href="<%="./new?requested_doctor=" + doctorId %>">
+        	<a href="<%="./appointment/new?requested_doctor=" + doctorId %>">
         
         <% }else{ %>
         
