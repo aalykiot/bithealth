@@ -91,7 +91,7 @@ public class Admin_dashboard extends HttpServlet {
 						
 						}catch (Exception e) {
 							// show error
-							System.out.println(e.getMessage());
+							System.out.println("Runtime-log: " + e.getMessage());
 						}
 			
 				}
@@ -155,7 +155,7 @@ public class Admin_dashboard extends HttpServlet {
 						
 						}catch (Exception e) {
 							// show error
-							System.out.println(e.getMessage());
+							System.out.println("Runtime-log: " + e.getMessage());
 						}
 			
 				}

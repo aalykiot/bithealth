@@ -94,7 +94,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 						}				
 						
 					}catch(Exception e){
-						response.getWriter().println(e.getMessage());
+						response.getWriter().println("Runtime-log: " + e.getMessage());
 					}
 					
 				}else{
