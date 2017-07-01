@@ -249,7 +249,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 								
 							}catch(Exception e){
 								// show error
-								response.getWriter().println(e.getMessage());
+								System.out.println("Runtime-log: " + e.getMessage());
 							}
 						
 						}else{

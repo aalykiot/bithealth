@@ -7,6 +7,11 @@
 %>     
     
 <%
+	// Tell browser not to cache this page
+	
+	response.setHeader("Cache-Control","no-cache,no-store,must-revalidate");
+	response.setHeader("Pragma","no-cache");
+	response.setDateHeader("Expires", 0);
 
 	if(session.getAttribute("email") == null || !session.getAttribute("type").toString().equals("doctor")){
 		
@@ -269,7 +274,7 @@
         			
                  <div class="form-group"> 
                  <label for="exampleInputEmail1">Available from</label> 
-                 <select  class="form-control" name ="DayFrom">
+                 <select  class="form-control" name ="dayFrom">
                  
                     
                    <% 
@@ -296,7 +301,7 @@
                 </div> 
                 <div class="form-group"> 
                   <label for="exampleInputEmail1">Available to</label> 
-                  <select  class="form-control" name ="DayTo">
+                  <select  class="form-control" name ="dayTo">
                   
                    <% 
                  	
