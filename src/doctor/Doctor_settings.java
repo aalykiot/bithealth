@@ -40,10 +40,10 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 				String firstName = request.getParameter("first_name");
 				String lastName = request.getParameter("last_name");
 				String email = request.getParameter("email");
-	            String dayFrom=request.getParameter("dayFrom");
-	            String dayTo=request.getParameter("dayTo");
-	            String hourFrom=request.getParameter("hourFrom");
-	            String hourTo=request.getParameter("hourTo");
+	            String dayFrom = request.getParameter("dayFrom");
+	            String dayTo = request.getParameter("dayTo");
+	            String hourFrom = request.getParameter("hourFrom");
+	            String hourTo = request.getParameter("hourTo");
 				
 				if(!firstName.isEmpty() && !lastName.isEmpty() && !email.isEmpty()){
 					
@@ -109,10 +109,10 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 								ps.setString(1, firstName);
 								ps.setString(2, lastName);
 								ps.setString(3, email);							
-								ps.setString(4, dayFrom);
-								ps.setString(5, dayTo);
-								ps.setString(6, hourFrom);
-								ps.setString(7, hourTo);							
+								ps.setInt(4, Integer.parseInt(dayFrom));
+								ps.setInt(5, Integer.parseInt(dayTo));
+								ps.setInt(6, Integer.parseInt(hourFrom));
+								ps.setInt(7, Integer.parseInt(hourTo));							
 								ps.setString(8, authSession.getAttribute("email").toString());
 								
 								ps.executeUpdate();
@@ -139,7 +139,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 							
 						} catch (Exception e) {
 							// show error
-							response.getWriter().println(e.getMessage());
+							System.out.println("Runtime-log: " + e.getMessage());
 						}
 						
 					}else{
