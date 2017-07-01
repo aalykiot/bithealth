@@ -73,8 +73,7 @@
 			
 			}catch(Exception e){
 				
-				request.setAttribute("error", e.getMessage());
-				
+				System.out.println("Runtime-log: " + e.getMessage());				
 			}
 			
 			
@@ -436,7 +435,8 @@
         		
         		
         		}catch(Exception e){
-        			request.setAttribute("debug", e.getMessage());
+        			
+        			System.out.println("Runtime-log: " + e.getMessage());
         		}
         
         %>   

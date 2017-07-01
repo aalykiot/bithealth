@@ -107,7 +107,7 @@ public class Appointment_cancel extends HttpServlet {
 							return;
 						}
 						catch(Exception e){
-							System.out.println(e.getMessage());
+							System.out.println("Runtime-log: " + e.getMessage());
 						}
 				}
 			}
@@ -187,7 +187,7 @@ public class Appointment_cancel extends HttpServlet {
 							return;
 						}
 						catch(Exception e){
-							System.out.println(e.getMessage());
+							System.out.println("Runtime-log: " + e.getMessage());
 							
 						}
 					}

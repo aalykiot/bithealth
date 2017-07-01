@@ -203,6 +203,7 @@ public class Appointment_new extends HttpServlet {
 							} catch (Exception e) {
 
 								request.setAttribute("error", "Error connecting to database!");
+								System.out.println("Runtime-log: " + e.getMessage());
 							}
 							
 						}else{

@@ -86,7 +86,7 @@ public class Appointment_review extends HttpServlet {
 							Database.close(conn);
 											
 						} catch (Exception e) {
-							System.out.println(e.getMessage());					
+							System.out.println("Runtime-log: " + e.getMessage());				
 						}
 		
 				}
@@ -145,7 +145,7 @@ public class Appointment_review extends HttpServlet {
 							Database.close(conn);
 											
 						} catch (Exception e) {
-							System.out.println(e.getMessage());							
+							System.out.println("Runtime-log: " + e.getMessage());					
 						}
 					}
 					
