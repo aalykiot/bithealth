@@ -170,7 +170,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 			
 			HttpSession authSession = request.getSession(false);
 			
-			if(authSession.getAttribute("email") == null || !authSession.getAttribute("type").toString().equals("user")){
+			if(authSession.getAttribute("email") == null || !authSession.getAttribute("type").toString().equals("doctor")){
 				
 				response.sendRedirect("../");
 				return;
@@ -180,6 +180,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 				String oldPassword = request.getParameter("old_password");
 				String newPassword = request.getParameter("new_password");
 				String newPasswordAgain = request.getParameter("new_password_again");
+				
 				
 				if(!oldPassword.isEmpty() && !newPassword.isEmpty() && !newPasswordAgain.isEmpty()){
 					

@@ -370,14 +370,11 @@
 	                
 	                
 	          	<div class="btn-group _panel-btn-group" role="group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                      Edit
-                      <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-right">          
-                      <li><a href="#"><span class="glyphicon glyphicon-remove"></span> Cancel</a></li>
-                    </ul>
-            	</div>
+		          		<form action="../appointment/cancel" method="POST">
+			          		<input type="hidden" name="appointment_id" value="<%= appId %>"/>
+		                    <button type="submit" name="cancel_submit" class="btn btn-danger btn-sm"><b>Cancel</b></button>
+	                    </form>
+	            	</div>
 				
 			<% }else if(status.equals("completed")){ %>
 			
