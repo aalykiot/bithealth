@@ -13,7 +13,7 @@
 	response.setHeader("Pragma","no-cache");
 	response.setDateHeader("Expires", 0);
 
-	if(session.getAttribute("username") == null || !session.getAttribute("type").toString().equals("admin")){
+	if(session.getAttribute("username") == null){
 		
 		response.sendRedirect("./login");
 		return;

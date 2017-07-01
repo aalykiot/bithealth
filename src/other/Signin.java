@@ -76,11 +76,24 @@ public class Signin extends HttpServlet {
 							Database.close(conn);
 							
 							// User found in users table
-							HttpSession authSession = request.getSession();
-							authSession.setAttribute("email", email);
-							authSession.setAttribute("type", "user");
-							response.sendRedirect("./user/dashboard");
-							return;
+							
+							HttpSession authSession = request.getSession(false);
+							
+							if(authSession == null){ // Visitor has no authSession
+								
+								authSession = request.getSession();
+								authSession.setAttribute("type", "user");
+								response.sendRedirect("./user/dashboard");
+								return;
+								
+							}else{ // Visitor has authSession (propably has logged in as user/doctor)
+								
+								authSession.setAttribute("email", email);
+								authSession.setAttribute("type", "user");
+								response.sendRedirect("./user/dashboard");
+								return;
+								
+							}
 							
 						}else{
 							
@@ -107,11 +120,23 @@ public class Signin extends HttpServlet {
 								Database.close(conn);
 								
 								// User found in doctors table
-								HttpSession authSession = request.getSession();
-								authSession.setAttribute("email", email);
-								authSession.setAttribute("type", "doctor");
-								response.sendRedirect("./doctor/dashboard");
-								return;
+								HttpSession authSession = request.getSession(false);
+								
+								if(authSession == null){ // Visitor has no authSession
+									
+									authSession = request.getSession();
+									authSession.setAttribute("type", "doctor");
+									response.sendRedirect("./doctor/dashboard");
+									return;
+									
+								}else{ // Visitor has authSession (propably has logged in as admin)
+									
+									authSession.setAttribute("email", email);
+									authSession.setAttribute("type", "doctor");
+									response.sendRedirect("./doctor/dashboard");
+									return;
+									
+								}
 								
 							}else{
 								
