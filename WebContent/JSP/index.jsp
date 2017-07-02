@@ -57,7 +57,7 @@
                 	<center>
                 		<img src="${pageContext.request.contextPath}/RESOURCES/img/banner.png" width="450px"/>
                     	<h1 class="_slogan">Manage your health efficiently</h1>
-                    	<p class="_par">This platform allows you to get an appointment with your favorite doctor easily and efficiently. You can also manage, reschedule or even delete your appointments with a few simple steps and all these with the help of BitHealth.</p>
+                    	<p class="_par">This platform allows you to get an appointment with your favorite doctor easily and efficiently. You can also manage and evaluate your appointments with a few simple steps and all these with the help of BitHealth.</p>
                 	</center>
                 </div>
                 <div class="col-md-4 col-md-offset-1">
