@@ -80,7 +80,7 @@
                             <input type="password" class="form-control" placeholder="Password" name="password" maxlength="255"/>
                             <input type="text" class="form-control" placeholder="AMKA" name="amka" autocomplete="off" maxlength="20"/>
                             <button type="submit" class="btn btn-success btn-lg _form-btn" name="submit">Manage your health</button>
-                            <p class="_reminder">By clicking "Manage your health", you agree to our <a href="#">terms of service</a> and <a href="#">privacy policy</a>. </p>
+                            <p class="_reminder">By clicking "Manage your health", you agree to our <a href="./terms">terms of service</a> and <a href="./privacy">privacy policy</a>. </p>
                         </form>
                     </div>
                     
