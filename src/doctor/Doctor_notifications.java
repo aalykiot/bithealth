@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-@WebServlet(name="User_notifications", urlPatterns={"/doctor/notifications"})
+@WebServlet(name="Doctor_notifications", urlPatterns={"/doctor/notifications"})
 public class Doctor_notifications extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
