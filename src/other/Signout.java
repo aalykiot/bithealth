@@ -27,27 +27,61 @@ public class Signout extends HttpServlet {
 		HttpSession authSession = request.getSession(false);
 		
 		if(authSession != null){
-			if(authSession.getAttribute("email") != null || authSession.getAttribute("username") != null){
-				if(authSession.getAttribute("username") != null){
-					// Invalidate admin session
-					authSession.invalidate();
-					response.sendRedirect("./admin/login");
-					return;
-				}else{
-					// Invalidate user or doctor session
-					authSession.invalidate();
+			
+				if(authSession.getAttribute("email") == null && authSession.getAttribute("username") == null){
+					
+					// Hmmmm that would be weird but we will handle it
 					response.sendRedirect("./");
 					return;
+					
 				}
-			}else{
-				response.sendRedirect("./");
-				return;
-			}
+				
+				if(authSession.getAttribute("email") != null && authSession.getAttribute("username") != null){
+					
+					// User is logged in as patient/doctor and admin
+					if(authSession.getAttribute("username") != null){
+						
+						// Remove attribute, do not invalidate the session
+						authSession.removeAttribute("username");
+						response.sendRedirect("./admin/login");
+						return;
+						
+					}else{
+						
+						// Remove attribute not invalidate the session
+						authSession.removeAttribute("email");
+						response.sendRedirect("./");
+						return;
+						
+					}
+					
+				}else{
+					
+					if(authSession.getAttribute("username") != null){
+						
+						// Invalidate admin session
+						authSession.invalidate();
+						response.sendRedirect("./admin/login");
+						return;
+						
+					}else{
+						
+						// Invalidate user or doctor session
+						authSession.invalidate();
+						response.sendRedirect("./");
+						return;
+						
+					}
+					
+				}
+				
 			
 		}else{
+			
 			// Visitor has no authSession send him to welcome page
 			response.sendRedirect("./");
 			return;
+			
 		}
 		
 	}
