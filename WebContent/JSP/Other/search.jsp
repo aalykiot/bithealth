@@ -167,7 +167,7 @@
 					%>	
 						
 	                  <li><a href="./<%= session.getAttribute("type") %>/notifications">
-	                    <span class="glyphicon glyphicon-bell"></span>
+	                    <span class="glyphicon glyphicon-bell" id="newNotElement"></span>
 	                    <span class="badge _navbar-not"><%= Integer.toString(newNotifications) %></span>
 	                  </a></li>
 	                  <li class="dropdown">
@@ -335,7 +335,12 @@
 	        </div>
 
 	        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-	                <script src="${pageContext.request.contextPath}/RESOURCES/js/bootstrap.min.js"></script>
+	        <% if(newNotifications > 0){ %>
+        
+        	<script src="${pageContext.request.contextPath}/RESOURCES/js/bell-icon-flickering.js"></script>
+        
+        	<% } %>
+	        <script src="${pageContext.request.contextPath}/RESOURCES/js/bootstrap.min.js"></script>
 	    </body>
 	</html>
 
