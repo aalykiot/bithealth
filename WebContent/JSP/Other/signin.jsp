@@ -33,6 +33,7 @@
 
         <!-- Google fonts -->
         <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 
     </head>
     <body>

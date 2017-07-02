@@ -33,6 +33,7 @@
 
         <!-- Google fonts -->
         <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 
     </head>
     <body>
@@ -53,8 +54,11 @@
         <div class="container _container">
             <div class="row">
                 <div class="col-md-7">
-                    <h1 class="_slogan">Manage your health<br/>efficiently</h1>
-                    <p class="_par">This platform allows you to get an appointment with your favorite doctor easily and efficiently. You can also manage, reschedule or even delete your appointments with a few simple steps and all these with the help of BitHealth.</p>
+                	<center>
+                		<img src="${pageContext.request.contextPath}/RESOURCES/img/banner.png" width="450px"/>
+                    	<h1 class="_slogan">Manage your health efficiently</h1>
+                    	<p class="_par">This platform allows you to get an appointment with your favorite doctor easily and efficiently. You can also manage, reschedule or even delete your appointments with a few simple steps and all these with the help of BitHealth.</p>
+                	</center>
                 </div>
                 <div class="col-md-4 col-md-offset-1">
                      <% 
