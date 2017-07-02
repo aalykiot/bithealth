@@ -60,7 +60,7 @@
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand _dev-brand" href="#" style="color:#fff;">
+                <a class="navbar-brand _dev-brand" href="./dashboard" style="color:#fff;">
                   <span class="glyphicon glyphicon-plus" style="font-size: 13px;position:relative;top:-1px;"></span>Developers Console
                 </a>
               </div>
