@@ -56,6 +56,7 @@
                 <div class="col-md-7">
                 	<center>
                 		<img src="${pageContext.request.contextPath}/RESOURCES/img/banner.png" width="450px"/>
+                		<div style="height: 35px;"></div>
                     	<h1 class="_slogan">Manage your health efficiently</h1>
                     	<p class="_par">This platform allows you to get an appointment with your favorite doctor easily and efficiently. You can also manage and evaluate your appointments with a few simple steps and all these with the help of BitHealth.</p>
                 	</center>
