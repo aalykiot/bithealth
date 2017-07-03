@@ -29,7 +29,7 @@ public class Signout extends HttpServlet {
 		if(authSession != null){
 			
 				if(authSession.getAttribute("email") == null && authSession.getAttribute("username") == null){
-					System.out.println("E");
+					
 					// Hmmmm that would be weird but we will handle it
 					response.sendRedirect("./");
 					return;

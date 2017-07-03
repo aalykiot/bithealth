@@ -63,33 +63,6 @@ public class Appointment_cancel extends HttpServlet {
 							rs.close();
 							ps.close();
 							
-							//Update pending status to canceled
-							query = "UPDATE appointments SET status = 'canceled' WHERE appointment_id = ?";
-					
-							ps = conn.prepareStatement(query);
-							
-							ps.setInt(1, appointmentId);
-							
-							ps.executeUpdate();
-							
-							//Find doctor id
-							query = "SELECT doctor_id FROM appointments WHERE appointment_id = ? ";
-							
-							ps = conn.prepareStatement(query);
-							
-							ps.setInt(1, appointmentId);
-							
-							rs = ps.executeQuery();
-							
-							int doctorId = 0;
-							
-							if(rs.next()){
-								doctorId =  rs.getInt(1);
-							}
-								
-							rs.close();
-							ps.close();
-							
 							//Check if appointment is already cancel
 							query = "SELECT COUNT(*) FROM appointments WHERE appointment_id = ? AND status = 'canceled' ";
 							
@@ -110,14 +83,42 @@ public class Appointment_cancel extends HttpServlet {
 							
 							if(count == 0){
 								
-								query = "INSERT INTO notifications(user_id,doctor_id,appointment_id) VALUES ( ?, ?, ?) ";
+								//Update pending status to canceled
+								query = "UPDATE appointments SET status = 'canceled' WHERE appointment_id = ?";
+						
+								ps = conn.prepareStatement(query);
+								
+								ps.setInt(1, appointmentId);
+								
+								ps.executeUpdate();
+								
+								//Find doctor id
+								query = "SELECT doctor_id FROM appointments WHERE appointment_id = ? ";
 								
 								ps = conn.prepareStatement(query);
 								
+								ps.setInt(1, appointmentId);
+								
+								rs = ps.executeQuery();
+								
+								int doctorId = 0;
+								
+								if(rs.next()){
+									doctorId =  rs.getInt(1);
+								}
+									
+								rs.close();
+								ps.close();
+								
+									
+								query = "INSERT INTO notifications(user_id,doctor_id,appointment_id) VALUES ( ?, ?, ?) ";
+									
+								ps = conn.prepareStatement(query);
+									
 								ps.setInt(1, userId);
 								ps.setInt(2, doctorId);
 								ps.setInt(3, appointmentId);
-								
+									
 								ps.executeUpdate();
 								ps.close();
 								
@@ -165,33 +166,6 @@ public class Appointment_cancel extends HttpServlet {
 							rs.close();
 							ps.close();
 							
-							//Update pending status to canceled
-							query = "UPDATE appointments SET status = 'canceled' WHERE appointment_id = ?";
-					
-							ps = conn.prepareStatement(query);
-							
-							ps.setInt(1, appointmentId);
-							
-							ps.executeUpdate();
-							
-							//Find user id
-							query = "SELECT user_id FROM appointments WHERE appointment_id = ? ";
-							
-							ps = conn.prepareStatement(query);
-							
-							ps.setInt(1, appointmentId);
-							
-							rs = ps.executeQuery();
-							
-							int userId = 0;
-							
-							if(rs.next()){
-								userId =  rs.getInt(1);
-							}
-							
-							rs.close();
-							ps.close();
-							
 							//Check if appointment is already cancel
 							query = "SELECT COUNT(*) FROM appointments WHERE appointment_id = ? AND status = 'canceled' ";
 							
@@ -210,19 +184,49 @@ public class Appointment_cancel extends HttpServlet {
 							rs.close();
 							ps.close();
 							
-							if(count == 1){
-							
-								query = "INSERT INTO notifications(user_id,doctor_id,appointment_id) VALUES ( ?, ?, ?) ";
+							if(count == 0){
+								
+								//Update pending status to canceled
+								query = "UPDATE appointments SET status = 'canceled' WHERE appointment_id = ?";
+						
+								ps = conn.prepareStatement(query);
+								
+								ps.setInt(1, appointmentId);
+								
+								ps.executeUpdate();
+								
+								//Find user id
+								query = "SELECT user_id FROM appointments WHERE appointment_id = ? ";
 								
 								ps = conn.prepareStatement(query);
 								
+								ps.setInt(1, appointmentId);
+								
+								rs = ps.executeQuery();
+								
+								int userId = 0;
+								
+								if(rs.next()){
+									userId =  rs.getInt(1);
+								}
+								
+								rs.close();
+								ps.close();
+											
+								
+								query = "INSERT INTO notifications(user_id,doctor_id,appointment_id) VALUES ( ?, ?, ?) ";
+									
+								ps = conn.prepareStatement(query);
+									
 								ps.setInt(1, userId);
 								ps.setInt(2, doctorId);
 								ps.setInt(3, appointmentId);
-								
+									
 								ps.executeUpdate();
 								ps.close();
+								
 							}
+							
 							
 							Database.close(conn);
 							
