@@ -34,6 +34,7 @@
 		String doctorId = null;
 		String first_name = null;
 		String last_name = null;
+		String speciality = null;
 		long amka = 0;
 		
 		if(conn != null){
@@ -41,7 +42,7 @@
 			try{
 			
 			
-				query = "SELECT doctor_id, first_name, last_name, amka FROM doctors WHERE email = ? ";
+				query = "SELECT doctor_id, first_name, last_name, amka, speciality FROM doctors WHERE email = ? ";
 				
 				ps = conn.prepareStatement(query);
 				ps.setString(1, email);
@@ -54,6 +55,7 @@
 					first_name = rs.getString(2);
 					last_name = rs.getString(3);
 					amka = rs.getLong(4);
+					speciality = rs.getString(5);
 					
 				}
 				
@@ -212,7 +214,11 @@
                 </div>
                 <div class="form-group">
                   <label for="exampleInputEmail1">AMKA</label>
-                  <input type="email" class="form-control _settings-input" value="<%= amka %>" readonly>
+                  <input type="text" class="form-control _settings-input" value="<%= amka %>" readonly>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Speciality</label>
+                  <input type="email" class="form-control _settings-input" value="<%= speciality %>" readonly>
                 </div>
                 
                    <% 
