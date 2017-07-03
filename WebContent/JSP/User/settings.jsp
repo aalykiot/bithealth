@@ -213,7 +213,7 @@
                 </div>
                 <div class="form-group">
                   <label for="exampleInputEmail1">AMKA</label>
-                  <input type="email" class="form-control _settings-input" value="<%= amka %>" readonly>
+                  <input type="text" class="form-control _settings-input" value="<%= amka %>" readonly>
                 </div>
                 <button type="submit" name="update_settings" class="btn btn-md btn-success">Update settings</button>
               </form>
