@@ -77,7 +77,7 @@
                     <ul class="dropdown-menu">
                       <li class="dropdown-header">Signed in as <br/><strong><%= username %></strong></li>
                       <li role="separator" class="divider"></li>
-                      <li><a href="../signout">Sign out</a></li>
+                      <li><a href="../signout?m=admin">Sign out</a></li>
                     </ul>
                   </li>
                 </ul>
