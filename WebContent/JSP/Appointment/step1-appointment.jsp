@@ -243,8 +243,6 @@
               </form>
 
 <%
-        
-        	if(!searchQuery.isEmpty()){
         		
         		try{
         			
@@ -257,17 +255,30 @@
             		
     				ps.setString(1, "%" + searchQuery + "%");
     				ps.setString(2, "%" + searchQuery + "%");
+    				
         			
         		}else{
         			
-            		query = "SELECT COUNT(*) FROM doctors WHERE speciality = ? AND (CONCAT(first_name, ' ', last_name) ILIKE ? OR CONCAT(last_name, ' ', first_name) ILIKE ?)";
-            		
-            		
-            		ps = conn.prepareStatement(query);
-            		
-            		ps.setString(1, speciality);
-    				ps.setString(2, "%" + searchQuery + "%");
-    				ps.setString(3, "%" + searchQuery + "%");
+        			if(searchQuery.isEmpty()){
+        				
+        				query = "SELECT COUNT(*) FROM doctors WHERE speciality = ?";
+        				
+                		ps = conn.prepareStatement(query);
+                		
+                		ps.setString(1, speciality);
+        				
+        			}else{
+        				
+                		query = "SELECT COUNT(*) FROM doctors WHERE speciality = ? AND (CONCAT(first_name, ' ', last_name) ILIKE ? OR CONCAT(last_name, ' ', first_name) ILIKE ?)";
+                		
+                		
+                		ps = conn.prepareStatement(query);
+                		
+                		ps.setString(1, speciality);
+        				ps.setString(2, "%" + searchQuery + "%");
+        				ps.setString(3, "%" + searchQuery + "%");
+        				
+        			}
         			
         		}
         		
@@ -287,7 +298,7 @@
         %>
         
         
-        <% if(results == 0){ %>
+        <% if(results == 0){%>
         		<div class="row">
         		<div style="text-align: center;position: relative; top: 60px;">
 				<span style="color: #bbb; font-size: 100px;" class="glyphicon glyphicon-search"></span><br />
@@ -295,14 +306,27 @@
 				</div></div>
         
         <% }else{ %>
-        		<hr><span><b><%= results %></b> result(s) found for <b><i><%= searchQuery %></i></b></span><hr>
+        		<hr>
+        		
+        		<% if(!searchQuery.isEmpty()){ %>
+        		
+        			<span><b><%= results %></b> result(s) found for <b><i><%= searchQuery %></i></b></span>
+        		
+        		<% }else{ %>
+        		
+        			<span><b><%= results %></b> result(s) found</span>
+        		
+        		<% } %>
+        		
+        		<span style="float: right;"><b>filter::</b> <%= speciality %></span>
+        		<hr>
         		<div class="row">
         <%		
         		}
         
 				if(speciality.equals("All")){
 					
-	        		query = "SELECT doctor_id, CONCAT(first_name, ' ', last_name) AS full_name, good_review, bad_review FROM doctors WHERE (CONCAT(first_name, ' ', last_name) ILIKE ? OR CONCAT(last_name, ' ', first_name) ILIKE ?)";
+	        		query = "SELECT doctor_id, CONCAT(first_name, ' ', last_name) AS full_name, good_review, bad_review, speciality FROM doctors WHERE (CONCAT(first_name, ' ', last_name) ILIKE ? OR CONCAT(last_name, ' ', first_name) ILIKE ?)";
 	        		
 					ps = conn.prepareStatement(query);
 					
@@ -311,7 +335,7 @@
 					
 				}else{
 					
-	        		query = "SELECT doctor_id, CONCAT(first_name, ' ', last_name) AS full_name, good_review, bad_review FROM doctors WHERE speciality ILIKE ? AND (CONCAT(first_name, ' ', last_name) ILIKE ? OR CONCAT(last_name, ' ', first_name) ILIKE ?)";
+	        		query = "SELECT doctor_id, CONCAT(first_name, ' ', last_name) AS full_name, good_review, bad_review, speciality FROM doctors WHERE speciality ILIKE ? AND (CONCAT(first_name, ' ', last_name) ILIKE ? OR CONCAT(last_name, ' ', first_name) ILIKE ?)";
 	        		
 					ps = conn.prepareStatement(query);
 					
@@ -332,6 +356,7 @@
         			String fullName = rs.getString(2);
         			String goodReview = Integer.toString(rs.getInt(3));
         			String badReview = Integer.toString(rs.getInt(4));
+        			String dbSpeciality = rs.getString(5);
         		
         		
         %>
@@ -342,7 +367,18 @@
                 <center>
                   <span class="glyphicon glyphicon-user _doctor-icon"></span>
                   <div class="caption">
-                    <h4>Dr. <%= fullName %></h4>
+                    
+                    <% if(speciality.equals("All")){ %>
+                    
+                    	<div><b>Dr. <%= fullName %></b></div>
+                    	<br/>
+                    	<div style="margin-top: -15px;margin-bottom: 10px;">(<%= dbSpeciality %>)</div>
+                    
+                    <% }else{ %>
+                    
+                    	<div style="margin-bottom: 10px;"><b>Dr. <%= fullName %></b></div>
+                    
+          			<% } %>
                     <div class="btn-group" role="group">
                       <button type="button" style="color:#5cb85c;" class="btn btn-default disabled">
                         <span class="glyphicon glyphicon-thumbs-up"></span>
@@ -373,15 +409,7 @@
         		}
         
         %>   
-        
-        <% }else{ %>
-        
-        	<div style="text-align: center;position: relative; top: 60px;">
-			<span style="color: #bbb; font-size: 100px;" class="glyphicon glyphicon-search"></span><br />
-			<span style="font-weight: bold;color: #bbb; font-size: 40px;">No results found</span>
-			</div>
-        
-        <% } %>
+
 
           </div>
         </div>

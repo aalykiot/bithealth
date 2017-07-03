@@ -236,7 +236,7 @@
 	        <%		
 	        		}
 	        
-	        		query = "SELECT doctor_id, CONCAT(first_name, ' ', last_name) AS full_name, good_review, bad_review FROM doctors WHERE CONCAT(first_name, ' ', last_name) ILIKE ? OR CONCAT(last_name, ' ', first_name) ILIKE ?";
+	        		query = "SELECT doctor_id, CONCAT(first_name, ' ', last_name) AS full_name, good_review, bad_review, speciality FROM doctors WHERE CONCAT(first_name, ' ', last_name) ILIKE ? OR CONCAT(last_name, ' ', first_name) ILIKE ?";
 			
 			
 					ps = conn.prepareStatement(query);
@@ -255,6 +255,7 @@
 	        			String fullName = rs.getString(2);
 	        			String goodReview = Integer.toString(rs.getInt(3));
 	        			String badReview = Integer.toString(rs.getInt(4));
+	        			String dbSpeciality = rs.getString(5);
 	        		
 	        		
 	        %>
@@ -274,7 +275,12 @@
 	                <center>
 	                  <span class="glyphicon glyphicon-user _doctor-icon"></span>
 	                  <div class="caption">
-	                    <h4>Dr. <%= fullName %></h4>
+	                  
+	                    <div><b>Dr. <%= fullName %></b></div>
+                    	<br/>
+                    	<div style="margin-top: -15px;margin-bottom: 10px;">(<%= dbSpeciality %>)</div>
+	                    
+	                    
 	                    <div class="btn-group" role="group">
 	                      <button type="button" style="color:#5cb85c;" class="btn btn-default disabled">
 	                        <span class="glyphicon glyphicon-thumbs-up"></span>
