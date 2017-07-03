@@ -1,0 +1,20 @@
+html, body{
+    height: 100%;
+    background-color: #f0f0f0;
+}
+
+a:hover{
+    text-decoration: none;
+}
+
+.image{
+  margin-top: 50px;
+  position: relative;
+  left: 25px;
+}
+
+.message{
+  font-family: 'Ubuntu', sans-serif;
+  margin-top: 50px;
+  margin-bottom: 40px;
+}
