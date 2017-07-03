@@ -75,7 +75,6 @@
 		}
 	
 %>    
-<%= request.getAttribute("error") %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
