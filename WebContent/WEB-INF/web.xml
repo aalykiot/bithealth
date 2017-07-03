@@ -18,6 +18,6 @@
 	<error-page>
 	    <!-- Missing resource -->
 	    <error-code>404</error-code>
-	    <location>/ERROR-PAGES/404.html</location>
+	    <location>/ERROR-PAGES/404.jsp</location>
 	</error-page>
 </web-app>
