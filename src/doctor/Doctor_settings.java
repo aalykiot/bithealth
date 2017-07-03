@@ -99,31 +99,42 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 							
 							if(counter == 0 || email.equals(authSession.getAttribute("email"))){
 								
+								if(Integer.parseInt(dayFrom) < Integer.parseInt(dayTo) && Integer.parseInt(hourFrom) < Integer.parseInt(hourTo)){
 
-								// Update doctors database
-								
-								query = "UPDATE doctors SET first_name = ?, last_name = ?, email = ?, day_from = ?, day_to = ?, hour_from = ?, hour_to = ?  WHERE email = ?";
-
-								ps = conn.prepareStatement(query);
-								
-								ps.setString(1, firstName);
-								ps.setString(2, lastName);
-								ps.setString(3, email);							
-								ps.setInt(4, Integer.parseInt(dayFrom));
-								ps.setInt(5, Integer.parseInt(dayTo));
-								ps.setInt(6, Integer.parseInt(hourFrom));
-								ps.setInt(7, Integer.parseInt(hourTo));							
-								ps.setString(8, authSession.getAttribute("email").toString());
-								
-								ps.executeUpdate();
-								
-								Database.close(conn);
-								
-								authSession.setAttribute("email", email); // change session for the new email
-								
-								request.setAttribute("ua_success", "Your account has been successfully updated");
-								request.getRequestDispatcher("/JSP/Doctor/settings.jsp").forward(request, response);
-								return;
+									// Update doctors database
+									
+									query = "UPDATE doctors SET first_name = ?, last_name = ?, email = ?, day_from = ?, day_to = ?, hour_from = ?, hour_to = ?  WHERE email = ?";
+	
+									ps = conn.prepareStatement(query);
+									
+									ps.setString(1, firstName);
+									ps.setString(2, lastName);
+									ps.setString(3, email);							
+									ps.setInt(4, Integer.parseInt(dayFrom));
+									ps.setInt(5, Integer.parseInt(dayTo));
+									ps.setInt(6, Integer.parseInt(hourFrom));
+									ps.setInt(7, Integer.parseInt(hourTo));							
+									ps.setString(8, authSession.getAttribute("email").toString());
+									
+									ps.executeUpdate();
+									
+									Database.close(conn);
+									
+									authSession.setAttribute("email", email); // change session for the new email
+									
+									request.setAttribute("ua_success", "Your account has been successfully updated");
+									request.getRequestDispatcher("/JSP/Doctor/settings.jsp").forward(request, response);
+									return;
+								}
+								else{
+									
+									Database.close(conn);
+									
+									request.setAttribute("ua_error", "Doctor availability is not correct");
+									request.getRequestDispatcher("/JSP/Doctor/settings.jsp").forward(request, response);
+									return;
+									
+								}
 								
 							}else{
 								
