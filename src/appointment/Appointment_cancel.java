@@ -178,7 +178,7 @@ public class Appointment_cancel extends HttpServlet {
 							ps.setInt(2, doctorId);
 							ps.setInt(3, appointmentId);
 							
-							//ps.executeUpdate();
+							ps.executeUpdate();
 							ps.close();
 							
 							Database.close(conn);
