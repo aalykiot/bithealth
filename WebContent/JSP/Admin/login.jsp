@@ -24,6 +24,7 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <link rel="icon" href="${pageContext.request.contextPath}/RESOURCES/img/favicon.ico" type="image/x-icon">
     <title>Developers Console</title>
     <link href="${pageContext.request.contextPath}/RESOURCES/css/bootstrap.min.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/RESOURCES/css/adminl.css" rel="stylesheet">
