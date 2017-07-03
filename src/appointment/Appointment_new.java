@@ -176,7 +176,7 @@ public class Appointment_new extends HttpServlet {
 												
 												Database.close(conn);
 												
-												response.sendRedirect("../user/dashboard");
+												response.sendRedirect("../user/dashboard?v=pending");
 												return;
 											}
 											else{

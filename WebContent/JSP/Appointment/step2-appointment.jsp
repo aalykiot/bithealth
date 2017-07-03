@@ -193,7 +193,7 @@
               
               %>
               
-            	<div class="alert alert-danger _alert-app" id="alert-box">
+            	<div class="alert alert-danger _alert" id="alert-box">
 	        		<div class="container _container">
 	        			<%= request.getAttribute("error") %>
 	        			<a href="#"><span class="glyphicon glyphicon-remove" id="alert-box-cancel" style="float: right;opacity: 0.3;color: #333;"></span></a>
