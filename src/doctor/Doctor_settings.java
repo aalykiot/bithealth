@@ -122,7 +122,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 									
 									authSession.setAttribute("email", email); // change session for the new email
 									
-									request.setAttribute("ua_success", "Your account has been successfully updated");
+									request.setAttribute("success", "Your account has been successfully updated");
 									request.getRequestDispatcher("/JSP/Doctor/settings.jsp").forward(request, response);
 									return;
 								}
@@ -130,7 +130,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 									
 									Database.close(conn);
 									
-									request.setAttribute("ua_error", "Doctor availability is not correct");
+									request.setAttribute("error", "Doctor availability is not correct");
 									request.getRequestDispatcher("/JSP/Doctor/settings.jsp").forward(request, response);
 									return;
 									
@@ -140,7 +140,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 								
 								Database.close(conn);
 								
-								request.setAttribute("ua_error", "Email already exists!");
+								request.setAttribute("error", "Email already exists!");
 								request.getRequestDispatcher("/JSP/Doctor/settings.jsp").forward(request, response);
 								return;
 								
@@ -155,7 +155,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 						
 					}else{
 						
-						request.setAttribute("ua_error", "Error connecting to database!");
+						request.setAttribute("error", "Error connecting to database!");
 						request.getRequestDispatcher("/JSP/Doctor/settings.jsp").forward(request, response);
 						return;
 						
@@ -163,7 +163,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 					
 				}else{
 					
-					request.setAttribute("ua_error", "Some fields were empty!");
+					request.setAttribute("error", "Some fields were empty!");
 					request.getRequestDispatcher("/JSP/Doctor/settings.jsp").forward(request, response);
 					return;
 					
@@ -245,7 +245,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 									Database.close(conn);
 									
 									
-									request.setAttribute("up_success", "Your password has been successfully updated");
+									request.setAttribute("success", "Your password has been successfully updated");
 									request.getRequestDispatcher("/JSP/Doctor/settings.jsp").forward(request, response);
 									return;
 									
@@ -253,7 +253,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 								}else{
 									
 									Database.close(conn);
-									request.setAttribute("up_error", "Old password is incorrect!");
+									request.setAttribute("error", "Old password is incorrect!");
 									request.getRequestDispatcher("/JSP/Doctor/settings.jsp").forward(request, response);
 									return;
 									
@@ -266,7 +266,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 						
 						}else{
 							
-							request.setAttribute("up_error", "Error connecting to database!");
+							request.setAttribute("error", "Error connecting to database!");
 							request.getRequestDispatcher("/JSP/Doctor/settings.jsp").forward(request, response);
 							return;
 							
@@ -274,7 +274,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 						
 					}else{
 						
-						request.setAttribute("up_error", "Passwords don't match!");
+						request.setAttribute("error", "Passwords don't match!");
 						request.getRequestDispatcher("/JSP/Doctor/settings.jsp").forward(request, response);
 						return;
 						
@@ -282,7 +282,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 					
 				}else{
 					
-					request.setAttribute("up_error", "Some fields are empty!");
+					request.setAttribute("error", "Some fields are empty!");
 					request.getRequestDispatcher("/JSP/Doctor/settings.jsp").forward(request, response);
 					return;
 					

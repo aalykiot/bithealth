@@ -183,6 +183,24 @@
             </div>
           </div><!-- /.container-fluid -->
         </nav>
+        
+        
+              <% 
+              
+          		// if error show error message
+              
+              	if(request.getAttribute("error") != null){
+              
+              %>
+              
+            	<div class="alert alert-danger _alert-app" id="alert-box">
+	        		<div class="container _container">
+	        			<%= request.getAttribute("error") %>
+	        			<a href="#"><span class="glyphicon glyphicon-remove" id="alert-box-cancel" style="float: right;opacity: 0.3;color: #333;"></span></a>
+	        		</div>
+        		</div>
+              
+              <% } %>
 
         <div class="_empty-space"></div>
 
@@ -339,15 +357,6 @@
 
 
 		<%
-		
-		if(request.getAttribute("error") != null ){
-			
-			%>
-			
-			<div class="alert alert-danger"><%= request.getAttribute("error") %></div>
-			
-			<%
-		}
 
 		try{
 			query = "SELECT CONCAT(first_name, ' ', last_name) AS full_name from doctors WHERE doctor_id = ?";
@@ -451,6 +460,17 @@
         
         <% } %>
         <script src="${pageContext.request.contextPath}/RESOURCES/js/bootstrap.min.js"></script>
+        
+        <script>
+        
+        $("#alert-box-cancel").click(function(){
+        	
+            $("#alert-box").slideUp(500);
+            
+    });
+        
+        </script>
+        
     </body>
 </html>
 

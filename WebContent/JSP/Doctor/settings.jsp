@@ -169,6 +169,40 @@
             </div>
           </div><!-- /.container-fluid -->
         </nav>
+        
+              <% 
+              
+              	// if success show success message
+              
+              	if(request.getAttribute("success") != null){
+              
+              %>
+              	
+            	<div class="alert alert-success _alert" id="alert-box">
+	        		<div class="container _container">
+	        			<%= request.getAttribute("success") %>
+	        			<a href="#"><span class="glyphicon glyphicon-remove" id="alert-box-cancel" style="float: right;opacity: 0.3;color: #333;"></span></a>
+	        		</div>
+        		</div>
+              
+              <% } %>
+              
+              <% 
+              
+          		// if error show error message
+              
+              	if(request.getAttribute("error") != null){
+              
+              %>
+              
+            	<div class="alert alert-danger _alert" id="alert-box">
+	        		<div class="container _container">
+	        			<%= request.getAttribute("error") %>
+	        			<a href="#"><span class="glyphicon glyphicon-remove" id="alert-box-cancel" style="float: right;opacity: 0.3;color: #333;"></span></a>
+	        		</div>
+        		</div>
+              
+              <% } %>
 
         <div class="_empty-space"></div>
 
@@ -383,28 +417,7 @@
                 </div> 
                 <button type="submit" name="update_settings" class="btn btn-md btn-success">Update settings</button>
               </form>
-              
-              <% 
-              
-              	// if success show success message
-              
-              	if(request.getAttribute("ua_success") != null){
-              
-              %>
-              	<div class="alert alert-success" id="success-alert"><%= request.getAttribute("ua_success") %></div>
-              
-              <% } %>
-              
-              <% 
-              
-          		 // if error show error message
-              
-              	if(request.getAttribute("ua_error") != null){
-              
-              %>
-              	<div class="alert alert-danger"><%= request.getAttribute("ua_error") %></div>
-              
-              <% } %>
+
               
             </div>
             
@@ -428,28 +441,6 @@
                 <button type="submit" name="update_password" class="btn btn-md btn-success">Update password</button>
               </form>
               
-			  	<% 
-              	
-              		// if success show success message
-              
-              		if(request.getAttribute("up_success") != null){
-              
-              	%>
-              		<div class="alert alert-success" id="success-alert"><%= request.getAttribute("up_success") %></div>
-              
-              	<% } %>
-              
-              	<% 
-              
-          		 	// if error show error message
-              
-              		if(request.getAttribute("up_error") != null){
-              
-              	%>
-              		
-              		<div class="alert alert-danger"><%= request.getAttribute("up_error") %></div>
-              
-              	<% } %>
 				
             </div>
 
@@ -465,9 +456,11 @@
         
         <script>
         
-        $("#success-alert").fadeTo(1500, 500).slideUp(500, function(){
-            $("#success-alert").slideUp(500);
-        });
+        $("#alert-box-cancel").click(function(){
+        	
+            $("#alert-box").slideUp(500);
+            
+    });
         
         </script>
         

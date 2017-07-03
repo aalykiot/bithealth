@@ -1,5 +1,5 @@
 html, body{
-    height: 100%;
+
 }
 
 ._brand {
@@ -111,4 +111,16 @@ html, body{
 ._admin_del_btn{
   position: relative;
   left: 6px;
+}
+
+._alert{
+	border-radius: 0;
+	margin-top: 31px;
+	margin-bottom: -60px;
+}
+
+._alert-app{
+	border-radius: 0;
+	margin-top: 51px;
+	margin-bottom: -60px;
 }
