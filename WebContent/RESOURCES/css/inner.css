@@ -1,0 +1,121 @@
+html, body{
+
+}
+
+._brand {
+    font-size: 1.8em;
+    font-family: 'Lobster', cursive;
+}
+
+._dev-brand {
+    font-size: 1.3em;
+    font-family: 'Open Sans', sans-serif;
+}
+
+._nav-glyphicon {
+    font-size: 0.8em;
+}
+
+._container {
+  width: 1050px;
+}
+
+._navbar{
+  box-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+
+
+._search-input {
+  padding-left: 30px;
+  color:#fafafa;
+  background-color:#333;
+  border:0px;
+  transition: width .5s ease;
+  width: 200px !important;
+  font-size: 16px;
+  height: 30px;
+  margin-top: 2px;
+}
+
+._search-glyphicon{
+  position: relative;
+  top: 3px;
+  left: 25px;
+}
+
+._search-input:focus{
+  box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0.075), 0 0 0px rgba(255, 0, 0, 0.6);
+  width: 260px !important;
+}
+
+._empty-space {
+  height: 90px;
+}
+
+._empty-space-not {
+  height: 20px;
+}
+
+._book-app-button {
+  float:right;
+  position:relative;
+  top:-5px;
+}
+
+._progress-bar {
+  float:right;
+  width:200px;
+  position:relative;
+  top:-18px;
+}
+
+._panel-btn-group {
+  float:right;
+  position:relative;
+  top:-11px;
+}
+
+._navbar-not {
+  padding: 4px 4px;
+  line-height: .5;
+  font-size: 10px;
+  position: relative;
+  top: -3px;
+}
+
+._media-not {
+  border-bottom: 1px solid #D8D8D8;
+  padding-bottom: 10px;
+}
+
+._media-not:last-child {
+  border-bottom: 0px;
+}
+
+._doctor-icon{
+  font-size: 120px;
+  padding-top: 10px;
+  color: #444;
+}
+
+._doctor-icon-app{
+  font-size: 120px;
+  padding-top: 20px;
+  color: #444;
+}
+
+.thumbnail:hover{
+  background-color: #f1f1f1 !important;
+}
+
+._admin_del_btn{
+  position: relative;
+  left: 6px;
+}
+
+._alert{
+	border-radius: 0;
+	margin-top: 51px;
+	margin-bottom: -60px;
+}
+
